@@ -11,8 +11,8 @@ public class asklepiosController {
         return "call";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
+//    @GetMapping("/login")
+//    public String login() {
+//        return "login";
+//    }
 }
