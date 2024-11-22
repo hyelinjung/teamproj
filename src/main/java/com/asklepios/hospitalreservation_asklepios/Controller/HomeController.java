@@ -1,7 +1,6 @@
 package com.asklepios.hospitalreservation.Controller;
 
-import com.asklepios.hospitalreservation.boardService.BoardService_Imp;
-import com.asklepios.hospitalreservation.boardService.IF_BoardService;
+import com.asklepios.hospitalreservation_asklepios.Service.IF_BoardService;
 import com.asklepios.hospitalreservation.boardVO.BoardVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

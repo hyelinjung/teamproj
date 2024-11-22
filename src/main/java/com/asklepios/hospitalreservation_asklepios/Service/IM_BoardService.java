@@ -1,4 +1,4 @@
-package com.asklepios.hospitalreservation.boardService;
+package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation.boardRepository.IF_BoardRepository;
 import com.asklepios.hospitalreservation.boardVO.BoardVO;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BoardService_Imp implements IF_BoardService{
+public class IM_BoardService implements IF_BoardService{
     @Autowired
     IF_BoardRepository boardRepository;
 
