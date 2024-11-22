@@ -1,6 +1,6 @@
 package com.asklepios.hospitalreservation_asklepios.Service;
 
-import com.asklepios.hospitalreservation_asklepios.Dao.UserMapper;
+import com.asklepios.hospitalreservation_asklepios.Repository.IF_UserMapper;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class IM_UserService implements IF_UserService{
     @Autowired
-    UserMapper usermapper;
+    IF_UserMapper usermapper;
 
     @Override
     public boolean login(UserVO userVO) {

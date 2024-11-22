@@ -4,6 +4,6 @@ import com.asklepios.hospitalreservation.boardVO.BoardVO;
 
 
 
-public interface IF_BoardRepository {
+public interface IF_BoardMapper {
     public void insertBoard(BoardVO boardVO);
 }
