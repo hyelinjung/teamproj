@@ -1,4 +1,4 @@
-package com.asklepios.hospitalreservation.boardService;
+package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation.boardVO.BoardVO;
 

@@ -1,4 +1,4 @@
-package com.asklepios.hospitalreservation_asklepios.Dto;
+package com.asklepios.hospitalreservation_asklepios.VO;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
-public class UserDto {
+public class UserVO {
 
     @NotBlank(message = "아이디를 입력해주세요.")
     private String user_id;
@@ -16,7 +16,7 @@ public class UserDto {
     private String user_password;
 
     @Builder
-    public UserDto(String user_id, String user_password) {
+    public UserVO(String user_id, String user_password) {
         this.user_id = user_id;
         this.user_password = user_password;
     }
