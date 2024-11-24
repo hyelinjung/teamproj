@@ -1,4 +1,4 @@
-package com.asklepios.hospitalreservation.boardVO;
+package com.asklepios.hospitalreservation_asklepios.VO;
 
 public class BoardVO {
     private String board_sequence=null;
@@ -9,7 +9,7 @@ public class BoardVO {
     private String board_binary=null;
     private String board_viewcount=null;
     private String board_date=null;
-    private String board_good_count=null;
+    private String board_goodcount=null;
 
     @Override
     public String toString() {
@@ -22,7 +22,7 @@ public class BoardVO {
                 ", board_binary='" + board_binary + '\'' +
                 ", board_viewcount='" + board_viewcount + '\'' +
                 ", board_date='" + board_date + '\'' +
-                ", board_good_count='" + board_good_count + '\'' +
+                ", board_goodcount='" + board_goodcount + '\'' +
                 '}';
     }
 
@@ -90,11 +90,11 @@ public class BoardVO {
         this.board_date = board_date;
     }
 
-    public String getBoard_good_count() {
-        return board_good_count;
+    public String getBoard_goodcount() {
+        return board_goodcount;
     }
 
-    public void setBoard_good_count(String board_good_count) {
-        this.board_good_count = board_good_count;
+    public void setBoard_goodcount(String board_goodcount) {
+        this.board_goodcount = board_goodcount;
     }
 }

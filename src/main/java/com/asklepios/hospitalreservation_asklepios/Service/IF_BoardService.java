@@ -1,7 +1,15 @@
 package com.asklepios.hospitalreservation_asklepios.Service;
 
-import com.asklepios.hospitalreservation.boardVO.BoardVO;
+import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
+import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
+
+import java.util.List;
 
 public interface IF_BoardService {
-    public void addBoard(BoardVO boardVO);
+    public void addBoard(BoardVO boardVO) throws Exception;
+    public List<BoardVO> boardHealthList(PageVO pagevo)throws Exception;
+    public List<BoardVO> boardCampaignList(PageVO pagevo)throws Exception;
+    public List<BoardVO> boardMedList(PageVO pagevo)throws Exception;
+    public List<BoardVO> boardFreeList(PageVO pagevo)throws Exception;
+    public int boardCount();
 }

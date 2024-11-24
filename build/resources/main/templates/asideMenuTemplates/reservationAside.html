@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>NoticeBoardAside</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=81gyxzbizl&callback=initMap"></script>
+  <script type="text/javascript">
+    var map = null;
+
+    function initMap() {
+      map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng(37.3595704, 127.105399),
+        zoom: 10
+      });
+    }
+  </script>
+</head>
+<style>
+  aside {
+    width: 400px;
+  }
+  .asideStyle {
+    /*border: 1px black solid;*/
+    height: 100px;
+  }
+  .asideForm {
+    width: 100%;
+    height: 100px;
+  }
+  .asideButton {
+    width: 100%;
+    height: 100px;
+    background-color: white;
+    border-width: 0px 0px 1px;
+    font-size: x-large;
+    border-top-right-radius: 20px;
+  }
+  .asideButton:hover {
+    color: black;
+  }
+  .asideButton:focus {
+    background-color: #004204;
+    color: white;
+  }
+</style>
+<body>
+<aside>
+  <div class="asideStyle">
+    <form action="/1" method="get" class="asideForm">
+      <input type="submit" class="asideButton hover:bg-green-500" value="Search Hospital">
+    </form>
+  </div>
+
+  <div class="asideStyle">
+    <form action="/2" method="get" class="asideForm">
+      <input type="submit" class="asideButton hover:bg-green-500" value="Reservation">
+    </form>
+  </div>
+
+  <div class="asideStyle">
+    <form action="/3" method="get" class="asideForm">
+      <input type="submit" class="asideButton hover:bg-green-500" value="Reservation Info">
+    </form>
+  </div>
+
+  <br>
+  <br>
+  <div id="map" style="width: 100%; height: 400px;"></div>
+</aside>
+</body>
+</html>
