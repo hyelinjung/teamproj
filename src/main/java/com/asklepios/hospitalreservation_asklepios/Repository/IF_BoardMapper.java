@@ -1,9 +1,10 @@
-package com.asklepios.hospitalreservation.boardRepository;
+package com.asklepios.hospitalreservation_asklepios.Repository;
 
-import com.asklepios.hospitalreservation.boardVO.BoardVO;
+import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
+import org.apache.ibatis.annotations.Mapper;
 
 
-
+@Mapper
 public interface IF_BoardMapper {
-    public void insertBoard(BoardVO boardVO);
+    public void insertOne(BoardVO boardVO);
 }

@@ -1,4 +1,4 @@
-package com.asklepios.hospitalreservation.boardVO;
+package com.asklepios.hospitalreservation_asklepios.VO;
 
 public class BoardVO {
     private String board_sequence=null;
