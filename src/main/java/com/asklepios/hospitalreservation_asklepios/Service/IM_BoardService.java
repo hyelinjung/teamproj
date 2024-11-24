@@ -5,6 +5,7 @@ package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation_asklepios.Repository.IF_BoardMapper;
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
+import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,25 @@ public class IM_BoardService implements IF_BoardService{
     }
 
     @Override
-    public List<BoardVO> boardList() {
-        return boardMapper.selectAll();
+    public List<BoardVO> boardHealthList(PageVO pagevo) {
+        return boardMapper.selectHealth( pagevo);
+    }
+    @Override
+    public List<BoardVO> boardCampaignList(PageVO pagevo) {
+        return boardMapper.selectCampaign( pagevo);
+    }
+    @Override
+    public List<BoardVO> boardMedList(PageVO pagevo) {
+        return boardMapper.selectMed(pagevo);
+    }
+    @Override
+    public List<BoardVO> boardFreeList(PageVO pagevo) {
+        return boardMapper.selectFree(pagevo);
+    }
+
+    @Override
+    public int boardCount() {
+        return boardMapper.countBoard();
     }
 
 

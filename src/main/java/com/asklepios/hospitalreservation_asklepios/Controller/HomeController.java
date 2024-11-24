@@ -2,6 +2,7 @@ package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.Service.IF_BoardService;
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
+import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +20,32 @@ public class HomeController {
     public String main(){
         return "home";
     }
-    @GetMapping("/bboard")
-    public String board(Model model ){
-        List<BoardVO> boardlist=boardService.boardList();
+    @GetMapping("/bboard_health")
+    public String board_health(Model model, @ModelAttribute PageVO pagevo) throws Exception {
+        List<BoardVO> boardlist=boardService.boardHealthList(pagevo);
+        if(pagevo.getPage()==null){
+            pagevo.setPage(1);
+        }
+        pagevo.setTotalCount(boardService.boardCount());
+
+        model.addAttribute("boardlist",boardlist);
+        return "board/main";
+    }
+    @GetMapping("/bboard_campaign")
+    public String board_cam(Model model, @ModelAttribute PageVO pagevo ) throws Exception {
+        List<BoardVO> boardlist=boardService.boardCampaignList( pagevo);
+        model.addAttribute("boardlist",boardlist);
+        return "board/main";
+    }
+    @GetMapping("/bboard_med")
+    public String board_med(Model model , @ModelAttribute PageVO pagevo) throws Exception {
+        List<BoardVO> boardlist=boardService.boardMedList( pagevo);
+        model.addAttribute("boardlist",boardlist);
+        return "board/main";
+    }
+    @GetMapping("/bboard_free")
+    public String board_free(Model model , @ModelAttribute PageVO pagevo) throws Exception {
+        List<BoardVO> boardlist=boardService.boardFreeList(pagevo);
         model.addAttribute("boardlist",boardlist);
         return "board/main";
     }
@@ -29,8 +53,9 @@ public class HomeController {
     public String write(){
         return "board/write";
     }
+
     @PostMapping("/bboard/submitwrite")
-    public String submitWrite(@ModelAttribute BoardVO boardVO){
+    public String submitWrite(@ModelAttribute BoardVO boardVO) throws Exception {
         boardService.addBoard(boardVO);
 //        System.out.println(boardVO.toString());
         return "redirect:/bboard";
