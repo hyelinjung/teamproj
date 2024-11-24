@@ -6,8 +6,19 @@
     <insert id="insertOne" parameterType="com.asklepios.hospitalreservation_asklepios.VO.BoardVO" >
         insert into testboard values(nextval(board_sequence),#{board_user_id},#{board_category},#{board_title},#{board_content},#{board_binary},default,default,default)
     </insert>
-    <select id="selectAll" resultType="com.asklepios.hospitalreservation_asklepios.VO.BoardVO">
-        select * from testboard
+    <select id="selectHealth" resultType="com.asklepios.hospitalreservation_asklepios.VO.BoardVO">
+        select * from testboard where board_category='오늘의 건강' and board_sequence between #{startNo} and #{endNo}
     </select>
-
+    <select id="selectCampaign" resultType="com.asklepios.hospitalreservation_asklepios.VO.BoardVO">
+        select * from testboard where board_category='캠페인' and board_sequence between #{startNo} and #{endNo}
+    </select>
+    <select id="selectMed" resultType="com.asklepios.hospitalreservation_asklepios.VO.BoardVO">
+        select * from testboard where board_category='의료기기' and board_sequence between #{startNo} and #{endNo}
+    </select>
+    <select id="selectFree" resultType="com.asklepios.hospitalreservation_asklepios.VO.BoardVO">
+        select * from testboard where board_category='자유게시판' and board_sequence between #{startNo} and #{endNo}
+    </select>
+    <select id="countBoard" resultType="int">
+        select count(*) from testboard where board_category='오늘의 건강'
+    </select>
 </mapper>

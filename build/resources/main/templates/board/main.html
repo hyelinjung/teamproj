@@ -110,6 +110,20 @@
                             <td th:text="${boardvo.board_viewcount}"></td>
                             <td th:text="${boardvo.board_goodcount}"></td>
                         </tr>
+                        <tr>
+                            <td colspan="6">
+                                <span th:if= "${pageVO.prev}">
+                                    <a href="bboard?page=${pagevo.startPage-1}">[이전]</a>
+                                </span>
+<!--                                <span th:each="idx:${#numbers.sequence(pagevo.startNo,pagevo,endNo)}">-->
+<!--                                    <a href="board?page=${idx}">${idx}</a>-->
+<!--                                </span>-->
+                                <span th:if="${pageVO.next}">
+                                <a href="board?page=${pagevo.endPage+1}">[다음]</a>
+                                </span>
+                            </td>
+
+                        </tr>
 <!--                        <tr>-->
 <!--                            <td>1</td>-->
 <!--                            <td><a href="#">sample</a></td>-->
