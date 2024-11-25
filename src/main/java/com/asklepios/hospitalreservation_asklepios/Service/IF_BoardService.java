@@ -2,8 +2,8 @@ package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
 import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
-
 import java.util.List;
+
 
 public interface IF_BoardService {
     public void addBoard(BoardVO boardVO) throws Exception;

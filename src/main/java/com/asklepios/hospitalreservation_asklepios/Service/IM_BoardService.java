@@ -1,8 +1,5 @@
 package com.asklepios.hospitalreservation_asklepios.Service;
 
-
-
-
 import com.asklepios.hospitalreservation_asklepios.Repository.IF_BoardMapper;
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
 import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
@@ -18,7 +15,6 @@ public class IM_BoardService implements IF_BoardService{
 
     @Override
     public void addBoard(BoardVO boardVO) {
-
         String category=boardVO.getBoard_category();
         if(category!=null){
             if(category.equals("1")){
@@ -31,7 +27,6 @@ public class IM_BoardService implements IF_BoardService{
                 boardVO.setBoard_category("자유게시판");
             }
         }
-//        System.out.println(boardVO.toString());
         boardMapper.insertOne(boardVO);
     }
 

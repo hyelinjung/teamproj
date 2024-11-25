@@ -16,6 +16,7 @@ import java.util.List;
 public class HomeController {
     @Autowired
     IF_BoardService boardService;
+
     @GetMapping("/home")
     public String main(){
         return "home";
@@ -57,8 +58,8 @@ public class HomeController {
     @PostMapping("/bboard/submitwrite")
     public String submitWrite(@ModelAttribute BoardVO boardVO) throws Exception {
         boardService.addBoard(boardVO);
-//        System.out.println(boardVO.toString());
         return "redirect:/bboard";
+
     }
 
 }
