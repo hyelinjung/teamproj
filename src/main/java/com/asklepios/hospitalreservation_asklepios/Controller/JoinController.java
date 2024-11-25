@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class AsklepiosController {
+public class JoinController {
 
-    @GetMapping("/")
-    public String home() {
+    @GetMapping("/agreement")
+    public String agreement() {
         return "home";
     }
 }
