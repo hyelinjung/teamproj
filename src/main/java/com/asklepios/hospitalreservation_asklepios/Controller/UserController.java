@@ -64,4 +64,8 @@ public class UserController {
         return "resultPw";
     }
 
+    @GetMapping("/userjoin")
+    public String userjoin() {
+        return "userJoin/agreement";
+    }
 }
