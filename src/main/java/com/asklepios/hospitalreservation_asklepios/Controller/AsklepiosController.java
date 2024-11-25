@@ -10,9 +10,4 @@ public class AsklepiosController {
     public String home() {
         return "call";
     }
-
-//    @GetMapping("/login")
-//    public String login() {
-//        return "login";
-//    }
 }
