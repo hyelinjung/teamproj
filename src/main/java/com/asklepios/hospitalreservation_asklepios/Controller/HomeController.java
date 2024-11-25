@@ -18,10 +18,11 @@ public class HomeController {
     IF_BoardService boardService;
 
     @GetMapping("/home")
-    public String main(){ return "home"; }
+    public String main(){
+        return "home";
+    }
     @GetMapping("/bboard_health")
     public String board_health(Model model, @ModelAttribute PageVO pagevo) throws Exception {
-        
         if(pagevo.getPage()==null){
             pagevo.setPage(1);
         }
@@ -32,13 +33,13 @@ public class HomeController {
     }
     @GetMapping("/bboard_campaign")
     public String board_cam(Model model, @ModelAttribute PageVO pagevo ) throws Exception {
-        List<BoardVO> boardlist=boardService.boardCampaignList(pagevo);
+        List<BoardVO> boardlist=boardService.boardCampaignList( pagevo);
         model.addAttribute("boardlist",boardlist);
         return "board/main";
     }
     @GetMapping("/bboard_med")
     public String board_med(Model model , @ModelAttribute PageVO pagevo) throws Exception {
-        List<BoardVO> boardlist=boardService.boardMedList(pagevo);
+        List<BoardVO> boardlist=boardService.boardMedList( pagevo);
         model.addAttribute("boardlist",boardlist);
         return "board/main";
     }
@@ -48,13 +49,15 @@ public class HomeController {
         model.addAttribute("boardlist",boardlist);
         return "board/main";
     }
-    @GetMapping("/bboard/write")
-    public String write(){ return "board/write"; }
-    
+    @GetMapping("bboard/write")
+    public String write(){
+        return "board/write";
+    }
+
     @PostMapping("/bboard/submitwrite")
     public String submitWrite(@ModelAttribute BoardVO boardVO) throws Exception {
         boardService.addBoard(boardVO);
-        return "redirect:/bboard_health";
+        return "redirect:/bboard";
 
     }
 

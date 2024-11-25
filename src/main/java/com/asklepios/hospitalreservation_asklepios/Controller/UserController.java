@@ -48,17 +48,20 @@ public class UserController {
             model.addAttribute("error", error);
             return "findId";
         }else{
-            System.out.println(user_name + "의 아이디는 " + user_id);
+//            System.out.println(user_name + "의 아이디는 " + user_id);
             model.addAttribute("user_name", user_name);
             model.addAttribute("user_id", user_id);
             return "resultId";
         }
 
     }
-
-    @GetMapping("/join")
-    public String join() {
-        return "userJoin/agreement";
+    @GetMapping("/findPw")
+    public String findPw() {
+        return "findPw";
+    }
+    @PostMapping("/findPw")
+    public String findPw(@ModelAttribute UserVO userVO, Model model) {
+        return "resultPw";
     }
 
 }

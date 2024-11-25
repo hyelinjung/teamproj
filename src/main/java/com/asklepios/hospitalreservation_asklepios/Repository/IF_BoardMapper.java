@@ -4,7 +4,6 @@ import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
 import org.apache.ibatis.annotations.Mapper;
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
