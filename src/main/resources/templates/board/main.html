@@ -1,0 +1,174 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="boardmain.css" />
+<body>
+
+    <header>
+        <div id="logo">
+            <a  href="home"><img src="logo_new1.png" width="300px" height="100%"></a>
+        </div>
+
+        <div id="header">Hospital Reservation</div>
+    </header>
+    <div id="login">
+        <span><a href="login">로그인<i class="fa-solid fa-right-to-bracket"></i></a>   |</span>
+        <span><a href="#">회원가입<i class="fa-solid fa-user-plus"></i></a></span>
+    </div>
+    <div class="con">
+        <nav class="top-bar__menu-box-1">
+            <ul>
+                <li>
+                    <a href="#">병원목록</a>
+                    <ul>
+                        <li><a href="#">text1</a></li>
+                        <li><a href="#">text2</a></li>
+                        <li><a href="#">text3</a></li>
+                        <li><a href="#">text4</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">예약신청</a>
+                    <ul>
+                        <li><a href="#">text1</a></li>
+                        <li><a href="#">text2</a></li>
+                        <li><a href="#">text3</a></li>
+                        <li><a href="#">text4</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">예방접종정보</a>
+                    <ul>
+                        <li><a href="#">text1</a></li>
+                        <li><a href="#">text2</a></li>
+                        <li><a href="#">text3</a></li>
+                        <li><a href="#">text4</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">게시판</a>
+                    <ul>
+                        <li><a href="#">text1</a></li>
+                        <li><a href="#">text2</a></li>
+                        <li><a href="#">text3</a></li>
+                        <li><a href="#">text4</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </nav>
+
+    </div>
+    <aside id="aside1">
+        <div class="list">
+            내과
+        </div>
+        <div class="list">
+            내과
+        </div>
+        <div class="list">
+            내과
+        </div>
+        <div class="list">
+            내과
+        </div>
+        <div class="list">
+            내과
+        </div>
+    </aside>
+    <section>
+        <div id="boardheader">게시판</div>
+        <div id="boardmenu">
+            <span><a href="#">오늘의 건강</a> |</span>
+            <span><a href="#">캠페인</a>  |</span>
+            <span><a href="#">의료기기</a>  |</span>
+            <span><a href="#">자유게시판</a></span>
+        </div>
+        <div>
+            <form action="bboard/write" method="get">
+                <table id="boardtable">
+                    <thead>
+                        <tr>
+                            <td width="10%">글 번호</td>
+                            <td width="15%">작성자</td>
+                            <td width="35%">제목</td>
+                            <td width="20%">작성일</td>
+                            <td width="10%">조회수</td>
+                            <td width="10%">좋아요</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="boardvo:${boardlist}">
+                            <td th:text="${boardvo.board_sequence}"></td>
+                            <td th:text="${boardvo.board_user_id}"></td>
+                            <td th:text="${boardvo.board_title}"></td>
+                            <td th:text="${#strings.substring(boardvo.board_date,0,10)}"></td>
+                            <td th:text="${boardvo.board_viewcount}"></td>
+                            <td th:text="${boardvo.board_goodcount}"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <span th:if= "${pageVO.prev}">
+                                    <a href="bboard?page=${pagevo.startPage-1}">[이전]</a>
+                                </span>
+<!--                                <span th:each="idx:${#numbers.sequence(pagevo.startNo,pagevo,endNo)}">-->
+<!--                                    <a href="board?page=${idx}">${idx}</a>-->
+<!--                                </span>-->
+                                <span th:if="${pageVO.next}">
+                                <a href="board?page=${pagevo.endPage+1}">[다음]</a>
+                                </span>
+                            </td>
+
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td>1</td>-->
+<!--                            <td><a href="#">sample</a></td>-->
+<!--                            <td>2024.11.21</td>-->
+<!--                            <td>0</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>1</td>-->
+<!--                            <td><a href="#">sample</a></td>-->
+<!--                            <td>2024.11.21</td>-->
+<!--                            <td>0</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>1</td>-->
+<!--                            <td><a href="#">sample</a></td>-->
+<!--                            <td>2024.11.21</td>-->
+<!--                            <td>0</td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td>1</td>-->
+<!--                            <td><a href="#">sample</a></td>-->
+<!--                            <td>2024.11.21</td>-->
+<!--                            <td>0</td>-->
+<!--                        </tr>-->
+
+                        <tr>
+                            <td colspan="6" style="float: left">
+                                <input type="submit" value="글 쓰기">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+
+    </section>
+    <aside id="aside2">
+
+    </aside>
+    <footer id="ad">
+        <h1>광고</h1>
+    </footer>
+    <footer id="footer">
+        <h1>footer</h1>
+    </footer>
+
+</body>
+</html>
