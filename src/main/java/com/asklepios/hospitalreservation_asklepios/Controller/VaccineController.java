@@ -1,4 +1,4 @@
-package com.asklepios.hospitalreservation_asklepios;
+package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
