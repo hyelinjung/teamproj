@@ -24,7 +24,7 @@ public class UserController {
     @PostMapping("/login")
     public String login(@ModelAttribute UserVO userVO, Model model) {
         if(userService.login(userVO)){
-            return "board/main";
+            return "redirect:/bboard_health";
         }else {
             String error = "🚫 아이디 또는 비밀번호가 잘못 되었습니다.";
             model.addAttribute("error", error);
@@ -54,6 +54,11 @@ public class UserController {
             return "resultId";
         }
 
+    }
+
+    @GetMapping("/join")
+    public String join() {
+        return "userJoin/agreement";
     }
 
 }
