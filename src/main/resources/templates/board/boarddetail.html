@@ -331,37 +331,44 @@
     <!--    <span><a href="#">자유게시판</a></span>-->
     <!--  </div>-->
     <div>
-        <form action="mod" method="post">
+        <form action="submitwrite" method="post">
             <table>
                 <tr>
-                    <td><h2 th:text="${boardVO.board_title}"></h2></td>
+                    <td><h2 th:text="${boardVO.boardtitle}"></h2></td>
                 </tr>
                 <tr>
                     <td>Category</td>
-<!--                    <td class="header">Title</td>-->
+                    <td class="header"></td>
                 </tr>
                 <tr>
                     <td>
-<!--                        <select id="boardcategory" name="board_category" >-->
-<!--                            <option th:selected="${boardVO.board_category=='오늘의 건강'}" value="1" >오늘의 건강</option>-->
-<!--                            <option th:selected="${boardVO.board_category=='캠페인'}" value="2">캠페인</option>-->
-<!--                            <option th:selected="${boardVO.board_category=='의료기기'}" value="3">의료기기</option>-->
-<!--                            <option th:selected="${boardVO.board_category=='자유게시판'}" value="4">자유게시판</option>-->
+<!--                        <select id="boardcategory" name="board_category">-->
+<!--                            <option value="1">오늘의 건강</option>-->
+<!--                            <option value="2">캠페인</option>-->
+<!--                            <option value="3">의료기기</option>-->
+<!--                            <option value="4">자유게시판</option>-->
 <!--                        </select>-->
-                        <input type="text" th:value="${baordVO.boardcategory}" readonly>
-
-                        </input>
+                        <input type="text" th:value="boardVO.board_category" readonly>
                     </td>
-<!--                    <td><input type="text" name="board_title" th:value="${boardVO.board_title}" readonly></td>-->
-                    <td></td>
+                    <td>
+
+
+                    </td>
                 </tr>
                 <tr>
                     <td>작성자</td>
-                    <td>Date</td>
+                    <td>작성날짜</td>
                 </tr>
-                <tr><input type="text"  ></tr>
+                <tr>
+                   <td>
+                       <input type="text" th:value="${boardVO.board_user_id}" readonly>
+                   </td>
+                    <td>
+                        <input type="text" th:value="${boardVO.board_date}"readonly>
+                    </td>
+                </tr>
                 <tr><td class="header">Content</td></tr>
-                <tr><td colspan="2"><textarea name="board_content"} th:text="${boardVO.board_content}" readonly></textarea></td></tr>
+                <tr><td colspan="2"><textarea name="board_content" th:text="${baordVO.board_content}"></textarea></td></tr>
                 <tr><td class="header">첨부파일</td></tr>
                 <tr><td><input type="text" name="board_binary" th:value="${boardVO.board_binary}" readonly></td></tr>
                 <tr>
@@ -371,10 +378,13 @@
                     <td><input type="hidden" th:value="${boardVO.board_sequence}" name="board_sequence"></td>
                 </tr>
                 <tr>
-                    <td><input type="submit" value="수정하기"></td>
+                    <td><input type="submit" value="수정"></td>
+                    <td><input type="button" value="좋아요"> </td>
                 </tr>
             </table>
+
         </form>
+
     </div>
 
 </section>
