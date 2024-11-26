@@ -78,5 +78,17 @@ public class IM_BoardService implements IF_BoardService{
         boardMapper.updateBoard(boardVO);
     }
 
+    @Override
+    public BoardVO detail(String no) throws Exception {
+        BoardVO boardVO=boardMapper.selectOne(no);
+        boardVO.setBoard_viewcount(
+                Integer.toString(Integer.parseInt(boardVO.getBoard_viewcount())+1)
+        );
+//        System.out.println(boardVO.getBoard_title());
+//        System.out.println(boardVO.getBoard_viewcount());
+        boardMapper.plusViewCount(boardVO);
+        return boardVO;
+    }
+
 
 }

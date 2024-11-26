@@ -31,10 +31,10 @@ public class HomeController {
         }
         pagevo.setTotalCount(boardService.boardCount());
         List<BoardVO> boardlist=boardService.boardHealthList(pagevo);
-        System.out.println(pagevo.getPage());
-        System.out.println(pagevo.getStartNo()+"/"+pagevo.getEndNo());
-        System.out.println(pagevo.isNext());
-        System.out.println(pagevo.isPrev());
+//        System.out.println(pagevo.getPage());
+//        System.out.println(pagevo.getStartNo()+"/"+pagevo.getEndNo());
+//        System.out.println(pagevo.isNext());
+//        System.out.println(pagevo.isPrev());
 
         model.addAttribute("boardlist",boardlist);
         return "board/main";
@@ -77,17 +77,25 @@ public class HomeController {
 
     @PostMapping("/bboard/submitwrite")
     public String submitWrite(@ModelAttribute BoardVO boardVO) throws Exception {
+
         boardService.addBoard(boardVO);
         return "redirect:/bboard_health";
 
     }
+    @GetMapping("/detail")
+    public String detail(Model model, @ModelAttribute PageVO pagevo,
+                         @RequestParam("no") String no) throws Exception {
+        BoardVO boardVO=boardService.detail(no);
+        model.addAttribute("boardVO",boardVO);
+        return "board/detail";
+    }
     @GetMapping("/modboard")
-    public String mod(@RequestParam("no") String no,
-                      Model model) throws Exception {
+    public String mod(Model model,@ModelAttribute BoardVO boardVO
+                      ) throws Exception {
 //        System.out.println(no);
-        BoardVO boardvo=boardService.modBoard(no);
+         boardVO=boardService.modBoard(boardVO.getBoard_sequence());
 //        System.out.println(boardvo.getBoard_content());
-        model.addAttribute("boardVO",boardvo);
+        model.addAttribute("boardVO",boardVO);
         return "board/modwrite";
     }
     @PostMapping("/save")
