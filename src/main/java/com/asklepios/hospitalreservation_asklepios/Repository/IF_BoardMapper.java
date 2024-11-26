@@ -17,4 +17,5 @@ public interface IF_BoardMapper {
 
     public BoardVO selectOne(String no);
     public void updateBoard(BoardVO boardVO);
+    public void plusViewCount(BoardVO boardVO);
 }
