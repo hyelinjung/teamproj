@@ -82,7 +82,7 @@ public class IM_UserService implements IF_UserService{
             int idx = (int) (charSet.length * Math.random());
             tempPw.append(charSet[idx]);
         }
-        usermapper.updatePwd(user_id, tempPw.toString());
+        usermapper.updatePwd(user_id,tempPw.toString()) ;
         return tempPw.toString();
     }
 

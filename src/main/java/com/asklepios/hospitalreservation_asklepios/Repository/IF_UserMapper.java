@@ -17,4 +17,5 @@ public interface IF_UserMapper {
     String selectEmail(String user_id);
     void updatePwd(String user_id, String pwd);
     void insertUserCommonInfo(UserVO userVO);
+
 }
