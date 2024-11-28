@@ -8,28 +8,36 @@
             src="https://kit.fontawesome.com/68dda164c0.js"
             crossorigin="anonymous"
     ></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0ed2bd9a4fc16e942f081b64d8391986"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <link rel="stylesheet" href="home.css" />
 <style>
-    table{
-        margin-top: 100px;
-        margin-left: 100px;
-        width: 800px;
-        font-size: 20px;
-    }
-    table,td{
-        border: 1px solid;
-    }
-    #search{
-        width: 100px;
+    .searchfilter{
+        width: 80px;
         height: 40px;
-        font-size: 15px;
-        border: 0;
-        outline: 1.5px rgb(19, 97, 3) solid;
         border-radius: 5px;
-        padding-left: 10px;
-        background-color: rgb(60, 113, 47);
+        background: white;
+        /*background: #3d87ff;*/
+        color:#3d87ff;
+        margin-left: 20px;
+        border: 1px solid #3d87ff;
+    }
+    .select{
+        width: 120px;
+        height: 40px;
+        border-radius: 5px;
+        border: 1px solid #3d87ff;
+    }
+    #modal_subject{
+        position:absolute;
+        display:none;
+        justify-content: center;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: rgba(0,0,0,0.4);
     }
 </style>
 <body>
@@ -41,82 +49,36 @@
 </aside>
 <section>
     <div>
-        <form action="#">
-            <table>
-                <tr>
-                    <td width="20%"><label>지역:</label></td>
-                    <td>
-                        <select>
-                            <option value="1">수원시</option>
-                            <option value="2">용인시</option>
-                            <option value="3">의왕시</option>
-                            <option value="4">화성시</option>
-                            <option value="5">시흥시</option>
-                            <option value="6">고양시</option>
-                            <option value="7">안산시</option>
-                            <option value="8">이천시</option>
-                            <option value="9">안양시</option>
-                            <option value="10">평택시</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="20%"><label>진료과:</label></td>
-                    <td>
-                        <select>
-                            <option value="1">내과</option>
-                            <option value="2">이비인후과</option>
-                            <option value="3">정형외과</option>
-                            <option value="4">성형외과</option>
-                            <option value="5">정신건강의학과</option>
-                            <option value="6">피부과</option>
-                            <option value="7">안과</option>
-                            <option value="8">소아청소년과</option>
-                            <option value="9">산부인과</option>
-                            <option value="10">비뇨기과</option>
-                            <option value="11">외과</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="20%"><label>진료시간:</label></td>
-                    <td>
-                        <select name="" id="">
-                            <option value="1">주간</option>
-                            <option value="1">야간</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>주말진료:</td>
-                    <td>
-                        <select name="">
-                            <option value="1">주말진료</option>
-                            <option value="2">주말휴무</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input id="search" type="submit" value="검색하기"></td>
-                </tr>
-            </table>
-        </form>
-        <table id="result">
-            <thead>
-                <tr>
-                    <td>병원명</td>
-                    <td>운영시간</td>
-                    <td>전화번호</td>
-                </tr>
-            </thead>
-            <tbody>
+        <table id="search">
+            <tr>
+                <td><button id="subject" class="searchfilter">진료과목</button></td>
+                <td><button id="ing" class="searchfilter">진료중</button></td>
+                <td><button id="night" class="searchfilter">야간진료</button></td>
+            </tr>
+        </table>
+        <div id="modal_subject">
+            <ul>
+                <li><button class="select" style="background: rgba(241,221,44,0.5)">내과</button></li>
+                <li><button class="select">이비인후과</button></li>
+                <li><button class="select">정형외과</button></li>
+                <li><button class="select">성형외과</button></li>
+                <li><button class="select">정신건강의학과</button></li>
+                <li><button class="select">피부과</button></li>
+                <li><button class="select">안과</button></li>
+                <li><button class="select">소아청소년과</button></li>
+                <li><button class="select">산부인과</button></li>
+                <li><button class="select">비뇨기과</button></li>
+                <li><button class="select">외과</button></li>
+            </ul>
 
-                <tr ></tr>
-            </tbody>
+        </div>
+
+        <table id="result">
+
         </table>
     </div>
-    <div id="map" style="width:500px;height:400px;"></div>
+
+
 
 </section>
 <aside id="aside2"></aside>
@@ -129,6 +91,15 @@
 
 </body>
 </html>
+<script>
+    const subject=document.getElementById("subject");
+    const ing=document.getElementById("ing");
+    const night=document.getElementById("night");
+    const modal=document.getElementById("modal_subject");
+    subject.addEventListener("click",()=>{
+        modal.style.display=flex;
+    });
 
+</script>
 
 
