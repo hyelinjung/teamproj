@@ -238,16 +238,19 @@
     let hospital[[${stat.count}]]=[[${hospitalVO}]];
     hospitalList.push(hospital[[${stat.count}]]);
     [/]
-    for(let i=0;i<hospitalList.length;i++){
-        console.log(JSON.stringify(hospitalList[i]));
-    }
-    for(let i=0;i<hospitalList.length;i++){
-        if(hospitalList[i].hospital_date==="y"){
-            Mod_hospitalList.push(hospitalList[i]);
-        }
-    }
-    console.log(Mod_hospitalList);
+    // for(let i=0;i<hospitalList.length;i++){
+    //     console.log(JSON.stringify(hospitalList[i]));
+    // }
+    // for(let i=0;i<hospitalList.length;i++){
+    //     if(hospitalList[i].hospital_date==="y"){
+    //         Mod_hospitalList.push(hospitalList[i]);
+    //     }
+    // }
+    // console.log(Mod_hospitalList);
 
+    let JSON_hospitalList={
+        "hospitalList":JSON.stringify(hospitalList)
+    };
 
     //진료요일 변경
     function changeday() {
