@@ -29,7 +29,7 @@ public class IM_UserService implements IF_UserService{
     public String findId(String user_name, String reg_first, String reg_last) {
         int cnt = 0;
         List<UserVO> ulist = usermapper.selectAllName();
-        String reg_num = reg_first.concat(reg_last);
+        String reg_num = reg_first + '-' + reg_last;
 //        System.out.println(reg_num);
 //        System.out.println(register_number);
         // 유저 목록에 사용자가 있는지 확인
