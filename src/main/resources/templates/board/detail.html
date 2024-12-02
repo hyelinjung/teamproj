@@ -8,6 +8,11 @@
             src="https://kit.fontawesome.com/68dda164c0.js"
             crossorigin="anonymous"
     ></script>
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"
+    ></script>
 </head>
 <link rel="stylesheet" href="boardmain.css" />
 <body>
@@ -213,12 +218,12 @@
     table select{
         width:300px;
         height: 30px;
-        border: 1.5px rgb(19, 97, 3) solid;
+        border: 1.5px #3B82F6 solid;
         border-radius: 5px;
 
     }
     input[type="text"] {
-        border: 1.5px rgb(19, 97, 3) solid;
+        border: 1.5px #3B82F6 solid;
         width: 350px;
         height: 30px;
         border-radius: 5px;
@@ -226,7 +231,7 @@
 
     }
     textarea {
-        border: 1.5px rgb(19, 97, 3) solid;
+        border: 1.5px #3B82F6 solid;
         width: 750px;
         height: 400px;
         border-radius: 5px;
@@ -242,10 +247,10 @@
         height: 40px;
         font-size: 15px;
         border: 0;
-        outline: 1.5px rgb(19, 97, 3) solid;
+        outline: 1.5px #3B82F6 solid;
         border-radius: 5px;
         padding-left: 10px;
-        background-color: rgb(60, 113, 47);
+        background-color: #3B82F6;
     }
     input[type="submit"]:active {
         width: 100px;
@@ -253,15 +258,15 @@
         font-size: 15px;
         border: 0;
         border-radius: 5px;
-        outline: 1.5px rgb(60, 113, 47) solid;
+        outline: 1.5px #3B82F6 solid;
         padding-left: 10px;
-        background-color: rgb(19, 97, 3);
+        background-color: #3B82F6;
     }
     input[type="file"]{
         width: 300px;
         border: 0;
         border-radius: 5px;
-        outline: 1.5px rgb(60, 113, 47) solid;
+        outline: 1.5px #3B82F6 solid;
     }
 
 
@@ -374,7 +379,10 @@
                 <tr><td class="header">Content</td></tr>
                 <tr><td colspan="2"><textarea name="board_content" th:text="${boardVO.getBoard_content()}" readonly></textarea></td></tr>
                 <tr><td class="header">첨부파일</td></tr>
-                <tr><td><input type="text" name="board_binary" th:value="${boardVO.board_binary}" readonly></td></tr>
+                <tr>
+                    <td><input type="text" name="board_binary" th:value="${boardVO.board_binary}" readonly></td>
+                    <td><span id="heart"></span></td>
+                </tr>
                 <tr>
                     <td><input type="hidden" th:value="${boardVO.board_user_id}" name="board_user_id"></td>
                     <td><input type="hidden" th:value="${boardVO.board_viewcount}" name="board_viewcount"></td>
@@ -394,8 +402,13 @@
                     </td>
                 </tr>
             </table>
-
         </form>
+        <table>
+            <tr>
+<!--                <td><span id="heart"><i class="fa-solid fa-heart"></i></span></td>-->
+                <!--                <td><button th:if="isliked" id="like" onclick="test()" style="width: 80px;height: 30px"><i class="fa-solid fa-heart"></i></button></td>-->
+            </tr>
+        </table>
 
     </div>
 
@@ -413,7 +426,68 @@
 </body>
 </html>
 <script>
-    function board_like(){
+    // var userid=document.getElementById("userid").value;
+    var board_user_id="test2";
+    var board_sequence=document.getElementsByName("board_sequence")[0].value;
+    var likevo= {
+        "board_user_id": board_user_id,
+        "board_sequence": board_sequence,
+        "liked": true,
+        "like_id": "test"
+
+    };
+
+    let heart=document.getElementById("heart");
+    heart.addEventListener("click",test);
+    function test(){
+        // console.log(likevo);
+        $.ajax({
+            url:"like",
+            type:"post",
+            data:JSON.stringify(likevo),
+            dataType: "json",
+            contentType:"application/json",
+            success:function (data){
+                // console.log(data);
+                if(data){
+                    alert("좋아요 취소");
+                    heart.innerHTML=`<img width="50" height="50" src="https://img.icons8.com/ios/50/hearts--v1.png" alt="hearts--v1"/>`
+                    return false;
+                }else{
+                    alert("좋아요");
+                    heart.innerHTML=`<img width="48" height="48" src="https://img.icons8.com/color/48/hearts.png" alt="hearts"/>`;
+                    return true;
+                }
+            },
+            error:function (errorThrown){
+                alert(errorThrown.statusText);
+
+            }
+        })
 
     }
+    window.onload=heartCheck();
+
+    function heartCheck(){
+        $.ajax({
+            url:"likecheck",
+            type:"post",
+            data:JSON.stringify(likevo),
+            dataType: "json",
+            contentType:"application/json",
+            success:function (data){
+                // console.log(data);
+                if(data){
+                    heart.innerHTML=`<img width="48" height="48" src="https://img.icons8.com/color/48/hearts.png" alt="hearts"/>`;
+                }else{
+                    heart.innerHTML=`<img width="50" height="50" src="https://img.icons8.com/ios/50/hearts--v1.png" alt="hearts--v1"/>`
+                }
+            },
+            error:function (errorThrown){
+                alert(errorThrown.statusText);
+            }
+        })
+    }
+
+
 </script>
