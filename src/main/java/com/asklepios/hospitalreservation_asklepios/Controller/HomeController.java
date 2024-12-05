@@ -5,14 +5,11 @@ import com.asklepios.hospitalreservation_asklepios.Service.LikeService;
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
 import com.asklepios.hospitalreservation_asklepios.VO.LikeVO;
 import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
+import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -26,7 +23,8 @@ public class HomeController {
     IF_BoardService boardService;
     LikeService likeService;
     @GetMapping("/home")
-    public String main(){
+    public String main(@SessionAttribute(name = "loginUserId", required = false) String userId, Model model){
+        model.addAttribute("userId", userId);
         return "home";
     }
 

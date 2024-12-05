@@ -9,8 +9,10 @@ let mapContainer = document.getElementById('map'), // 지도를 표시할 div
       center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
       level: 1 // 지도의 확대 레벨
     };
-
+let currentAddr;
 let map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+let zoomControl = new kakao.maps.ZoomControl();
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 // 마커를 담을 배열입니다
 let markers = [];
 let infowindow = new kakao.maps.InfoWindow({zIndex:1});
@@ -18,6 +20,14 @@ let infowindow = new kakao.maps.InfoWindow({zIndex:1});
 let geocoder = new kakao.maps.services.Geocoder();
 let startFlag = false;
 const ps = new kakao.maps.services.Places();
+
+// function searchAddrFromCoords(coords) {
+//   // 좌표로 행정동 주소 정보를 요청합니다
+//   geocoder.coord2RegionCode(coords.getLng(), coords.getLat());
+// }
+
+window.onload = getLocation();
+
 function getLocation(){
   // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
   if (navigator.geolocation) {
@@ -37,6 +47,19 @@ function getLocation(){
       displayMarker(locPosition, message);
       // let currentLoc = geocoder.coord2RegionCode(lat, lon, callback); <-- callback error
       // console.log(currentLoc);
+
+      geocoder.coord2RegionCode(lon, lat, function (result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          // 첫 번째 결과의 행정구역 이름 사용
+          currentAddr = result[0].address_name;
+          console.log("현재 주소:", currentAddr);
+
+          // 키워드 검색 실행
+          ps.keywordSearch(currentAddr + ' 병원', placesSearchCB, { size: 6 });
+        } else {
+          console.error("coord2RegionCode 실패:", status);
+        }
+      });
     });
   } else {
     // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
@@ -87,7 +110,10 @@ function getLocation(){
 
 // 키워드 검색을 요청하는 함수입니다
 function addressSearch() {
-  let keyword = document.getElementById('search').value;
+  let keyword = document.getElementById('searchPlace').value;
+  // if(!keyword){
+  //   keyword = currentAddr;
+  // }
 
   if (!keyword.replace(/^\s+|\s+$/g, '')) {
     Swal.fire({
@@ -211,7 +237,7 @@ function getListItem(index, places) {
   let flag;
   let el = document.createElement('div');
   el.tabIndex = 0;
-  el.className = 'item focus:bg-blue-200';
+  el.className = 'item';
   let itemStr = /* '<i class="fa-solid fa-house-chimney-medical fa-2xl markerbg"></i>' */
       '<li class="item">' + '<img src="hospital_li.png" alt="아이콘" class="markerbg" />' +
       // '<span class="markerbg marker_' + (index+1) + '"></span>' +
@@ -228,29 +254,29 @@ function getListItem(index, places) {
   itemStr += '</div>';
   el.innerHTML = itemStr;
 
+  el.addEventListener('click', () => {
+    document.querySelectorAll('.item').forEach(item=>{
+      item.classList.remove('selected');
+    });
+    el.classList.add('selected');
+  });
+
   let buttonContainer = el.querySelector('.button');
   $.ajax({
     url: '/asklepios/findHospitalName',
     type: 'post',
     data: {hospital_name: places.place_name},
     success:function(data){
-      console.log(data)
+      // console.log(data)
       if (data){
         let reserveButton = document.createElement('button');
-        reserveButton.type = 'button'; /*<= 모달 창에서는 submit으로 변경  */
+        reserveButton.type = 'submit';/*<= 모달 창에서는 submit으로 변경  */
+        reserveButton.name = 'hospital_name';
+        reserveButton.value = places.place_name;
+        // reserveButton.setAttribute('onclick', 'sendPage()');
         reserveButton.className =
             'my-auto d-flex w-36 h-16 rounded-lg font-semibold text-white text-3xl bg-blue-500 hover:bg-blue-600';
         reserveButton.textContent = '예약하기';
-
-        // onclick으로 모달 구현
-        reserveButton.onclick = function () {
-          alert(`병원 이름: ${places.place_name}`); // 원하는 동작
-          $.ajax({
-            url: '/asklepios/reserve',
-            type: 'post',
-            data: {hospital_name: places.place_name}
-          })
-        };
 
         buttonContainer.appendChild(reserveButton);
       }
@@ -261,7 +287,14 @@ function getListItem(index, places) {
   });
   return el;
 }
-
+function sendPage(){
+  let flag = confirm("예약하시겠습니까?");
+  if(flag){
+    return flag;
+  }else{
+    return flag;
+  }
+}
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
   var imageSrc = 'hospital_marker.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
@@ -303,7 +336,7 @@ function displayPagination(pagination) {
 
   for (i=1; i<=pagination.last; i++) {
     let el = document.createElement('a');
-    el.href = "#";
+    // el.href = "#";
     el.innerHTML = i;
 
     if (i===pagination.current) {
@@ -346,3 +379,12 @@ function removeAllChildNods(el) {
     el.removeChild (el.lastChild);
   }
 }
+
+// function sendPage(){
+//   let flag = confirm("예약하시겠습니까?");
+//   if(flag){
+//     return flag;
+//   }else{
+//     return flag;
+//   }
+// }
