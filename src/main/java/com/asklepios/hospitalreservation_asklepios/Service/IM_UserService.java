@@ -1,6 +1,7 @@
 package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation_asklepios.Repository.IF_UserMapper;
+import com.asklepios.hospitalreservation_asklepios.VO.DoctorVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,5 +109,36 @@ public class IM_UserService implements IF_UserService{
             return 0;
         }
     }
+
+    @Override
+    public void addUserDoctorInfo(DoctorVO doctorVO) {
+        usermapper.insertUserDoctorInfo(doctorVO);
+    }
+
+    @Override
+    public String checkedPassword(String user_id) {
+        return usermapper.selectPwdUsingID(user_id);
+    }
+
+    @Override
+    public UserVO printOneInfo(String user_id) {
+        return usermapper.selectUserByID(user_id);
+    }
+
+    @Override
+    public void modifyUserCommonInfo(UserVO userVO) {
+        usermapper.updateUserCommonInfo(userVO);
+    }
+
+    @Override
+    public DoctorVO printOneDoctorInfo(String user_doctor_id) {
+        return usermapper.selectDoctorByID(user_doctor_id);
+    }
+
+    @Override
+    public void modifyUserDoctorInfo(DoctorVO doctorVO) {
+        usermapper.updateUserDoctorInfo(doctorVO);
+    }
+
 
 }
