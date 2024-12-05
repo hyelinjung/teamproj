@@ -19,27 +19,50 @@ public class IM_BoardService implements IF_BoardService{
         boardMapper.insertOne(boardVO);
     }
 
+//    @Override
+//    public List<BoardVO> BoardList(PageVO pagevo,String type) throws Exception {
+//       List<BoardVO> boardList=List.of();
+//        if(type.equals("모든글")){
+//            boardList=boardMapper.selectAll(pagevo);
+//        }else if(type.equals("오늘의건강")){
+//            boardList=boardMapper.selectHealth(pagevo);
+//        }else if(type.equals("캠페인")){
+//            boardList=boardMapper.selectCampaign(pagevo);
+//        }else if(type.equals("의료정보")){
+//            boardList=boardMapper.selectMed(pagevo);
+//        }else if(type.equals("자유게시판")){
+//            boardList=boardMapper.selectFree(pagevo);
+//        }
+//        System.out.println(boardList.size());
+//        return boardList;
+//    }
+
     @Override
     public List<BoardVO> boardAll(PageVO pagevo) throws Exception {
         return boardMapper.selectAll(pagevo);
     }
 
     @Override
-    public List<BoardVO> boardHealthList(PageVO pagevo) {
-        return boardMapper.selectHealth( pagevo);
+    public List<BoardVO> boardList(PageVO pagevo, String category) throws Exception {
+        return boardMapper.selectBoard(pagevo,category);
     }
-    @Override
-    public List<BoardVO> boardCampaignList(PageVO pagevo) {
-        return boardMapper.selectCampaign( pagevo);
-    }
-    @Override
-    public List<BoardVO> boardMedList(PageVO pagevo) {
-        return boardMapper.selectMed(pagevo);
-    }
-    @Override
-    public List<BoardVO> boardFreeList(PageVO pagevo) {
-        return boardMapper.selectFree(pagevo);
-    }
+
+//    @Override
+//    public List<BoardVO> boardHealthList(PageVO pagevo) {
+//        return boardMapper.selectHealth( pagevo);
+//    }
+//    @Override
+//    public List<BoardVO> boardCampaignList(PageVO pagevo) {
+//        return boardMapper.selectCampaign( pagevo);
+//    }
+//    @Override
+//    public List<BoardVO> boardMedList(PageVO pagevo) {
+//        return boardMapper.selectMed(pagevo);
+//    }
+//    @Override
+//    public List<BoardVO> boardFreeList(PageVO pagevo) {
+//        return boardMapper.selectFree(pagevo);
+//    }
 
     @Override
     public List<BoardVO> boardNoticeList(){
@@ -47,8 +70,8 @@ public class IM_BoardService implements IF_BoardService{
     }
 
     @Override
-    public int boardCount() {
-        return boardMapper.countBoard();
+    public int boardCount(String category) {
+        return boardMapper.countBoard(category);
     }
 
     @Override
