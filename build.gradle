@@ -46,6 +46,14 @@ dependencies {
     // 조준곤 file upload
     implementation 'commons-io:commons-io:2.18.0'
     implementation 'commons-fileupload:commons-fileupload:1.4'
+    // 조준곤 List to JSON 변환 메소드 빌드
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20240303'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    // 메일 빌드
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 }
 
 tasks.named('test') {

@@ -7,6 +7,7 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src = "js/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <style>
     @font-face {
@@ -48,6 +49,31 @@
         text-align: center;
         font-size: 18px;
     }
+    .insertValue {
+        width: 80%;
+        height: 80px;
+    }
+    .tableSet {
+        display: flex;
+        justify-content: center;
+    }
+    table tr td input {
+        width: 100%;
+        height: 70px;
+        border-radius: 10px;
+    }
+    table tr td {
+        height: 100px;
+    }
+    .sheet {
+        background-color: gray;
+        border-radius: 50%;
+        width:120px;
+        height: 120px;
+        align-content: center;
+        text-align: center;
+        font-size: 18px;
+    }
 </style>
 <script th:inline="javascript">
     window.onload = function() {
@@ -66,52 +92,52 @@
             }
         })
     }
-let cnt = 0;
-function sample6_execDaumPostcode() {
-new daum.Postcode({
-oncomplete: function(data) {
+    let cnt = 0;
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-var addr = ''; // 주소 변수
-var extraAddr = ''; // 참고항목 변수
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
 
 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-addr = data.roadAddress;
-} else { // 사용자가 지번 주소를 선택했을 경우(J)
-addr = data.jibunAddress;
-}
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
 
 // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-if(data.userSelectedType === 'R'){
+                if(data.userSelectedType === 'R'){
 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
                         extraAddr += data.bname;
                     }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
+        // 건물명이 있고, 공동주택일 경우 추가한다.
                     if(data.buildingName !== '' && data.apartment === 'Y'){
                         extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                     }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
                     if(extraAddr !== ''){
                         extraAddr = ' (' + extraAddr + ')';
                     }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
+        // 조합된 참고항목을 해당 필드에 넣는다.
                     document.getElementById("sample6_extraAddress").value = extraAddr;
                     document.getElementById("sample6_extraAddress").readOnly = true;
                 } else {
                     document.getElementById("sample6_extraAddress").value = '';
                 }
 
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+        // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('sample6_postcode').value = data.zonecode;
                 document.getElementById("sample6_address").value = addr;
                 document.getElementById("sample6_postcode").readOnly = true;
                 document.getElementById("sample6_address").readOnly = true;
-                // 커서를 상세주소 필드로 이동한다.
+        // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("sample6_detailAddress").focus();
             }
         }).open();
@@ -128,10 +154,12 @@ if(data.userSelectedType === 'R'){
                 if(insertedID === 1) {
                     document.getElementById('insertIDInfo').value = "";
                     document.getElementById('insertIDInfo').innerText = "아이디가 중복되었습니다. 다시 입력하세요.";
+                    document.getElementById('insertIDInfo').style.color = "red";
                 } else if(insertedID === 0) {
                     document.getElementById('insertIDInfo').value = "";
                     document.getElementById('insertIDInfo').innerText = "사용 가능한 아이디 입니다.";
-                    cnt++;
+                    document.getElementById('insertIDInfo').style.color = "green";
+                    cnt = 1;
                 }
             }
         })
@@ -147,9 +175,20 @@ if(data.userSelectedType === 'R'){
         }
 
     }
-    // function userID(userID) {
-    //     userID.value = userID.value.replace(/^[A-Za-z0-9+]{4,12}$/, '');
-    // }
+    function userID(userID) {
+        const testUserID = /^[A-Za-z0-9]{5,11}$/;
+        if(testUserID.test(userID.value)) { // 유효성 검사 성공
+            document.getElementById('insertIDInfo').value = "";
+            document.getElementById("insertIDInfo").innerText = "사용 가능한 아이디 입니다";
+            document.getElementById('insertIDInfo').style.color = "black";
+        } else { // 유효성 검사 실패
+            document.getElementById('insertIDInfo').value = "";
+            document.getElementById("insertIDInfo").innerText = "사용할 수 없는 아이디 입니다. 6~12자의 영문 소문자와 숫자만 사용 가능합니다";
+            document.getElementById('insertIDInfo').style.color = "red";
+        }
+        cnt = 0;
+    }
+
     function checkInfo(submit) {
         if(document.getElementsByTagName("input") !== null) {
             if (document.getElementById('passwordVerifyMSG').innerText === "일치") {
@@ -207,14 +246,16 @@ if(data.userSelectedType === 'R'){
                     if(document.getElementById('user_name_eng').value !== "") {
                         userEngName = true;
                     }
-                    if(document.getElementById('user_register_first_number').innerText !== "") {
+                    if(document.getElementById('user_register_first_number').value !== "") {
                         userRegisterNumber = true;
                     }
                     if(document.getElementById('user_tel_first_number').value !== "") {
                         userTel = true;
                     }
-                    if(document.getElementById('user_email_address').value !== "") {
+                    if(verification) {
                         userEmail = true;
+                    } else {
+                        alert("이메일 인증 불가");
                     }
                     if(document.getElementById('sample6_postcode').value !== "") {
                         userAddr = true;
@@ -226,6 +267,7 @@ if(data.userSelectedType === 'R'){
                         return false;
                     }
                 } else {
+                    alert("아이디 중복 검사가 되지 않았습니다.")
                     return false;
                 }
             } else {
@@ -234,11 +276,102 @@ if(data.userSelectedType === 'R'){
             }
         }
     }
+    let verification = false;
+    let send_email_code = "";
+    function sendAuthenticationNumber(){
+        if(document.getElementById('user_email_address').value === "" || document.getElementById('user_email_domain').value === "") {
+            document.getElementById('authenticationVerifyMSG').innerText = "🚫 모든 입력값은 필수 입니다.(이메일 미기입)";
+            document.getElementById('user_email_address').focus();
+            document.getElementById('authenticationVerifyMSG').style.color = "red";
+        }else{
+            let totalEmailAddress;
+            totalEmailAddress = document.getElementById('user_email_address').value + '@' + document.getElementById('user_email_domain').value;
+            document.getElementsByName('user_email')[0].value = totalEmailAddress;
+            document.getElementById('authenticationVerifyMSG').innerText = "☑️ 인증번호가 발송되었습니다.";
+            document.getElementById('authenticationVerifyMSG').style.color = "#3B82F6";
+            // cnt ++;
+            $.ajax({
+                url: '/asklepios/mailSend',
+                type: 'post',
+                data: {user_email: totalEmailAddress},
+                success:function(data){
+                    send_email_code = data;
+                    // cnt ++;
+                },
+                error: function (){
+                }
+            });
 
+            // if(cnt >0){
+            //     let timer = null;
+            //     let isRunning = false;
+            //
+            //     $(function(){
+            //         var display = $('#timer');
+            //         var leftSec = 600;
+            //         // 남은 시간
+            //         // 이미 타이머가 작동중이면 중지
+            //         if (isRunning){
+            //             clearInterval(timer);
+            //             display.html("");
+            //             startTimer(leftSec, display);
+            //         }else{
+            //             startTimer(leftSec, display);
+            //
+            //         }
+            //     });
+            // }
+            document.getElementById("sendAuthentication").style.display = "none";
+            document.getElementById("checkAuthentication").style.display = "inline-block";
+        }
+    }
+
+    // 이메일인증으로 코드를 받으면 그 코드랑 입력한 코드가 일치하는지 확인하는 기능_20241126수행
+    function checkAuthenticationNumber(){
+        let user_email_code = document.getElementById("authentication_number").value;
+
+        if(user_email_code === send_email_code){
+            document.getElementById('authenticationVerifyMSG').innerText = "☑️ 인증되었습니다.";
+            document.getElementById('authenticationVerifyMSG').style.color = "#3B82F6";
+            document.getElementById('authenticationVerifyMSG').readOnly = true;
+            document.getElementById("checkAuthentication").disabled = true;
+            verification = true;
+            // alert("이메일 인증 완료");
+        }else{
+            document.getElementById('authenticationVerifyMSG').innerText = "🚫 인증번호가 일치하지 않습니다. 이메일을 확인하고 다시 인증하십시오.";
+            document.getElementById('authenticationVerifyMSG').style.color = "red";
+            document.getElementById('authenticationVerifyMSG').readOnly = true;
+            document.getElementById("sendAuthentication").style.display = "inline-block";
+            document.getElementById("checkAuthentication").style.display = "none";
+        }
+    }
+
+    // function startTimer(count, display) {
+    //     var minutes, seconds;
+    //     timer = setInterval(function () {
+    //         minutes = parseInt(count / 60, 10);
+    //         seconds = parseInt(count % 60, 10);
+    //
+    //         minutes = minutes < 10 ? "0" + minutes : minutes;
+    //         seconds = seconds < 10 ? "0" + seconds : seconds;
+    //
+    //         display.html(minutes + ":" + seconds);
+    //
+    //         // 타이머 끝
+    //         if (--count < 0) {
+    //             clearInterval(timer);
+    //             alert("시간초과");
+    //             display.html("시간초과");
+    //             $("button").attr("disabled", true);
+    //             isRunning = false;
+    //         }
+    //     }, 1000);
+    //     isRunning = true;
+    // }
 </script>
 <body>
     <h1 style="font-size: xx-large; text-align: center">회원 정보 입력</h1>
-    <form action="/asklepios/commoninfo" method="post" onsubmit="return checkInfo()" id="submit">
+    <form action="/asklepios/commoninfo" method="post" enctype="multipart/form-data"  onsubmit="return checkInfo()" id="submit">
         <div class="tableSet">
             <table>
                 <tr>
@@ -249,10 +382,10 @@ if(data.userSelectedType === 'R'){
                     <td>
                         <input type="text" id="user_id" name="user_id"
                                class="mx-auto block bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 mx-20 p-5 focus:ring-2 focus:outline-none"
-                               placeholder="사용하실 아이디를 입력하시오." style="display: inline-block; width: 49.5%" oninput="userID()">
+                               placeholder="사용하실 아이디를 입력하시오." style="display: inline-block; width: 49.5%" oninput="userID(this)">
                         <button type="button" class="mx-auto block bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 mx-20 p-5 focus:ring-2 focus:outline-none" onclick="checkDuplicateID()" style="width: 49.5%; display: inline-block; height: 70px; border-radius: 10px;">아이디 중복 확인</button>
                     </td>
-                <tr>
+                </tr>
                 <tr>
                     <td style="height: auto"></td>
                     <td style="height: auto">
@@ -326,7 +459,7 @@ if(data.userSelectedType === 'R'){
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 20%">
+                    <td style="width: 20%" rowspan="3">
                         <label for="user_email_address" class="mx-auto block font-medium text-gray-900 dark:text-white">이메일<span style="color: red">(*)</span></label>
                     </td>
                     <td>
@@ -342,6 +475,19 @@ if(data.userSelectedType === 'R'){
                             <option value="hanmail.net">hanmail.net</option>
                         </select>
                         <input type="hidden" name="user_email" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" id="authentication_number" class="mx-auto block bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 mx-20 p-5 focus:ring-2 focus:outline-none"
+                               placeholder="전송받은 인증번호를 입력해 주세요." style="display: inline-block; width: 49.5%" oninput="userID(this)">
+                        <button type="button" id="sendAuthentication" class="mx-auto block bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 mx-20 p-5 focus:ring-2 focus:outline-none" onclick="sendAuthenticationNumber()" style="width: 49.5%; display: inline-block; height: 70px; border-radius: 10px;">인증번호 전송</button>
+                        <button type="button" id="checkAuthentication" class="mx-auto block bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 mx-20 p-5 focus:ring-2 focus:outline-none" onclick="checkAuthenticationNumber()" style="width: 49.5%; display: none; height: 70px; border-radius: 10px;">인증번호 확인</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: auto">
+                        <p id="authenticationVerifyMSG">인증번호를 입력해 주세요.</p>
                     </td>
                 </tr>
                 <tr>
@@ -382,7 +528,7 @@ if(data.userSelectedType === 'R'){
                         <label for="user_image" class="mx-auto block font-medium text-gray-900 dark:text-white">사용자 이미지<br>(300*400)</label>
                     </td>
                     <td>
-                        <input type="file" name="user_image" id="user_image" class="mx-auto bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 mx-20 p-5 focus:ring-2 focus:outline-none" value="선택된 이미지 없음">
+                        <input type="file" name="file" id="user_image" class="mx-auto bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 mx-20 p-5 focus:ring-2 focus:outline-none" placeholder="선택된 이미지 없음">
                     </td>
                 </tr>
             </table>
@@ -398,13 +544,7 @@ if(data.userSelectedType === 'R'){
                 <p><strong>약관 동의</strong></p>
             </div>
         </div>
-        <div style="width: 50px; border: 1px solid gray"></div>
-        <div style="text-align: center">
-            <div class="sheet" style="background-color: #1e40af; color: white">
-                <p><strong>본인 인증</strong></p>
-            </div>
-        </div>
-        <div style="width: 50px; border: 1px solid gray"></div>
+        <div style="width: 50px; border: 1px solid #1e40af"></div>
         <div style="text-align: center">
             <div class="sheet" style="background-color: #1e40af; color: white">
                 <p><strong>회원 가입</strong></p>

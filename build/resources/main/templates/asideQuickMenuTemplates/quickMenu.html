@@ -27,14 +27,14 @@
         <div class="bg-green-500 border border-gray-200 rounded-lg shadow dark:bg-green-800 dark:border-gray-700">
             <div class="profileImage">
                 <a href="myPage">
-                    <img src="../../static/defaultImage.png" alt="기본 프로필">
+                    <img src="defaultImage.png" alt="기본 프로필">
                 </a>
             </div>
             <div class="p-5">
                 <hr style="margin-bottom: 10px">
                 <h1>회원 정보</h1>
-                <p style="font-size: 14px">회원 이름 : ${user_id}</p>
-                <p style="font-size: 14px">이메일 : ${user_mail}</p>
+                <p style="font-size: 14px">회원 이름 : <span th:value="${user_name}"></span></p>
+                <p style="font-size: 14px">이메일 : <span th:value="${user_email}"></span></p>
                 <hr style="margin-top: 10px; margin-bottom: 10px">
                 <h1><a href="/reservation">예약 현황</a></h1>
                 <p style="font-size: 14px">예약 대기 : ${}</p>
