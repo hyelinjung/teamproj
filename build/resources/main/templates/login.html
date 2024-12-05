@@ -7,8 +7,25 @@
 	<script src="https://cdn.tailwindcss.com"></script>
 	<link rel="stylesheet" type="text/css" href="CSS/font.css">
 	<style>
+		@font-face {
+			font-family: 'Tenada';
+			src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
+			font-weight: normal;
+			font-style: normal;
+		}
+		@font-face {
+			font-family: 'Pretendard-Regular';
+			src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+			font-weight: 400;
+			font-style: normal;
+		}
+		header {
+			font-family:'Tenada', 'sans-serif';
+			margin-top: 300px;
+			font-size: 90px;
+		}
 		body {
-			font-family:Pretendard, sans-serif;
+			font-family:'Pretendard-Regular', 'sans-serif';
 			width: 1920px;
 			font-size: 30px;
 		}
@@ -34,7 +51,9 @@
 	<button class="btn mt-4">클릭</button>
 </div> -->
 <div class="container mx-auto">
-	<a href="./"><img src="logo.png" alt="로고" class="mt-20 mx-auto"></a>
+	<header>
+		<a href="home"><span class="mx-auto text-blue-500 font-bold" style="display: block; text-align: center;">ASKLEPIOS</span></a>
+	</header>
 	<!-- <div class="mx-auto bg-red-500" id="main"></div> -->
 	<form action="login" method="post" onsubmit="return validateForm()">
 		<div class="block justify-center h-full w-full">
@@ -54,7 +73,7 @@
 			<label id="errorMsg" class="mx-auto block mt-5 mb-5" style="color: red; font-size: 20px;" th:text="${error}"></label>
 			<!-- <div class="flex justify-center">
 			</div> -->
-			<button type="submit" class="mx-auto block py-5 font-semibold rounded-lg shadow-md text-white bg-blue-500 hover:bg-blue-500">
+			<button type="submit" class="mx-auto block py-5 font-semibold rounded-lg shadow-md text-white bg-blue-500 hover:bg-blue-600">
 				로그인
 			</button>
 		</div>

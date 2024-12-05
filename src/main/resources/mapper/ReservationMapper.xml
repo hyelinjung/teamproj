@@ -4,8 +4,42 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.asklepios.hospitalreservation_asklepios.Repository.IF_ReservationMapper">
 
-    <select id="selectAllHospitalName" resultType="com.asklepios.hospitalreservation_asklepios.VO.HospitalVO">
+    <select id="getAllHospitalName" resultType="com.asklepios.hospitalreservation_asklepios.VO.HospitalVO">
         SELECT hospital_name FROM hospital
     </select>
 
+    <select id="getHospitalAddress" parameterType="String" resultType="String">
+        SELECT hospital_addr FROM hospital WHERE hospital_name LIKE CONCAT('%',#{hospitalName},'%')
+    </select>
+
+    <select id="getHospitalCode" parameterType="String" resultType="String">
+        SELECT hospital_code FROM hospital WHERE hospital_name LIKE CONCAT('%',#{hospitalName},'%')
+    </select>
+
+    <select id="getDoctorName" parameterType="String" resultType="String">
+        SELECT user_name FROM users WHERE user_id = (SELECT user_doctor_id FROM user_doctor WHERE user_doctor_code = #{doctorCode})
+    </select>
+
+    <select id="getDoctorCode" parameterType="String" resultType="String">
+        SELECT user_name FROM users WHERE user_id = #{user_doctor_id}
+    </select>
+
+    <select id="getUserId" parameterType="String" resultType="String">
+        SELECT user_id FROM users WHERE user_name = #{userName}
+    </select>
+
+    <select id="getAllReservationTime" parameterType="String" resultType="String">
+        SELECT reservation_time FROM reservation WHERE reservation_hospital_code = #{hospitalCode} AND
+                                                       reservation_user_doctor_code = #{doctorCode} AND
+                                                       reservation_date = #{reservationDate}
+    </select>
+
+    <select id="getNextReservationCode" resultType="String">
+
+    </select>
+
+    <insert id="insertReservation" parameterType="com.asklepios.hospitalreservation_asklepios.VO.ReservationVO">
+        INSERT INTO reservation values (CONCAT('RES', LPAD((select nextval(asklepios.reservation_code_seq)), 3, '0')), #{reservation_hospital_code},
+                                        #{reservation_user_doctor_code}, #{reservation_user_id}, #{reservation_date}, #{reservation_time}, #{reservation_memo}, DEFAULT)
+    </insert>
 </mapper>

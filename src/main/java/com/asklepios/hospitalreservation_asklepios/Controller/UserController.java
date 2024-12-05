@@ -2,10 +2,13 @@ package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import com.asklepios.hospitalreservation_asklepios.Service.IF_UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -19,14 +22,26 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute UserVO userVO, Model model) {
+    public String login(@ModelAttribute UserVO userVO, Model model, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+
         if(userService.login(userVO)){
-            return "redirect:/bboard_health";
+            session.setAttribute("loginUserId", userVO.getUser_id());
+            session.setMaxInactiveInterval(30 * 60);
+            return "redirect:/home";
         }else {
             String error = "🚫 아이디 또는 비밀번호가 잘못 되었습니다.";
             model.addAttribute("error", error);
-            return "login";
+            return "/login";
         }
+    }
+
+    @PostMapping(value = "logout")
+    public String logoutGET(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "redirect:/home";
     }
 
     @GetMapping("/findId")
