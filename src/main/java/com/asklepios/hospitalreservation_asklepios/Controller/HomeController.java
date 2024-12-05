@@ -4,11 +4,16 @@ import com.asklepios.hospitalreservation_asklepios.Service.IF_BoardService;
 import com.asklepios.hospitalreservation_asklepios.Service.LikeService;
 import com.asklepios.hospitalreservation_asklepios.VO.*;
 //import com.asklepios.hospitalreservation_asklepios.VO.FileDataUtil;
+import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
+import com.asklepios.hospitalreservation_asklepios.VO.LikeVO;
+import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
+import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -28,6 +33,14 @@ public class HomeController {
   public String main(){
     return "home";
   }
+    @Autowired
+    IF_BoardService boardService;
+    LikeService likeService;
+    @GetMapping("/home")
+    public String main(@SessionAttribute(name = "loginUserId", required = false) String userId, Model model){
+        model.addAttribute("userId", userId);
+        return "home";
+    }
 
   @GetMapping("/bboard_all")
   public String board_all(Model model, @ModelAttribute PageVO pagevo) throws Exception{
