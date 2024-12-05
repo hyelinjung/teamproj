@@ -7,7 +7,7 @@ let customOverlay = new kakao.maps.CustomOverlay({
 let mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
       center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-      level: 3 // 지도의 확대 레벨
+      level: 1 // 지도의 확대 레벨
     };
 
 let map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -84,102 +84,6 @@ function getLocation(){
   }
 
 }
-
-// function addressSearch(){
-//   let keyword = document.getElementById('search').value;
-//   console.log(keyword);
-//   if((!keyword)){
-//     alert('검색어를 입력해주세요.');
-//     return;
-//   }else{
-//     if(!(keyword.includes('병원'))){
-//       keyword += '병원';
-//     }
-//   }
-//   ps.keywordSearch(keyword, placesSearchCB);
-//   if(startFlag){
-//     removeAllChildNods(hospitalList);
-//   }else{
-//     startFlag = true;
-//   }
-// }
-
-// function placesSearchCB(data, status, pagination) {
-//   if (status === kakao.maps.services.Status.OK) {
-//     // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-//     // LatLngBounds 객체에 좌표를 추가합니다
-//     let bounds = new kakao.maps.LatLngBounds();
-
-//     for (let i=0; i<data.length; i++) {
-//       if(data[i].category_group_code === 'HP8' /*|| data[i].category_group_code === 'PM9'*/){
-//         displayMarker(data[i], data[i].y, data[i].x);
-//         addToHospitalList(data[i])
-//         bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-//       }
-//     }
-//     if(bounds.isEmpty()){
-//       alert('검색된 병원이 없습니다.');
-//     }else{
-//       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-//       map.setBounds(bounds);
-//     }
-//   } else{
-//     alert('검색 결과가 없습니다.');
-//   }
-// }
-
-// // 지도에 마커를 표시하는 함수입니다
-// function displayMarker(place, y, x) {
-//   // 마커 이미지 생성
-//   const imgSrc = "../static/hospital_icon.png",
-//     imgSize = new kakao.maps.Size(65, 69),
-//     imgOption = {offset: new kakao.maps.Point(27,69)};
-
-//   const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize, imgOption);
-//   // 글씨 이쁘게 바꾸기 위해 참고하려고 가져온 것
-//   // const content = '<div class="customoverlay">' +
-//   //               '<a href="https://map.kakao.com/link/map/11394059" target="_blank">' +
-//   //               '<span class="title">구의야구공원</span>' +
-//   //               '</a>' +
-//   //               '</div>';
-//                 // 마커를 생성하고 지도에 표시합니다
-//   const marker = new kakao.maps.Marker({
-//     map: map,
-//     position: new kakao.maps.LatLng(place.y, place.x),
-//     image: markerImage
-//   });
-
-//   // 마커에 클릭이벤트를 등록합니다
-//   kakao.maps.event.addListener(marker, 'click', function() {
-//     // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-//     infowindow.setContent('<div style="padding:5px;font-size:12px;">' +
-//       '<a href="https://map.kakao.com/link/to/'+ place.place_name + ',' + place.y + ',' + place.x +
-//       '" style="color:blue" target="_blank">길찾기</a></div>'+ place.place_name + '</div>'
-//     );
-//     infowindow.open(map, marker);
-//   });
-// }
-
-// 병원 리스트에 추가하는 함수
-// function addToHospitalList(place) {
-//     const hospitalList = document.getElementById('hospital-list');
-//     const listItem = document.createElement('li');
-//     listItem.innerHTML = `
-//         <strong>${place.place_name}</strong><br>
-//         ${place.address_name}<br>
-//         <a href="https://map.kakao.com/link/to/${place.place_name},${place.y},${place.x}"
-//           style="color:blue" target="_blank">길찾기</a>
-//     `;
-//     hospitalList.appendChild(listItem);
-// }
-//   // 검색결과 목록의 자식 Element를 제거하는 함수입니다
-//   function removeAllChildNods(el) {
-//     while (el.hasChildNodes()) {
-//         el.removeChild (el.lastChild);
-//     }
-// }
-// 키워드로 장소를 검색합니다
-// addressSearch();
 
 // 키워드 검색을 요청하는 함수입니다
 function addressSearch() {
@@ -333,8 +237,7 @@ function getListItem(index, places) {
       console.log(data)
       if (data){
         let reserveButton = document.createElement('button');
-        reserveButton.innerHTML = 'class="'
-        reserveButton.type = 'button';
+        reserveButton.type = 'button'; /*<= 모달 창에서는 submit으로 변경  */
         reserveButton.className =
             'my-auto d-flex w-36 h-16 rounded-lg font-semibold text-white text-3xl bg-blue-500 hover:bg-blue-600';
         reserveButton.textContent = '예약하기';
@@ -342,6 +245,11 @@ function getListItem(index, places) {
         // onclick으로 모달 구현
         reserveButton.onclick = function () {
           alert(`병원 이름: ${places.place_name}`); // 원하는 동작
+          $.ajax({
+            url: '/asklepios/reserve',
+            type: 'post',
+            data: {hospital_name: places.place_name}
+          })
         };
 
         buttonContainer.appendChild(reserveButton);

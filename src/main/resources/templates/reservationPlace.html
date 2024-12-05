@@ -11,7 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <link rel="icon" href="logo_icon.png" type="image/x-icon">
-  <link rel="stylesheet" href="reservation.css" />
+  <link rel="stylesheet" href="reservationPlace.css" />
 </head>
 <body>
 <!--   <div th:replace="./include/topinclude.html"></div>-->
@@ -34,16 +34,19 @@
     <div class="shopSchList">
       <!-- 매장 리스트 -->
       <div class="list">
+        <form action="reserve" method="post">
         <ul  id="hospitalList" class="hospitalList"></ul>
+        </form>
         <div id="pagination" class="pagination"></div>
-        <!-- 지도 -->
       </div>
+        <!-- 지도 -->
       <div>
         <div class="map" id="map"></div>
       </div>
+    </div>
   </div>
-  </div>
+
 </body>
 </html>
-<script type="text/javascript" src="reservation.js"></script>
+<script type="text/javascript" src="reservationPlace.js"></script>
 
