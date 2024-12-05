@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class MailService {
 
   private final JavaMailSender javaMailSender;
-  private static final String senderEmail= "98jiyong@gmail.com";
+  private static final String senderEmail= "sjjidob@gmail.com";
   private static int number;
 
   // 랜덤으로 숫자 생성

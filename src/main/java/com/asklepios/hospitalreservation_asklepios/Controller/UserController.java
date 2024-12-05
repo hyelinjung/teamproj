@@ -73,4 +73,5 @@ public class UserController {
     public String userjoin() {
         return "userJoin/agreement";
     }
+
 }
