@@ -29,18 +29,12 @@ public class HomeController {
   LikeService likeService;
   @Autowired
   FileDataUtil fileDataUtil;
+
   @GetMapping("/home")
-  public String main(){
-    return "home";
+  public String main(@SessionAttribute(name = "loginUserId", required = false) String userId, Model model){
+      model.addAttribute("userId", userId);
+      return "home";
   }
-    @Autowired
-    IF_BoardService boardService;
-    LikeService likeService;
-    @GetMapping("/home")
-    public String main(@SessionAttribute(name = "loginUserId", required = false) String userId, Model model){
-        model.addAttribute("userId", userId);
-        return "home";
-    }
 
   @GetMapping("/bboard_all")
   public String board_all(Model model, @ModelAttribute PageVO pagevo) throws Exception{

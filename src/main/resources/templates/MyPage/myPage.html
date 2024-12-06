@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>MyPage</title>
@@ -88,8 +88,14 @@
     table tr td {
         /*border: 1px solid black;*/
     }
+
+    #viewReservation {
+        width: 100%;
+        height: 50px;
+    }
 </style>
-<script th:inline="javascript">
+<script th:inline="javascript" type="text/javascript">
+    /*<![CDATA[*/
     window.onload = function () {
         const modalOpenButton = document.getElementById('modalOpenButton');
         const modalCloseButton = document.getElementById('modalCloseButton');
@@ -125,6 +131,154 @@
                     getPasswordVerifyMSG.html('불일치');
                     getPasswordVerifyMSG.css("color", "red");
                 }
+            }
+        })
+        // 일반, 의사회원 구분 출력
+        let userAuthority = /*[[${userVO.getUser_authority()}]]*/;
+        console.log(userAuthority);
+        if (userAuthority === "doctor") {
+            console.log(userAuthority);
+            document.getElementById("doctorInfo").style.removeProperty("display");
+            document.getElementById("reservationDoctorInfo").style.removeProperty("display");
+        } else if (userAuthority === "client") {
+            console.log(userAuthority);
+            document.getElementById("reservationClientInfo").style.removeProperty("display");
+        }
+
+        // 예약 현황 테이블 생성
+        viewReservationStatus();
+        viewReservationStatusDoctor();
+
+    }
+
+    function viewReservationStatus() {
+        let tbody = document.getElementById("reservationTable");
+        tbody.innerHTML = "";
+        $.ajax({
+            url: "/asklepios/userreservationstatus",
+            type: "get",
+            data: {
+                user_id: "gkgjfj",
+            },
+            // dataType: "String",
+            success: function (reservationUserStatusVOList) {
+                // console.log(reservationUserStatusVOList[0].hospital_name);
+                const table = document.getElementById("reservationTable");
+                if(reservationUserStatusVOList.length === 0) {
+                    document.getElementById("userStatusTable").style.display = "none";
+                    document.getElementById("reservation").removeAttribute("display");
+                } else {
+                    for (let i = 0; i < reservationUserStatusVOList.length; i++) {
+                        // alert("2");
+                        const newRow = table.insertRow();
+                        newRow.style.textAlign = "center";
+
+                        let newCell1 = newRow.insertCell(0);
+                        let newCell2 = newRow.insertCell(1);
+                        let newCell3 = newRow.insertCell(2);
+                        let newCell4 = newRow.insertCell(3);
+                        let newCell5 = newRow.insertCell(4);
+
+                        newCell1.style.height = "50px";
+                        newCell2.style.height = "50px";
+                        newCell3.style.height = "50px";
+                        newCell4.style.height = "50px";
+                        newCell5.style.height = "50px";
+
+                        newCell1.innerHTML = '<p>' + reservationUserStatusVOList[i].hospital_name + '</p>';
+                        //의사의 이름을 출력
+                        newCell2.innerHTML = '<p>' + reservationUserStatusVOList[i].user_name + '</p>';
+                        newCell3.innerHTML = '<p>' + reservationUserStatusVOList[i].reservation_date + "/" + reservationUserStatusVOList[i].reservation_time + '</p>';
+                        newCell4.innerHTML = '<p>' + reservationUserStatusVOList[i].reservation_memo + '</p>';
+                        newCell5.innerHTML = '<p>' + reservationUserStatusVOList[i].reservation_accept + '</p>';
+
+                        if(reservationUserStatusVOList[i].reservation_accept === "승인") {
+                            newCell5.style.color = "green";
+                        } else {
+                            newCell5.style.color = "red";
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    function viewReservationStatusDoctor() {
+        let tbody = document.getElementById("reservationTableDoctor");
+        tbody.innerHTML = "";
+        $.ajax({
+            url: "/asklepios/doctorreservationstatus",
+            type: "get",
+            data: {
+                user_id: "gkgjfj",
+            },
+            // dataType: "String",
+            success: function (reservationDoctorStatusVOList) {
+                // console.log(reservationDoctorStatusVOList[0].hospital_name);
+                const table = document.getElementById("reservationTableDoctor");
+                if(reservationUserStatusVOList.length === 0) {
+                    document.getElementById("doctorStatusTable").style.display = "none";
+                    document.getElementById("text").removeAttribute("display");
+                } else {
+                    for (let i = 0; i < reservationDoctorStatusVOList.length; i++) {
+                        // alert("2");
+                        const newRow = table.insertRow();
+                        newRow.style.textAlign = "center";
+
+                        let newCell1 = newRow.insertCell(0);
+                        let newCell2 = newRow.insertCell(1);
+                        let newCell3 = newRow.insertCell(2);
+                        let newCell4 = newRow.insertCell(3);
+                        let newCell5 = newRow.insertCell(4);
+                        let newCell6 = newRow.insertCell(5);
+
+                        newCell1.style.height = "50px";
+                        newCell2.style.height = "50px";
+                        newCell3.style.height = "50px";
+                        newCell4.style.height = "50px";
+                        newCell5.style.height = "50px";
+                        newCell6.style.height = "50px";
+
+                        newCell1.innerHTML = '<p>' + reservationDoctorStatusVOList[i].hospital_name + '</p>';
+                        newCell2.innerHTML = '<p>' + reservationDoctorStatusVOList[i].user_name + '</p>';
+                        newCell3.innerHTML = '<p>' + reservationDoctorStatusVOList[i].reservation_date + "/" + reservationDoctorStatusVOList[i].reservation_time + '</p>';
+                        newCell4.innerHTML = '<p>' + reservationDoctorStatusVOList[i].reservation_memo + '</p>';
+                        newCell5.innerHTML = '<p>' + reservationDoctorStatusVOList[i].reservation_accept + '</p>';
+                        newCell6.innerHTML = '<button onclick="acceptReservation(this.value)" value="' + reservationDoctorStatusVOList[i].reservation_code + '">승인</button>' + "/" + '<button onclick="cancelReservation(this.value)" value="' + reservationDoctorStatusVOList[i].reservation_code + '">취소</button>';
+
+                        if (reservationDoctorStatusVOList[i].reservation_accept === "승인") {
+                            newCell5.style.color = "green";
+                        } else {
+                            newCell5.style.color = "red";
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    function acceptReservation(reservationCode) {
+        $.ajax({
+            url: "/asklepios/acceptreservation",
+            type: "get",
+            data: {
+                reservation_code: reservationCode
+            },
+            success: function () {
+                viewReservationStatusDoctor();
+            }
+        })
+    }
+
+    function cancelReservation(reservationCode) {
+        $.ajax({
+            url: "/asklepios/cancelreservation",
+            type: "get",
+            data: {
+                reservation_code: reservationCode
+            },
+            success: function () {
+                viewReservationStatusDoctor();
             }
         })
     }
@@ -291,7 +445,7 @@
         document.getElementById("user_doctor_medical").value = medical;
     }
 
-    // 의사 정보
+    // 병원 검색
     function searchDetailHospital() {
         let tbody = document.getElementById("selectedHospital");
         tbody.innerHTML = "";
@@ -348,7 +502,7 @@
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 document.getElementById('preview').src = e.target.result;
             };
             reader.readAsDataURL(input.files[0]);
@@ -359,14 +513,15 @@
 
 </script>
 <body class="mx-auto" style="margin-top: 20px; padding-top: 20px">
+<!--데이터 확인 및 수정-->
 <form id="modifyProfile" action="/asklepios/updateUserInfo" enctype="multipart/form-data" method="post"
       onsubmit="checkInfo()">
+    <!--전체 정보-->
     <div style="width: 19.5%; display: inline-block; vertical-align: top"><h1 style="font-size: 40px">내 프로필 보기</h1>
     </div>
     <hr>
     <div style="margin-top: 10px">
         <div style="width: 100%; display: inline-block">
-
             <table style="width: 100%">
                 <tr>
                     <td style="width: 20%;">
@@ -603,34 +758,20 @@
                             사진 미리보기</label>
                     </td>
                     <td class="insertValue">
-                        <img id="preview" />
+                        <img id="preview"/>
                     </td>
                 </tr>
 
             </table>
-
-
         </div>
-    </div>
-    <!--일반 정보-->
-
-    <div style="display: none">
-        <div style="width: 19.5%; display: inline-block; vertical-align: top"><h1 style="font-size: 40px">내 프로필 보기</h1>
-        </div>
-        <hr>
-        <div style="margin-top: 10px">
-            <div style="width: 19.5%; display: inline-block; vertical-align: top"><h1 style="font-size: 40px">예약 현황</h1>
-            </div>
-        </div>
-
     </div>
     <!--의사 정보-->
-    <div>
+    <div id="doctorInfo" style="display: none; margin-top: 50px">
         <div style="width: 19.5%; display: inline-block; vertical-align: top; margin-top: 20px"><h1
                 style="font-size: 40px">의사 정보</h1>
         </div>
         <hr>
-        <div style="margin-top: 10px">
+        <div style="margin-top: 20px">
             <div style="width: 100%; display: inline-block">
 
                 <table style="width: 100%">
@@ -736,6 +877,7 @@
         </div>
     </div>
 </form>
+<!--수정하기 버튼-->
 <div class="mx-auto" style="width: 40%; text-align: center">
     <button id="modalOpenButton"
             class="bg-blue-800 rounded-lg w-48 h-12 my-10 text-white"
@@ -751,6 +893,110 @@
             style="font-size: 24px; display: none">저장하기
     </button>
 </div>
+<!--예약 현황 정보-->
+<div id="reservationClientInfo" style="display: none; margin-top: 50px">
+    <div style="width: 19.5%; display: inline-block; vertical-align: top; margin-top: 20px"><h1
+            style="font-size: 40px">예약 현황</h1>
+    </div>
+    <hr>
+    <div style="margin-top: 20px">
+        <div style="width: 100%; display: inline-block">
+            <table style="width: 100%" id="userStatusTable">
+                <thead>
+                <tr style="text-align: center; background-color: #1e40af; border-top-color: #8a8a8a; border-bottom-color: #8a8a8a; height: 50px">
+                    <td style="width: 20%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            병원
+                        </p>
+                    </td>
+                    <td style="width: 10%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            의사
+                        </p>
+                    </td>
+                    <td style="width: 15%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            날짜
+                        </p>
+                    </td>
+                    <td style="width: 39.5%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            메모
+                        </p>
+                    </td>
+                    <td style="width: 15%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            상태
+                        </p>
+                    </td>
+                </tr>
+                </thead>
+                <tbody id="reservationTable">
+
+                </tbody>
+            </table>
+            <a href="/asklepios/reservation?user_id=gkgjfj">
+                <button id="reservation" class="bg-blue-800 rounded-lg w-48 h-12 my-10 text-white"
+                        style="font-size: 24px; display: none">진료 예약 하기
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+<!--예약 현황 정보(의사)-->
+<div id="reservationDoctorInfo" style="display: none; margin-top: 50px">
+    <div style="width: 19.5%; display: inline-block; vertical-align: top; margin-top: 20px"><h1
+            style="font-size: 40px">예약 현황</h1>
+    </div>
+    <hr>
+    <div style="margin-top: 20px">
+        <div style="width: 100%; display: inline-block">
+            <table style="width: 100%" id="doctorStatusTable">
+                <thead>
+                <tr style="text-align: center; background-color: #1e40af; border-top-color: #8a8a8a; border-bottom-color: #8a8a8a; height: 50px">
+                    <td style="width: 20%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            병원
+                        </p>
+                    </td>
+                    <td style="width: 10%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            신청인
+                        </p>
+                    </td>
+                    <td style="width: 15%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            날짜
+                        </p>
+                    </td>
+                    <td style="width: 34.5%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            메모
+                        </p>
+                    </td>
+                    <td style="width: 10%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            상태
+                        </p>
+                    </td>
+                    <td style="width: 10%">
+                        <p class="mx-auto block font-medium text-gray-900 dark:text-white">
+                            승인/취소
+                        </p>
+                    </td>
+                </tr>
+                </thead>
+                <tbody id="reservationTableDoctor">
+
+                </tbody>
+            </table>
+            <button id="text" class="bg-blue-800 rounded-lg w-48 h-12 my-10 text-white"
+                    style="font-size: 24px; display: none;" disabled>예약 대기중인 환자가 없습니다.
+            </button>
+        </div>
+    </div>
+</div>
+<!--데이터 수정을 위한 본인 확인 모달-->
 <div id="modalContainer" class="hidden">
     <div id="modalContent">
         <div style="display: flex; justify-content: space-between">
@@ -780,7 +1026,7 @@
         </div>
     </div>
 </div>
-
+<!--병원 검색 모달-->
 <div id="modalContainerDoctor" class="hidden">
     <div id="modalContentDoctor" style="text-align: right">
         <div style="display: flex; justify-content: space-between">
