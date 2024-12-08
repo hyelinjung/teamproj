@@ -37,7 +37,6 @@ header{
     font-size: 40px;
     margin-top: 35px;
     padding-left: 30px;
-    padding-right: 50px;
     justify-content: space-between;
 }
 /*#logo{*/
@@ -53,9 +52,10 @@ header{
 
 #loginSession{
     width: 450px;
-    font-size: 40px;
+    font-size: 35px;
     color: #3B82F6;
-    margin-top: 15px;
+    margin-top: 20px;
+    padding-left: 20px;
 }
 body{
     font-family: 'Pretendard-Regular','sans-serif';
@@ -66,7 +66,6 @@ body{
     padding-left: 0px;
     overflow-x: hidden;
 }
-
 #aside1 {
     width: 400px;
     height: 1200px;
@@ -104,8 +103,6 @@ section{
     height: 300px;
     border: 1px solid;
     margin-top: 100px;
-
-
 }
 body, ul, li {
     margin: 0;
@@ -232,7 +229,7 @@ a {
     font-family: 'Pretendard-Regular','sans-serif';
     display: flex;
     text-align: center;
-    margin-left: 110px;
+    margin-left: 85px;
 }
 #search-input{
     width: 530px;

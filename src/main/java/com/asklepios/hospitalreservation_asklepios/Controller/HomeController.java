@@ -29,16 +29,9 @@ public class HomeController {
   LikeService likeService;
   @Autowired
   FileDataUtil fileDataUtil;
-  @GetMapping("/home")
-  public String main(){
-    return "home";
-  }
-    @Autowired
-    IF_BoardService boardService;
-    LikeService likeService;
     @GetMapping("/home")
-    public String main(@SessionAttribute(name = "loginUserId", required = false) String userId, Model model){
-        model.addAttribute("userId", userId);
+    public String main(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model){
+        model.addAttribute("user", user);
         return "home";
     }
 

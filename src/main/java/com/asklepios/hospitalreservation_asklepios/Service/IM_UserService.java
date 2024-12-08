@@ -15,15 +15,17 @@ public class IM_UserService implements IF_UserService{
     IF_UserMapper usermapper;
 
     @Override
-    public boolean login(UserVO userVO) {
+    public UserVO login(UserVO userVO) {
         String pwd = usermapper.selectPwd(userVO);
+        UserVO uservo;
         if(userVO.getUser_password().equals(pwd)){
+            uservo = usermapper.selectUser(userVO);
 //            System.out.println("일치");
-            return true;
         }else{
+            uservo = null;
 //            System.out.println("불일치");
-            return false;
         }
+        return uservo;
     }
 
     @Override

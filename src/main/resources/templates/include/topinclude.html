@@ -13,11 +13,11 @@
         </form>
       </div>
       <div id="loginSession">
-        <th:block th:if="${userId == null}">
+        <th:block th:if="${user == null}">
           <span style="padding-right: 20px;"><a href="login">로그인<i class="fa-solid fa-right-to-bracket"></i></a></span>
           <span><a href="/asklepios/userjoin">회원가입<i class="fa-solid fa-user-plus"></i></a></span>
         </th:block>
-        <th:block th:unless="${userId == null}">
+        <th:block th:unless="${user == null}">
           <form th:action="@{logout}" method="post" style="display: inline; padding-right: 20px;">
             <button type="submit">로그아웃&nbsp;<i class="fa-solid fa-arrow-right-from-bracket"></i></button>
           </form>
@@ -33,7 +33,7 @@
   <nav class="top-bar__menu-box-1">
     <ul>
       <li>
-        <a href="#">병원목록</a>
+        <a href="#">병원조회</a>
         <ul>
           <li><a href="#">내과</a></li>
           <li><a href="#">이비인후과</a></li>
@@ -49,13 +49,16 @@
         </ul>
       </li>
       <li>
-        <a href="#">예약신청</a>
-        <ul>
-          <li><a href="#">text1</a></li>
-          <li><a href="#">text2</a></li>
-          <li><a href="#">text3</a></li>
-          <li><a href="#">text4</a></li>
-        </ul>
+        <a href="registration">병원등록</a>
+      </li>
+      <li>
+        <a href="reservation">진료예약</a>
+<!--        <ul>-->
+<!--          <li><a href="#">text1</a></li>-->
+<!--          <li><a href="#">text2</a></li>-->
+<!--          <li><a href="#">text3</a></li>-->
+<!--          <li><a href="#">text4</a></li>-->
+<!--        </ul>-->
       </li>
       <li>
         <a href="#">백신정보</a>

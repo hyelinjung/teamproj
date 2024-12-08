@@ -16,12 +16,14 @@ public class IM_ReservationService implements IF_ReservationService {
 
 
   @Override
-  public boolean checkHospitalName(String hospitalName) {
+  public boolean checkHospitalName(String hospitalName, String hospitalAddr) {
     boolean flag = false;
     List<HospitalVO> hospitalNameList = reservationmapper.getAllHospitalName();
     for (HospitalVO hospitalVO : hospitalNameList) {
       if(hospitalVO.getHospital_name().contains(hospitalName)){
+        if(hospitalVO.getHospital_addr().contains(hospitalAddr)){
         flag = true;
+        }
       }
     }
     return flag;
