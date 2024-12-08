@@ -122,11 +122,12 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script>
 	let send_email_code = "";
+	let sendFlag = false;
+	let checkFlag = false;
 	function send(){
-		let user_id = document.getElementById('user_id').value;
-		let user_email = document.getElementById('user_email').value;
-		let cnt = 0;
-		if(user_id === ""){
+		let user_id = document.querySelector('#user_id').value;
+		let user_email = document.querySelector('#user_email').value;
+		if(user_id === ''){
 			document.getElementById('sendMsg').innerText = "🚫 모든 입력값은 필수 입니다.(아이디 미기입)";
 			document.getElementById('user_id').focus();
 			document.getElementById('sendMsg').style.color = "red";
@@ -146,7 +147,7 @@
 					if (data === user_email){
 						document.getElementById('sendMsg').innerText = "☑️ 인증번호가 발송되었습니다.";
 						document.getElementById('sendMsg').style.color = "#3B82F6";
-						cnt ++;
+						sendFlag = true;
 						$.ajax({
 							url: '/asklepios/mailSend',
 							type: 'post',
@@ -162,9 +163,9 @@
 						document.getElementById('sendMsg').innerText = "🚫 이메일을 확인해주세요.";
 						document.getElementById('sendMsg').style.color = "red";
 						document.getElementById('timer').innerText = "";
-						cnt = 0;
+						sendFlag = false;
 					}
-					if(cnt >0){
+					if(sendFlag){
 						let timer = null;
 						let isRunning = false;
 
@@ -194,42 +195,94 @@
 	// 이메일인증으로 코드를 받으면 그 코드랑 입력한 코드가 일치하는지 확인하는 기능_20241126수행
 	function check(){
 		let user_email_code = document.getElementById("email_code").value;
-
-		if(user_email_code=== send_email_code){
-			document.getElementById('errorMsg').innerText = "☑️ 인증되었습니다.";
-			document.getElementById('errorMsg').style.color = "#3B82F6";
-		}else{
-			document.getElementById('errorMsg').innerText = "🚫 인증번호가 일치하지 않습니다.";
+		if(user_email_code === '') {
+			document.getElementById('errorMsg').innerText = "🚫 인증번호를 입력해주세요.";
 			document.getElementById('errorMsg').style.color = "red";
+		}else{
+			if(user_email_code === send_email_code){
+				document.getElementById('errorMsg').innerText = "☑️ 인증되었습니다.";
+				document.getElementById('errorMsg').style.color = "#3B82F6";
+				checkFlag = true;
+			}else{
+				document.getElementById('errorMsg').innerText = "🚫 인증번호가 일치하지 않습니다.";
+				document.getElementById('errorMsg').style.color = "red";
+				checkFlag = false;
+			}
 		}
 	}
 
 	function validateForm(){
-		let user_email_code = document.getElementById("email_code").value;
-		if(user_email_code === send_email_code){
-			return true;
-		}else{
+		let user_id = document.querySelector('#user_id').value;
+		let user_email = document.querySelector('#user_email').value;
+		let user_email_code = document.querySelector('#email_code').value;
+
+		if (user_id === '') {
 			Swal.fire({
 				icon: 'warning',
-				title: '임시 비밀번호 발급 실패',
-				text: '조건을 충족하지 못했습니다.',
+				title: '입력 오류',
+				text: '아이디를 입력하세요.',
 				confirmButtonColor: '#3B82F6',
 				confirmButtonText: '확인'
 			});
 			return false;
 		}
-	}
 
-	// if (data === user_email){
-	// 	document.getElementById('sendMsg').innerText = "☑️ 인증번호가 발송되었습니다.";
-	// 	document.getElementById('sendMsg').style.color = "#3B82F6";
-	// 	cnt ++;
-	// }else{
-	// 	document.getElementById('sendMsg').innerText = "🚫 이메일을 확인해주세요.";
-	// 	document.getElementById('sendMsg').style.color = "red";
-	// 	document.getElementById('timer').innerText = "";
-	// 	cnt = 0;
-	// }
+		if (user_email === '') {
+			Swal.fire({
+				icon: 'warning',
+				title: '입력 오류',
+				text: '이메일을 입력하세요.',
+				confirmButtonColor: '#3B82F6',
+				confirmButtonText: '확인'
+			});
+			return false;
+		}
+
+		if (sendFlag === false) {
+			Swal.fire({
+				icon: 'warning',
+				title: '인증 오류',
+				text: '인증번호를 전송하고 인증을 진행하세요.',
+				confirmButtonColor: '#3B82F6',
+				confirmButtonText: '확인'
+			});
+			return false;
+		}
+
+		if (checkFlag === false) {
+			Swal.fire({
+				icon: 'warning',
+				title: '인증 오류',
+				text: '인증번호를 확인하세요.',
+				confirmButtonColor: '#3B82F6',
+				confirmButtonText: '확인'
+			});
+			return false;
+		}
+
+		if (user_email_code ==='') {
+			Swal.fire({
+				icon: 'warning',
+				title: '입력오류',
+				text: '인증번호를 입력해주세요.',
+				confirmButtonColor: '#3B82F6',
+				confirmButtonText: '확인'
+			});
+			return false;
+		}
+
+		if (user_email_code !== send_email_code) {
+			Swal.fire({
+				icon: 'warning',
+				title: '인증번호 불일치',
+				text: '인증번호가 일치하지 않습니다.',
+				confirmButtonColor: '#3B82F6',
+				confirmButtonText: '확인'
+			});
+			return false;
+		}
+		return true;
+	}
 
 	function startTimer(count, display) {
 		var minutes, seconds;
@@ -256,13 +309,3 @@
 
 </script>
 </html>
-<!--
-asklepios - auvn eybb futa dind
-https://velog.io/@yujinaa/spring-%ED%8C%80%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%9B%B9%EC%82%AC%EC%9D%B4%ED%8A%B8-%EC%A0%9C%EC%9E%91-10.-%EA%B4%80%EB%A6%AC%EC%9E%90-%ED%8E%98%EC%9D%B4%EC%A7%80 
-https://velog.io/@wlsgur1533/%EC%9D%B4%EB%A9%94%EC%9D%BC-%EC%9D%B8%EC%A6%9D%ED%95%98%EA%B8%B0
-https://velog.io/@kjh950330/%ED%9A%8C%EC%9B%90-%EC%9E%84%EC%8B%9C-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8-%EC%A0%84%EC%86%A1-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84
-https://velog.io/@nick6253/%EC%9E%84%EC%8B%9C-%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8-%EB%B0%9C%EA%B8%89-%EA%B5%AC%ED%98%84SMTP
-https://chaereemee.tistory.com/9
-https://xetown.com/tips/1023190 (형식)
-https://badstorage.tistory.com/59
--->

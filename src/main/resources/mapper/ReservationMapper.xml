@@ -5,8 +5,7 @@
 <mapper namespace="com.asklepios.hospitalreservation_asklepios.Repository.IF_ReservationMapper">
 
     <select id="getAllHospitalName" resultType="com.asklepios.hospitalreservation_asklepios.VO.HospitalVO">
-        SELECT hospital_name
-        FROM hospital
+        SELECT hospital_name, hospital_addr FROM hospital
     </select>
 
     <select id="getHospitalAddress" parameterType="String" resultType="String">

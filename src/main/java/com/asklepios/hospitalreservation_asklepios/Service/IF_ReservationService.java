@@ -6,7 +6,7 @@ import com.asklepios.hospitalreservation_asklepios.VO.ReservationVO;
 import java.util.List;
 
 public interface IF_ReservationService {
-  public boolean checkHospitalName(String hospitalName);
+  public boolean checkHospitalName(String hospitalName, String hospitalAddr);
   public String findHospitalAddress(String hospitalName);
   public String findHospitalCode(String hospitalName);
   public String findDoctorName(String doctorCode);

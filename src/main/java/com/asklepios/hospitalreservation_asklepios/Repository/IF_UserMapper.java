@@ -23,6 +23,7 @@ public interface IF_UserMapper {
     void insertUserDoctorInfo(DoctorVO doctorVO);
     String selectPwdUsingID(String user_id);
     UserVO selectUserByID(String user_id);
+    UserVO selectUser(UserVO userVO);
     void updateUserCommonInfo(UserVO userVO);
     DoctorVO selectDoctorByID(String user_doctor_id);
     void updateUserDoctorInfo(DoctorVO doctorVO);

@@ -25,9 +25,10 @@ public class UserController {
     public String login(@ModelAttribute UserVO userVO, Model model, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
-
-        if(userService.login(userVO)){
-            session.setAttribute("loginUserId", userVO.getUser_id());
+        UserVO uservo = userService.login(userVO);
+        if(uservo != null) {
+            session.setAttribute("loginUser", uservo);
+            System.out.println(uservo.toString());
             session.setMaxInactiveInterval(30 * 60);
             return "redirect:/home";
         }else {

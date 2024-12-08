@@ -28,12 +28,14 @@ public class MailService {
       message.setRecipients(MimeMessage.RecipientType.TO, mail);
       message.setSubject("메일 인증 코드");
       String body = "";
-      body += "<h1>" + "메일 인증 코드" + "</h1><hr>";
-      body += "<h3>" + "안녕하세요. Asklepios입니다." + "</h3>";
-      body += "<h3>" + "고객님의 임시 비밀번호 발급을 위해 인증 코드를 발급하였습니다." + "</h3>";
-      body += "<h3>" + "아래의 인증 코드를 제한 시간 내에 입력해 주세요." + "</h3>";
-      body += "<h1><mark>" + number + "</mark></h1>";
-      body += "<h3>" + "감사합니다." + "</h3>";
+      body += "<div>";
+      body += "<h1>메일 인증 코드</h1><hr>";
+      body += "<h3>안녕하세요. Asklepios입니다.</h3>";
+      body += "<h3>고객님의 임시 비밀번호 발급을 위해 인증 코드를 발급하였습니다.</h3>";
+      body += "<h3>아래의 인증 코드를 제한 시간 내에 입력해 주세요.</h3>";
+      body += "<h1 style='background: white; color: #3b82f6;'>" + number + "</h1>";
+      body += "<h3>감사합니다.</h3>";
+      body += "</div>";
       message.setText(body,"UTF-8", "html");
     } catch (MessagingException e) {
       e.printStackTrace();
