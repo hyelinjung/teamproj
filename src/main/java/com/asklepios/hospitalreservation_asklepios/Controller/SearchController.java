@@ -56,8 +56,8 @@ public class SearchController {
         return modHospitalList;
     }
     @PostMapping("/getreview")
-    public List<ReviewVO> getReview(@RequestBody Hospital_doctorVO hdVO) throws JsonProcessingException {
-//        String hospital_code=hdVO.getHospital_code();
-        return searchService.searchReview("HOSP001");
+    public List<ReviewVO> getReview(@RequestParam("hospitalCode") String hospitalCode){
+        System.out.println(hospitalCode);
+        return searchService.searchReview(hospitalCode);
     }
 }

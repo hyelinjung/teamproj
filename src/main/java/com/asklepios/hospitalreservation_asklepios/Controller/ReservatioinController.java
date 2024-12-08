@@ -17,13 +17,13 @@ public class ReservatioinController {
   public boolean findHospitalName(@RequestParam("hospital_name") String hospitalName) {
     return reservationService.checkHospitalName(hospitalName);
   }
-
   @PostMapping("/reserve")
-  public String reserve(@RequestParam(value = "hospital_name", required = false) String hospitalName,Model model){
-//    System.out.println(hospitalName);
-    String doctorCode ="4fb63188-1578-4a0a-ae21-5a2786cb85cf";
+  public String reserve(@RequestParam("hospitalCode") String hospitalCode,
+                        @RequestParam("doctorCode") String doctorCode,
+      @RequestParam("hospitalName") String hospitalName,Model model){
+//    String doctorCode ="4fb63188-1578-4a0a-ae21-5a2786cb85cf";
     String doctorName = reservationService.findDoctorName(doctorCode);
-    String hospitalCode = reservationService.findHospitalCode(hospitalName);
+//    String hospitalCode = reservationService.findHospitalCode(hospitalName);
     model.addAttribute("hospital_name", hospitalName);
     model.addAttribute("hospital_code", hospitalCode);
     model.addAttribute("doctor_name", doctorName);
