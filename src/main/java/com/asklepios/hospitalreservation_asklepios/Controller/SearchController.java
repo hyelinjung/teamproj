@@ -1,16 +1,13 @@
 package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.Service.IF_SearchService;
-import com.asklepios.hospitalreservation_asklepios.VO.HospitalVO;
+
 import com.asklepios.hospitalreservation_asklepios.VO.Hospital_doctorVO;
 import com.asklepios.hospitalreservation_asklepios.VO.ReviewVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.tomcat.util.json.JSONParser;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
