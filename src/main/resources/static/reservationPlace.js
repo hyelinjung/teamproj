@@ -265,7 +265,10 @@ function getListItem(index, places) {
   $.ajax({
     url: '/asklepios/findHospitalName',
     type: 'post',
-    data: {hospital_name: places.place_name},
+    data: {
+      hospital_name: places.place_name,
+      hospital_address: places.road_address_name.substring(0,15)
+    },
     success:function(data){
       // console.log(data)
       if (data){

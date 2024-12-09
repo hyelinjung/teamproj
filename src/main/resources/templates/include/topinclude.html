@@ -5,7 +5,7 @@
     <div id="header">
       <a href="home" style="margin-top: 5px; margin-right: 25px;"><span class="text-blue-500 font-bold" style="font-size: 60px;">ASKLEPIOS</span></a>
       <div id="searchHospital">
-        <form action="search" method="get">
+        <form action="search?keyword=" method="get">
           <div class="searchInput">
             <input id="search-input" class="focus:ring-blue-500 focus:border-blue-500 p-3 focus:ring-1 focus:outline-none" type="search" placeholder="병원을 검색하세요" name="keyword">
             <input id="search-button" class="bg-blue-500 hover:bg-blue-600" type="submit" value="검색">
@@ -13,11 +13,11 @@
         </form>
       </div>
       <div id="loginSession">
-        <th:block th:if="${userId == null}">
+        <th:block th:if="${user == null}">
           <span style="padding-right: 20px;"><a href="login">로그인<i class="fa-solid fa-right-to-bracket"></i></a></span>
           <span><a href="/asklepios/userjoin">회원가입<i class="fa-solid fa-user-plus"></i></a></span>
         </th:block>
-        <th:block th:unless="${userId == null}">
+        <th:block th:unless="${user == null}">
           <form th:action="@{logout}" method="post" style="display: inline; padding-right: 20px;">
             <button type="submit">로그아웃&nbsp;<i class="fa-solid fa-arrow-right-from-bracket"></i></button>
           </form>
@@ -33,7 +33,7 @@
   <nav class="top-bar__menu-box-1">
     <ul>
       <li>
-        <a href="search?keyword=">병원목록</a>
+        <a href="search?keyword=">병원조회</a>
         <ul>
           <li><a href="search?keyword=내과">내과</a></li>
           <li><a href="search?keyword=이비인후과">이비인후과</a></li>
@@ -49,13 +49,16 @@
         </ul>
       </li>
       <li>
-        <a href="#">예약신청</a>
-        <ul>
-          <li><a href="#">text1</a></li>
-          <li><a href="#">text2</a></li>
-          <li><a href="#">text3</a></li>
-          <li><a href="#">text4</a></li>
-        </ul>
+        <a href="registration">병원등록</a>
+      </li>
+      <li>
+        <a href="reservation">진료예약</a>
+<!--        <ul>-->
+<!--          <li><a href="#">text1</a></li>-->
+<!--          <li><a href="#">text2</a></li>-->
+<!--          <li><a href="#">text3</a></li>-->
+<!--          <li><a href="#">text4</a></li>-->
+<!--        </ul>-->
       </li>
       <li>
         <a href="#">백신정보</a>

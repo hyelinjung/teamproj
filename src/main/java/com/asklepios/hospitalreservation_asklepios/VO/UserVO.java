@@ -2,12 +2,15 @@ package com.asklepios.hospitalreservation_asklepios.VO;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @Data
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class UserVO {
+public class UserVO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String user_id;
     private String user_password;

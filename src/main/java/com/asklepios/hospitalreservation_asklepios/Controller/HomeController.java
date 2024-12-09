@@ -6,6 +6,7 @@ import com.asklepios.hospitalreservation_asklepios.Util.FileDataUtil;
 //import com.asklepios.hospitalreservation_asklepios.Util.FileDataUtil;
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
 import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
+import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +20,10 @@ import java.util.List;
 public class HomeController {
   @Autowired
   IF_BoardService boardService;
-  @Autowired
-  LikeService likeService;
-  @Autowired
   FileDataUtil fileDataUtil;
     @GetMapping("/home")
-    public String main(@SessionAttribute(name = "loginUserId", required = false) String userId, Model model){
-        model.addAttribute("userId", userId);
+    public String main(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model){
+        model.addAttribute("user", user);
         return "home";
     }
 
@@ -98,18 +96,6 @@ public class HomeController {
     model.addAttribute("category", category);
     return "board/main";
   }
-//  @GetMapping("bboard/{category}")
-//  public String board(Model model,@PathVariable String category,
-//      @ModelAttribute PageVO pagevo) throws Exception {
-//    if(pagevo.getPage()==null){
-//      pagevo.setPage(1);
-//    }
-//    pagevo.setTotalCount(boardService.boardCount());
-//    List<BoardVO> boardList=boardService.BoardList(pagevo,category);
-//    model.addAttribute("boardList",boardList);
-//    model.addAttribute("type",category);
-//    return "board/main";
-//  }
   @GetMapping("bboard/write")
   public String write(){
     return "board/write";

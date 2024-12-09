@@ -27,13 +27,12 @@ public class FileDataUtil {
     private ArrayList<String>extNameArray=new ArrayList<>();
     private String uploadPath;
 
-  @Value("${upload.file.path}")
-  public void setUploadPath(String uploadPath) {
-    this.uploadPath = uploadPath;
-  }
+    @Value("${upload.file.path}")
+    public void setUploadPath(String uploadPath) {
+        this.uploadPath = uploadPath;
+    }
 
-
-  @RequestMapping(value="/downloadfile",method= RequestMethod.GET)
+    @RequestMapping(value = "/downloadfile", method = RequestMethod.GET)
     @ResponseBody
     public FileSystemResource fileDownload(@RequestParam("filename")String fileName, HttpServletResponse response){
         File file=new File(uploadPath+"/"+fileName);

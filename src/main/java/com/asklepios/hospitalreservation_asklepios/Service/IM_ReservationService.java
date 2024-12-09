@@ -2,6 +2,7 @@ package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation_asklepios.Repository.IF_ReservationMapper;
 import com.asklepios.hospitalreservation_asklepios.VO.HospitalVO;
+import com.asklepios.hospitalreservation_asklepios.VO.ReservationStatusVO;
 import com.asklepios.hospitalreservation_asklepios.VO.ReservationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,14 @@ public class IM_ReservationService implements IF_ReservationService {
 
 
   @Override
-  public boolean checkHospitalName(String hospitalName) {
+  public boolean checkHospitalName(String hospitalName, String hospitalAddr) {
     boolean flag = false;
     List<HospitalVO> hospitalNameList = reservationmapper.getAllHospitalName();
     for (HospitalVO hospitalVO : hospitalNameList) {
       if(hospitalVO.getHospital_name().contains(hospitalName)){
+        if(hospitalVO.getHospital_addr().contains(hospitalAddr)){
         flag = true;
+        }
       }
     }
     return flag;
@@ -85,4 +88,25 @@ public class IM_ReservationService implements IF_ReservationService {
 //    System.out.println(reservationvo.toString());
     reservationmapper.insertReservation(reservationvo);
   }
+
+  @Override
+  public List<ReservationStatusVO> findAllReservation(String user_id) {
+    return reservationmapper.selectUserReservationStatus(user_id);
+  }
+
+  @Override
+  public List<ReservationStatusVO> findAllDoctorReservation(String user_id) {
+    return reservationmapper.selectDoctorReservationStatus(user_id);
+  }
+
+  @Override
+  public void accept(String reservation_code) {
+    reservationmapper.updateAccept(reservation_code);
+  }
+
+  @Override
+  public void cancel(String reservation_code) {
+    reservationmapper.updateCancel(reservation_code);
+  }
+
 }

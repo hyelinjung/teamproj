@@ -2,6 +2,7 @@ package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.Service.IF_ReservationService;
 import com.asklepios.hospitalreservation_asklepios.VO.ReservationVO;
+import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,15 +13,26 @@ public class ReservatioinController {
   @Autowired
   IF_ReservationService reservationService;
 
+  @GetMapping("/reservation")
+  public String reservation(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
+    model.addAttribute("user", user);
+    return "reservationPlace";
+  }
+
   @ResponseBody
   @PostMapping("/findHospitalName")
-  public boolean findHospitalName(@RequestParam("hospital_name") String hospitalName) {
-    return reservationService.checkHospitalName(hospitalName);
+  public boolean findHospitalName(@RequestParam("hospital_name") String hospitalName,
+                                  @RequestParam("hospital_address") String hospitalAddr) {
+    return reservationService.checkHospitalName(hospitalName, hospitalAddr);
   }
   @PostMapping("/reserve")
-  public String reserve(@RequestParam("hospitalCode") String hospitalCode,
-                        @RequestParam("doctorCode") String doctorCode,
-      @RequestParam("hospitalName") String hospitalName,Model model){
+  public String reserve(@SessionAttribute(name = "loginUser", required = false) UserVO user,
+        @RequestParam("hospitalCode") String hospitalCode,
+        @RequestParam("doctorCode") String doctorCode,
+        @RequestParam("hospitalName") String hospitalName,
+                        Model model){
+    System.out.println(user.toString());
+    model.addAttribute("user", user);
 //    String doctorCode ="4fb63188-1578-4a0a-ae21-5a2786cb85cf";
     String doctorName = reservationService.findDoctorName(doctorCode);
 //    String hospitalCode = reservationService.findHospitalCode(hospitalName);
@@ -28,9 +40,9 @@ public class ReservatioinController {
     model.addAttribute("hospital_code", hospitalCode);
     model.addAttribute("doctor_name", doctorName);
     model.addAttribute("doctor_code", doctorCode);
-    model.addAttribute("user_name","조준곤");
-    model.addAttribute("user_id","jojungon");
-    model.addAttribute("user_tel","010-6880-3477");
+    model.addAttribute("user_name",user.getUser_name());
+    model.addAttribute("user_id",user.getUser_id());
+    model.addAttribute("user_tel",user.getUser_tel());
     return "reservationForm";
   }
 
@@ -39,10 +51,10 @@ public class ReservatioinController {
   public String[] reserve1(@RequestParam("reservation_date") String reservationDate,
                            @RequestParam("hospital_code") String hospitalCode,
                            @RequestParam("doctor_code") String doctorCode){
-    System.out.println(hospitalCode);
-    System.out.println(doctorCode
-    );
-    System.out.println(reservationDate);
+//    System.out.println(hospitalCode);
+//    System.out.println(doctorCode);
+//    System.out.println(reservationDate);
+
     return reservationService.findAllReservationTime(hospitalCode, doctorCode, reservationDate);
   }
 
@@ -53,9 +65,10 @@ public class ReservatioinController {
     return "redirect:/home";
   }
 
-  @GetMapping("/reservationForm")
-  public String reservationForm() {
-    return "reservationForm";
-  }
+//  @GetMapping("/reservationForm")
+//  public String reservationForm(@SessionAttribute(name = "loginUserId", required = false) String userId, Model model) {
+//    model.addAttribute("userId", userId);
+//    return "reservationForm";
+//  }
 
 }
