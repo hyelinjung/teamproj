@@ -1,8 +1,8 @@
 flatpickr("#calender",{
   inline:true
 });
-let hospitalCode = document.getElementsByTagName('input')[1].value;
-let doctorCode = document.getElementsByTagName('input')[3].value;
+let hospitalCode = document.querySelector("input[name='reservation_hospital_code']").value;
+let doctorCode = document.querySelector("input[name='reservation_user_doctor_code']").value;
 
 document.querySelector('#calender').addEventListener('change', ()=>{
   let reservationDate = document.querySelector('#calender').value;
@@ -14,6 +14,7 @@ document.querySelector('#calender').addEventListener('change', ()=>{
   // 기존 날짜에 있던 버튼들을 삭제 (새로 버튼을 추가하기 위해)
   removeAllChildNods(buttonContainer);
   console.log(reservationDate);
+  console.log(doctorCode);
     $.ajax({
       url: "/asklepios/isReserve",
       type: "post",

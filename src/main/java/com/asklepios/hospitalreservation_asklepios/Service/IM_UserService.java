@@ -142,5 +142,20 @@ public class IM_UserService implements IF_UserService{
         usermapper.updateUserDoctorInfo(doctorVO);
     }
 
+    @Override
+    public String findDoctorCode(String userId) {
+        return usermapper.selectDoctorCode(userId);
+    }
+
+    @Override
+    public int countReservation(String doctorCode) {
+        return usermapper.selectReservationCount(doctorCode);
+    }
+
+    @Override
+    public int countTotalReservation(String userId) {
+        return usermapper.selectTotalReservationCount(userId);
+    }
+
 
 }

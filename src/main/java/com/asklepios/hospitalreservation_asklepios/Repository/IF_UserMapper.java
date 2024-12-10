@@ -27,4 +27,7 @@ public interface IF_UserMapper {
     void updateUserCommonInfo(UserVO userVO);
     DoctorVO selectDoctorByID(String user_doctor_id);
     void updateUserDoctorInfo(DoctorVO doctorVO);
+    String selectDoctorCode(String userId);
+    int selectReservationCount(String doctorCode);
+    int selectTotalReservationCount(String userId);
 }

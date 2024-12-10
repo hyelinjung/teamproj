@@ -19,4 +19,8 @@ public interface IF_UserService {
     public void modifyUserCommonInfo(UserVO userVO);
     public DoctorVO printOneDoctorInfo(String user_doctor_id);
     public void modifyUserDoctorInfo(DoctorVO doctorVO);
+    public String findDoctorCode(String userId);
+    public int countReservation(String doctorCode);
+    public int countTotalReservation(String userId);
+
 }

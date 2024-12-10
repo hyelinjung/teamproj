@@ -1,28 +1,114 @@
-<aside class="quickMenu">
-    <div class="bg-green-500 border border-gray-200 rounded-lg shadow dark:bg-green-800 dark:border-gray-700">
+<aside class="quickMenu" style="position: sticky; top: 0;">
+    <div class="bg-blue-500 border border-gray-200 rounded-lg shadow dark:bg-green-800 dark:border-gray-700">
         <div class="profileImage">
             <a href="myPage">
-                <img src="defaultImage.png" alt="기본 프로필">
+                <th:block th:if="${user == null}">
+                    <img src="defaultGuest.png" alt="기본 프로필">
+                </th:block>
+                <th:block th:unless="${user == null}">
+                    <th:block th:if="${user.user_authority == 'client'}">
+                        <img src="defaultClient.png" alt="기본 프로필">
+                    </th:block>
+                    <th:block th:if="${user.user_authority == 'doctor'}">
+                        <img src="defaultDoctor.png" alt="기본 프로필">
+                    </th:block>
+                </th:block>
             </a>
         </div>
-        <div class="p-5">
-            <hr style="margin-bottom: 10px">
+        <div class="p-5 text-white text-3xl">
+            <th:block th:if="${user == null}">
+                <p style="text-align: center; font-size: 25px">게스트님 환영합니다.</p>
+            </th:block>
+            <th:block th:unless="${user == null}">
+                <p style="text-align: center; font-size: 25px"><span th:text="${user.user_name}"></span>님 환영합니다.</p>
+            </th:block>
+            <hr style="margin-bottom: 10px; margin-top: 10px;">
             <h1>회원 정보</h1>
-            <p style="font-size: 14px">회원 이름 : ${user_id}</p>
-            <p style="font-size: 14px">이메일 : ${user_mail}</p>
-            <hr style="margin-top: 10px; margin-bottom: 10px">
-            <h1><a href="/reservation">예약 현황</a></h1>
-            <p style="font-size: 14px">예약 대기 : ${}</p>
-            <p style="font-size: 14px">예약 승인 : ${}</p>
-            <hr style="margin-top: 10px; margin-bottom: 10px">
-            <a href="/asklepios/myPage?user_id=gkgjfj" >마이페이지</a>
-            <hr style="margin-top: 10px; margin-bottom: 10px">
-            <a href="/reservation">예약하기</a>
-            <hr style="margin-top: 10px; margin-bottom: 10px">
-            <a href="/vaccinationInfo">백신정보</a>
-            <hr style="margin-top: 10px; margin-bottom: 10px">
-            <a href="/hospitalInfo">병원검색</a>
+            <th:block th:if="${user == null}">
+                <span style="font-size: 20px"><a href="login">로그인 하기</a></span>
+                <hr style="margin-top: 10px; margin-bottom: 10px">
+            </th:block>
+            <th:block th:unless="${user == null}">
+                <p style="font-size: 20px">이름 : <span th:text="${user.user_name}"></span></p>
+                <p style="font-size: 20px">이메일 : <span th:text="${user.user_email}"></span></p>
+                <p id="hiddenId" style="font-size: 20px" th:text="${user.user_id}" hidden></p>
+                <p id="hiddenAuth" style="font-size: 20px" th:text="${user.user_authority}" hidden></p>
+                <hr style="margin-top: 10px; margin-bottom: 10px">
+                <a href="/asklepios/myPage" onclick="checkSession()">마이페이지</a>
+                <hr style="margin-top: 10px; margin-bottom: 10px">
+                <a href="/asklepios/reservation" onclick="checkSession()">예약하기</a>
+                <hr style="margin-top: 10px; margin-bottom: 10px">
+                <a href="/asklepios/home" onclick="checkSession()">예약현황</a>
+                <th:block th:if="${user.user_authority == 'client'}">
+                    <div>대기중인 예약 : <span id="reservationCount1"></span> 건</div>
+                    <hr style="margin-top: 10px; margin-bottom: 10px">
+                </th:block>
+                <th:block th:if="${user.user_authority == 'doctor'}">
+                    <div>대기중인 예약 : <span id="reservationCount2"></span> 건</div>
+                    <hr style="margin-top: 10px; margin-bottom: 10px">
+                </th:block>
+            </th:block>
+<!--            <th:block th:if="${user == null}">-->
+<!--                <hr style="margin-top: 10px; margin-bottom: 10px">-->
+<!--            </th:block>-->
+<!--            <th:block th:unless="${user == null}">-->
+<!--                -->
+<!--            </th:block>-->
+<!--            <a href="/vaccinationInfo">백신정보</a>-->
+<!--            <hr style="margin-top: 10px; margin-bottom: 10px">-->
+            <a href="/search?keyword=">병원검색</a>
             <hr style="margin-top: 10px; margin-bottom: 10px">
         </div>
     </div>
 </aside>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script>
+    let userId = document.querySelector('#hiddenId').innerText;
+    let userAuth = document.querySelector('#hiddenAuth').innerText;
+    let doctorCode;
+    if(userAuth === 'doctor'){
+        $.ajax({
+            url: '/asklepios/findDoctorCode',
+            type:'post',
+            data:{
+                user_id : userId
+            },
+            success:function (data){
+                doctorCode = data;
+                if(doctorCode != null){
+                    $.ajax({
+                        url: '/asklepios/reservationCount',
+                        type: 'post',
+                        data: {
+                            doctor_code: doctorCode
+                        },
+                        success: function (data) {
+                            document.querySelector('#reservationCount2').innerText = data;
+                        },
+                        error: function () {
+                            alert("zz");
+                        }
+                    })
+                }
+            },
+            error:function (){
+                alert("zz");
+            }
+        })
+    }
+    if(userAuth === 'client'){
+        $.ajax({
+            url: '/asklepios/totalReservationCount',
+            type: 'post',
+            data: {
+                user_id: userId
+            },
+            success: function (data) {
+                document.querySelector('#reservationCount1').innerText = data;
+            },
+            error: function () {
+                alert("zz");
+            }
+        })
+    }
+</script>

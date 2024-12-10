@@ -44,7 +44,7 @@
       <!-- 병원 리스트 -->
       <div class="list">
         <!--onsubmit="return sendPage()"-->
-        <form action="reserve" method="post" onsubmit="return sendPage()">
+        <form>
           <ul id="hospitalList" class="hospitalList"></ul>
         </form>
         <div id="pagination" class="pagination"></div>
@@ -55,12 +55,70 @@
       </div>
     </div>
   </div>
+  <aside id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
 </div>
+
 <!--modal-->
-<div id="modalContainer" class="hidden">
-  <div id="modalContent">
+<div id="modalInfo">
+  <div id="infoHeader">
+    <hr>
+    <span id="hospitalName" style="font-size: 40px; margin-left: 85px;"></span>
+    <div id="closebutton2"><img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/></div>
+    <div>
+      <table style="justify-content: center; display: flex; margin-top: 30px;">
+        <tbody id="infoTable">
+        <tr class="row">
+          <td>
+            <div class="resultrow">
+<!--              <div class="time">-->
+<!--                <span class="info" >진료시간: </span>-->
+<!--                <span class="info" id="clickhospitaltime"> </span>-->
+<!--              </div>-->
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <div class="infoTitle">병원명</div>
+        <div class="rheader" id="clickhospitalname"></div>
+        <div class="infoTitle">주소</div>
+        <div class="info1" id="clickhospitaladdr"></div>
+        <div class="infoTitle">연락처</div>
+        <div class="info1" id="clickhospitaltel"></div>
+        <div class="infoTitle">진료시간</div>
+        <div class="info1" id="clickhospitaltime"></div>
+        <div class="infoTitle">공지사항</div>
+        <div id="infoIntro"></div>
+        <div class="infoTitle">소개글</div>
+        <div id="infoNotice"></div>
+        <div class="infoTitle">의사정보</div>
+        <table id="doctorTable">
+          <tr>
+            <td>이름</td>
+            <td class="clickhospitaldoctorname"></td>
+          </tr>
+          <tr>
+            <td>진료과목</td>
+            <td class="clickhospitaldoctorsubject"></td>
+          </tr>
+          <tr>
+            <td>약력</td>
+            <td class="clickhospitaldoctorcareer"></td>
+          </tr>
+        </table>
+        <form action="reserve" method="post" onsubmit="return sendPage()">
+          <input type="hidden" id="hospitalName2" name="hospitalName">
+          <input  type="hidden" id="doctorCode" name="doctorCode">
+          <input type="hidden" id="hospitalCode" name="hospitalCode">
+          <input type="hidden" id="userID" name="userID" value="test">
+          <input id="reservation" class="bg-blue-500 hover:bg-blue-600 text-white" type="submit" style="width: 200px;height: 80px; font-size: 35px; border-radius: 5px; cursor: pointer;"  value="예약하기">
+        </form>
+      </div>
+    </div>
   </div>
 </div>
+
 </body>
 </html>
 <script type="text/javascript" src="reservationPlace.js"></script>

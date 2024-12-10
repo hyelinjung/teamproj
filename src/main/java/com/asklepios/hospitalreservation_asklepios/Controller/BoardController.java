@@ -1,7 +1,6 @@
 package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.Service.IF_BoardService;
-import com.asklepios.hospitalreservation_asklepios.Service.LikeService;
 import com.asklepios.hospitalreservation_asklepios.Util.FileDataUtil;
 //import com.asklepios.hospitalreservation_asklepios.Util.FileDataUtil;
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
@@ -17,15 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class BoardController {
   @Autowired
   IF_BoardService boardService;
   FileDataUtil fileDataUtil;
-    @GetMapping("/home")
-    public String main(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model){
-        model.addAttribute("user", user);
-        return "home";
-    }
 
   @GetMapping("/bboard_all")
   public String board_all(Model model, @ModelAttribute PageVO pagevo) throws Exception{

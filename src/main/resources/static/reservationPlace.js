@@ -273,15 +273,18 @@ function getListItem(index, places) {
       // console.log(data)
       if (data){
         let reserveButton = document.createElement('button');
-        reserveButton.type = 'submit';/*<= 모달 창에서는 submit으로 변경  */
+        reserveButton.type = 'button';/*<= 모달창을 띄울때는 button으로 변경  */
         reserveButton.name = 'hospital_name';
         reserveButton.value = places.place_name;
-        // reserveButton.setAttribute('onclick', 'sendPage()');
+        // reserveButton.setAttribute('onclick', 'addEvent()');
         reserveButton.className =
             'my-auto d-flex w-36 h-16 rounded-lg font-semibold text-white text-3xl bg-blue-500 hover:bg-blue-600';
         reserveButton.textContent = '예약하기';
-
+        reserveButton.addEventListener('click', () => {
+          showInfo(places.place_name, places.road_address_name.substring(0, 15));
+        });
         buttonContainer.appendChild(reserveButton);
+
       }
     },
     error: function (){
@@ -289,7 +292,121 @@ function getListItem(index, places) {
     }
   });
   return el;
+  // 버튼 클릭시 모달 이벤트로 변경
+  function addEvent(name, address){
+    console.log(places.place_name);
+    console.log(places.road_address_name.substring(0,15));
+    showInfo(name, address);
+  }
 }
+let modalInfo=document.getElementById("modalInfo");
+let hospitalname=document.getElementById("hospitalName");
+let closeButton2=document.getElementById("closebutton2");
+//병원정보모달 닫기
+closeButton2.addEventListener("click",()=>{
+  modalInfo.style.display="none";
+  document.body.style.backgroundColor="white";
+})
+//병원이름 클릭시 병원정보모달
+let clickHospitalInfo;
+let doctorData;
+function showInfo(name, addr){
+  console.log(name);
+  console.log(addr);
+  $.ajax({
+    url: "/asklepios/findHospital",
+    type: 'post',
+    data: {
+      hospital_name1: name,
+      hospital_address1: addr
+    },
+    success:function(result){
+      console.log(result);
+      clickHospitalInfo = result;
+      console.log(clickHospitalInfo.hospital_code);
+      if(clickHospitalInfo.hospital_code === null){
+        alert(name+"을/를 찾지못했습니다")
+      }else{
+        // //병원코드로 리뷰 받아오기
+
+        //모달창 병원정보 입력
+        document.getElementById("clickhospitalname").innerText=clickHospitalInfo.hospital_name;
+        document.getElementById("clickhospitaladdr").innerText=clickHospitalInfo.hospital_addr;
+        document.getElementById("clickhospitaltel").innerText=clickHospitalInfo.hospital_tel;
+        document.getElementById("clickhospitaltime").innerText=clickHospitalInfo.hospital_time;
+        document.getElementById("infoIntro").innerText=clickHospitalInfo.hospital_intro;
+        document.getElementById("infoNotice").innerText=clickHospitalInfo.hospital_notice;
+        document.getElementById("hospitalCode").value=clickHospitalInfo.hospital_code;
+        document.getElementById("hospitalName2").value=clickHospitalInfo.hospital_name;
+        $.ajax({
+          url: "/asklepios/findDoctors",
+          type: "post",
+          data:{
+            hospital_code : clickHospitalInfo.hospital_code
+          },
+          success:function (doctors){
+            console.log(doctors);
+            doctorData = doctors;
+            let doctorTable=document.getElementById("doctorTable");
+            doctorTable.innerHTML="";
+            doctorData.forEach((doctor, index) => {
+              let doctorRow = `
+              <tr>
+                  <td>이름</td>
+                  <td>${doctor.user_name}</td>
+                  <td rowspan="3">`;
+                  if(doctor.user_image == null){
+                    doctorRow += `<img src="profile_image/doctor_image.jpg" alt="의사 사진" width="150px" height="200px" style="border-radius: 10px;" />`;
+                  }else{
+                    doctorRow += `<img src="profile_image/${doctor.user_image}" alt="의사 사진" width="150px" height="200px" style="border-radius: 10px;" />`;
+                  }
+                  doctorRow += `</td>
+                  <td rowspan="3" style="text-align: center">
+                      <input type="radio" name="selectDoctor" class="w-6 h-6" value="${doctor.user_doctor_code}" ${index === 0 ? "checked" : ""}/>
+                  </td>
+              </tr>
+              <tr>
+                  <td>진료과목</td>
+                  <td>${doctor.user_doctor_medical}</td>
+              </tr>
+              <tr>
+                  <td>약력</td>
+                  <td>${doctor.user_doctor_career}<br>${doctor.user_doctor_graduate}</td>
+              </tr>
+              <br>`;
+              doctorTable.innerHTML += doctorRow;
+            })
+            // 첫 번째 의사의 코드를 기본값으로 설정
+            const doctorCodeInput = document.getElementById("doctorCode");
+            const defaultRadio = document.querySelector("input[name='selectDoctor']:checked");
+            if (defaultRadio) {
+              doctorCodeInput.value = defaultRadio.value;
+            }
+
+            // 라디오 버튼 변경 이벤트 처리
+            document.querySelectorAll("input[name='selectDoctor']").forEach(radio => {
+              radio.addEventListener("change", function () {
+                doctorCodeInput.value = this.value; // 선택된 라디오 버튼의 값을 hidden input에 설정
+                console.log("선택된 의사 코드:", this.value); // 디버그 로그
+              });
+            });
+          },
+          error:function (){
+            alert("error");
+          }
+        })
+      }
+    },
+    error: function (){
+      alert("왜 안될까?");
+    }
+  });
+  document.body.style.backgroundColor="gray";
+  modalInfo.style.backgroundColor="white";
+  modalInfo.style.display="flex";
+  hospitalname.innerText="상세정보";
+}
+
 function sendPage(){
   let flag = confirm("예약하시겠습니까?");
   if(flag){
@@ -383,11 +500,4 @@ function removeAllChildNods(el) {
   }
 }
 
-// function sendPage(){
-//   let flag = confirm("예약하시겠습니까?");
-//   if(flag){
-//     return flag;
-//   }else{
-//     return flag;
-//   }
-// }
+
