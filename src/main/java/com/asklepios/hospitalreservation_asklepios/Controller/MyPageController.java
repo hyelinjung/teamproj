@@ -5,14 +5,13 @@ import com.asklepios.hospitalreservation_asklepios.Service.IF_UserService;
 import com.asklepios.hospitalreservation_asklepios.Util.Profile_ImageUtil;
 import com.asklepios.hospitalreservation_asklepios.VO.DoctorVO;
 import com.asklepios.hospitalreservation_asklepios.VO.ReservationStatusVO;
-import com.asklepios.hospitalreservation_asklepios.VO.ReservationVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.List;
 
@@ -32,31 +31,45 @@ public class MyPageController {
 //    private String filePath;
 
     @GetMapping("/myPage")
-    public String myPage(@RequestParam("user_id") String user_id, Model model) {
-        if (user_id == null) {
+    public String myPage(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
+        if (user == null) {
             return "redirect:/login";
-        } else {
+        } else if(user.getUser_authority().equals("client")) {
+            user.divideEngName();
+            user.divideAddr();
+            user.divideEmail();
+            user.divideTel();
+            String filePath = "profile_image/" + user.getUser_image();
+            // Reservation 불러오기
+            List<ReservationStatusVO> reservationStatusVOList = reservationService.findAllReservation(user.getUser_id());
+//            List<ReservationStatusVO> reservationDoctorStatusVOList = reservationService.findAllDoctorReservation(user_id);
+            model.addAttribute("filePath", filePath);
+            model.addAttribute("user", user);
+            model.addAttribute("reservationStatusVOList", reservationStatusVOList);
+//            model.addAttribute("reservationDoctorStatusVOList", reservationDoctorStatusVOList);
+            return "MyPage/myPageClient";
+        }
+        else {
             // UserVO 불러오기
-            UserVO userVO = userService.printOneInfo(user_id);
-            userVO.divideEngName();
-            userVO.divideAddr();
-            userVO.divideEmail();
-            userVO.divideTel();
-            String filePath = "profile_image/" + userVO.getUser_image();
-
+//            UserVO userVO = userService.printOneInfo(user_id);
+            user.divideEngName();
+            user.divideAddr();
+            user.divideEmail();
+            user.divideTel();
+            String filePath = "profile_image/" + user.getUser_image();
             // DoctorVO 불러오기
-            DoctorVO doctorVO = userService.printOneDoctorInfo(user_id);
-
+            System.out.println(user.getUser_id());
+            DoctorVO doctorVO = userService.printOneDoctorInfo(user.getUser_id());
+            System.out.println(doctorVO);
             // Reservation 불러오기
 //            List<ReservationStatusVO> reservationStatusVOList = reservationService.findAllReservation(user_id);
 //            List<ReservationStatusVO> reservationDoctorStatusVOList = reservationService.findAllDoctorReservation(user_id);
-
             model.addAttribute("filePath", filePath);
-            model.addAttribute("userVO", userVO);
+            model.addAttribute("user", user);
             model.addAttribute("doctorVO", doctorVO);
 //            model.addAttribute("reservationStatusVOList", reservationStatusVOList);
 //            model.addAttribute("reservationDoctorStatusVOList", reservationDoctorStatusVOList);
-            return "MyPage/myPage";
+            return "MyPage/myPageDoctor";
         }
     }
 
@@ -94,16 +107,30 @@ public class MyPageController {
 
     @PostMapping(value = "/updateUserInfo")
     public String modifyProfile(@ModelAttribute UserVO userVO, @ModelAttribute DoctorVO doctorVO, @RequestParam(value = "file", required = false) MultipartFile file, Model model) throws Exception {
-        String newFileName = profileImageUtil.storeFile(file);
-        System.out.println(userVO.toString());
-        System.out.println(doctorVO.toString());
-        userVO.setUser_image(newFileName);
-        String doctor_id = userVO.getUser_id();
-        model.addAttribute("user_id", doctor_id);
-        doctorVO.setUser_doctor_id(doctor_id);
-        userService.modifyUserDoctorInfo(doctorVO);
-        userService.modifyUserCommonInfo(userVO);
-//        System.out.println(userVO.getUser_authority());
-        return "MyPage/myPage";
+        if(userVO.getUser_authority().equals("client")) {
+            String newFileName = profileImageUtil.storeFile(file);
+            System.out.println(userVO.toString());
+            System.out.println(doctorVO.toString());
+            userVO.setUser_image(newFileName);
+            String doctor_id = userVO.getUser_id();
+            model.addAttribute("user_id", doctor_id);
+            doctorVO.setUser_doctor_id(doctor_id);
+            userService.modifyUserDoctorInfo(doctorVO);
+            userService.modifyUserCommonInfo(userVO);
+    //        System.out.println(userVO.getUser_authority());
+            return "MyPage/myPageClient";
+        }else{
+            String newFileName = profileImageUtil.storeFile(file);
+            System.out.println(userVO.toString());
+            System.out.println(doctorVO.toString());
+            userVO.setUser_image(newFileName);
+            String doctor_id = userVO.getUser_id();
+            model.addAttribute("user_id", doctor_id);
+            doctorVO.setUser_doctor_id(doctor_id);
+            userService.modifyUserDoctorInfo(doctorVO);
+            userService.modifyUserCommonInfo(userVO);
+            //        System.out.println(userVO.getUser_authority());
+            return "MyPage/myPageDoctor";
+        }
     }
 }

@@ -12,7 +12,7 @@ public class Hospital_doctorVO {
   private String hospital_date;
   private String hospital_tel;
   private String hospital_addr;
-  private String doctor_code;
+  private String user_doctor_code;
   private String codes;
   private String user_doctor_id;
   private String user_doctor_hospital_code;

@@ -1,9 +1,8 @@
 package com.asklepios.hospitalreservation_asklepios.Repository;
 
-import com.asklepios.hospitalreservation_asklepios.VO.HospitalVO;
-import com.asklepios.hospitalreservation_asklepios.VO.ReservationStatusVO;
-import com.asklepios.hospitalreservation_asklepios.VO.ReservationVO;
+import com.asklepios.hospitalreservation_asklepios.VO.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,4 +23,6 @@ public interface IF_ReservationMapper {
   List<ReservationStatusVO> selectDoctorReservationStatus(String user_id);
   void updateAccept(String reservation_code);
   void updateCancel(String reservation_code);
+  List<Hospital_doctorVO> selectDoctor(String hospitalCode);
+  HospitalVO selectHospital(@Param("hospitalName") String hospitalName, @Param("hospitalAddr") String HospitalAddr);
 }
