@@ -37,13 +37,18 @@ header{
     height: 150px;
     align-content: center;
 }
-
+footer {
+    font-family: 'Pretendard-Regular', 'sans-serif';
+}
 #loginSession{
     width: 450px;
     font-size: 35px;
     color: #3B82F6;
     margin-top: 20px;
     padding-left: 20px;
+}
+#dynamite {
+    font-family: 'Tenada', 'sans-serif';
 }
 body{
     font-family: 'Pretendard-Regular','sans-serif';

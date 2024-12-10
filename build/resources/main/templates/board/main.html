@@ -14,7 +14,7 @@
 <style>
   #boardtable{
     margin-top: 150px;
-    margin-left: 50px;
+    margin-left: 150px;
     width: 900px;
     border-collapse: collapse;
     border-radius: 10px;
@@ -60,147 +60,119 @@
 }
 #write{
   margin-top: 20px;
-  margin-left: 50px;
+  margin-left: 150px;
   width: 120px;
   height: 60px;
   font-size: 25px;
   background: #84b6ff;
   border-radius: 10px;
 }
-/*#boardSearch{*/
-/*  display: inline-block;*/
-/*  padding-left: 10px;*/
-/*  padding-right: 10px;*/
-/*  border: 1px solid #3B82F6 ;*/
-/*  border-radius: 10px ;*/
-/*  margin-left: 200px;*/
-/*  width: 300px;*/
-/*  height: 60px;*/
-/*  font-size: 25px;*/
-/*}*/
-/*#searchButton{*/
-/*  margin-top: 20px;*/
-/*  margin-left: 30px;*/
-/*  width: 120px;*/
-/*  height: 60px;*/
-/*  font-size: 25px;*/
-/*  background: #84b6ff;*/
-/*  border-radius: 10px;*/
-/*}*/
-#write :active{
-  background: #3B82F6;
+
+
+
+section{
+  display: inline-block;
 }
+
 </style>
 <body>
     <div th:replace="~{include/topinclude}"></div>
-    <aside id="aside1">
-        <div class="list">
-            내과
-        </div>
-        <div class="list">
-            내과
-        </div>
-        <div class="list">
-            내과
-        </div>
-        <div class="list">
-            내과
-        </div>
-        <div class="list">
-            내과
-        </div>
-    </aside>
-    <section>
-<!--        <div id="boardheader">게시판</div>-->
-<!--        <div id="boardmenu">-->
-<!--            <span><a href="#">오늘의 건강</a> |</span>-->
-<!--            <span><a href="#">캠페인</a>  |</span>-->
-<!--            <span><a href="#">의료기기</a>  |</span>-->
-<!--            <span><a href="#">자유게시판</a></span>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <form action="bboard/write" method="get">-->
-<!--                <table id="boardtable">-->
-<!--                    <thead>-->
-<!--                        <tr>-->
-<!--                            <td width="10%">글 번호</td>-->
-<!--                            <td width="15%">작성자</td>-->
-<!--                            <td width="35%">제목</td>-->
-<!--                            <td width="20%">작성일</td>-->
-<!--                            <td width="10%">조회수</td>-->
-<!--                            <td width="10%">좋아요</td>-->
-<!--                        </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody>-->
-<!--                        <tr th:each="boardvo:${noticelist}">-->
-<!--                            <td>공지사항</td>-->
-<!--                            <td>운영진</td>-->
-<!--                            <td th:text="${boardvo.board_title}"></td>-->
-<!--                            <td th:text="${#strings.substring(boardvo.board_date,0,10)}"></td>-->
-<!--                            <td th:text="${boardvo.board_viewcount}"></td>-->
-<!--                            <td th:text="${boardvo.board_goodcount}"> </td>-->
-<!--                        </tr>-->
-<!--                        <tr th:each="boardvo:${boardlist}">-->
-<!--                            <td th:text="${boardvo.board_sequence}"></td>-->
-<!--                            <td th:text="${boardvo.board_user_id}"></td>-->
-<!--                            <td >-->
-<!--                                <a th:text="${boardvo.board_title}" th:href="@{detail(no=${boardvo.board_sequence})}"></a>-->
-<!--                            </td>-->
-<!--                            <td th:text="${#strings.substring(boardvo.board_date,0,10)}"></td>-->
-<!--                            <td th:text="${boardvo.board_viewcount}"></td>-->
-<!--                            <td th:text="${boardvo.board_goodcount}"></td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td colspan="6">-->
-<!--                                <span th:if= "${pageVO.prev}">-->
-<!--                                    <a th:href="@{bboard_health(page=${pageVO.startPage})}">[이전]</a>-->
-<!--                                </span>-->
-<!--                                <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">-->
-<!--                                    <a th:text="${idx}" th:href="@{bboard_health(page=${idx})}"></a>-->
-<!--                                </span>-->
-<!--                                <span th:if="${pageVO.next}">-->
-<!--                                    <a th:href="@{bboard_health(page=${pageVO.endPage+1})}">[다음]</a>-->
-<!--                                </span>-->
-<!--                            </td>-->
+    <div class="homeContainer">
+      <aside id="aside1" th:replace="~{asideMenuTemplates/noticeBoardAside}">
 
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>1</td>-->
-<!--                            <td><a href="#">sample</a></td>-->
-<!--                            <td>2024.11.21</td>-->
-<!--                            <td>0</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>1</td>-->
-<!--                            <td><a href="#">sample</a></td>-->
-<!--                            <td>2024.11.21</td>-->
-<!--                            <td>0</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>1</td>-->
-<!--                            <td><a href="#">sample</a></td>-->
-<!--                            <td>2024.11.21</td>-->
-<!--                            <td>0</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>1</td>-->
-<!--                            <td><a href="#">sample</a></td>-->
-<!--                            <td>2024.11.21</td>-->
-<!--                            <td>0</td>-->
-<!--                        </tr>-->
+      </aside>
 
-<!--                        <tr>-->
-<!--                            <td colspan="6" style="float: left">-->
-<!--                                <input type="submit" value="글 쓰기">-->
-<!--                            </td>-->
-<!--                        </tr>-->
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </form>-->
-<!--        </div>-->
-      <div id="boardheader">게시판</div>
-      <table id="boardtable">
-        <thead>
+      <section>
+        <!--        <div id="boardheader">게시판</div>-->
+        <!--        <div id="boardmenu">-->
+        <!--            <span><a href="#">오늘의 건강</a> |</span>-->
+        <!--            <span><a href="#">캠페인</a>  |</span>-->
+        <!--            <span><a href="#">의료기기</a>  |</span>-->
+        <!--            <span><a href="#">자유게시판</a></span>-->
+        <!--        </div>-->
+        <!--        <div>-->
+        <!--            <form action="bboard/write" method="get">-->
+        <!--                <table id="boardtable">-->
+        <!--                    <thead>-->
+        <!--                        <tr>-->
+        <!--                            <td width="10%">글 번호</td>-->
+        <!--                            <td width="15%">작성자</td>-->
+        <!--                            <td width="35%">제목</td>-->
+        <!--                            <td width="20%">작성일</td>-->
+        <!--                            <td width="10%">조회수</td>-->
+        <!--                            <td width="10%">좋아요</td>-->
+        <!--                        </tr>-->
+        <!--                    </thead>-->
+        <!--                    <tbody>-->
+        <!--                        <tr th:each="boardvo:${noticelist}">-->
+        <!--                            <td>공지사항</td>-->
+        <!--                            <td>운영진</td>-->
+        <!--                            <td th:text="${boardvo.board_title}"></td>-->
+        <!--                            <td th:text="${#strings.substring(boardvo.board_date,0,10)}"></td>-->
+        <!--                            <td th:text="${boardvo.board_viewcount}"></td>-->
+        <!--                            <td th:text="${boardvo.board_goodcount}"> </td>-->
+        <!--                        </tr>-->
+        <!--                        <tr th:each="boardvo:${boardlist}">-->
+        <!--                            <td th:text="${boardvo.board_sequence}"></td>-->
+        <!--                            <td th:text="${boardvo.board_user_id}"></td>-->
+        <!--                            <td >-->
+        <!--                                <a th:text="${boardvo.board_title}" th:href="@{detail(no=${boardvo.board_sequence})}"></a>-->
+        <!--                            </td>-->
+        <!--                            <td th:text="${#strings.substring(boardvo.board_date,0,10)}"></td>-->
+        <!--                            <td th:text="${boardvo.board_viewcount}"></td>-->
+        <!--                            <td th:text="${boardvo.board_goodcount}"></td>-->
+        <!--                        </tr>-->
+        <!--                        <tr>-->
+        <!--                            <td colspan="6">-->
+        <!--                                <span th:if= "${pageVO.prev}">-->
+        <!--                                    <a th:href="@{bboard_health(page=${pageVO.startPage})}">[이전]</a>-->
+        <!--                                </span>-->
+        <!--                                <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">-->
+        <!--                                    <a th:text="${idx}" th:href="@{bboard_health(page=${idx})}"></a>-->
+        <!--                                </span>-->
+        <!--                                <span th:if="${pageVO.next}">-->
+        <!--                                    <a th:href="@{bboard_health(page=${pageVO.endPage+1})}">[다음]</a>-->
+        <!--                                </span>-->
+        <!--                            </td>-->
+
+        <!--                        </tr>-->
+        <!--                        <tr>-->
+        <!--                            <td>1</td>-->
+        <!--                            <td><a href="#">sample</a></td>-->
+        <!--                            <td>2024.11.21</td>-->
+        <!--                            <td>0</td>-->
+        <!--                        </tr>-->
+        <!--                        <tr>-->
+        <!--                            <td>1</td>-->
+        <!--                            <td><a href="#">sample</a></td>-->
+        <!--                            <td>2024.11.21</td>-->
+        <!--                            <td>0</td>-->
+        <!--                        </tr>-->
+        <!--                        <tr>-->
+        <!--                            <td>1</td>-->
+        <!--                            <td><a href="#">sample</a></td>-->
+        <!--                            <td>2024.11.21</td>-->
+        <!--                            <td>0</td>-->
+        <!--                        </tr>-->
+        <!--                        <tr>-->
+        <!--                            <td>1</td>-->
+        <!--                            <td><a href="#">sample</a></td>-->
+        <!--                            <td>2024.11.21</td>-->
+        <!--                            <td>0</td>-->
+        <!--                        </tr>-->
+
+        <!--                        <tr>-->
+        <!--                            <td colspan="6" style="float: left">-->
+        <!--                                <input type="submit" value="글 쓰기">-->
+        <!--                            </td>-->
+        <!--                        </tr>-->
+        <!--                    </tbody>-->
+        <!--                </table>-->
+        <!--            </form>-->
+        <!--        </div>-->
+        <div id="boardheader">게시판</div>
+        <table id="boardtable">
+          <thead>
           <tr>
             <td width="10%">번호</td>
             <td width="45%">제목</td>
@@ -209,8 +181,8 @@
             <td width="10%">조회수</td>
             <td width="10%">좋아요</td>
           </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
           <tr class="tr" th:each="boardvo:${boardlist}">
             <td th:text="${boardvo.board_sequence}"></td>
             <td class="left">
@@ -300,6 +272,33 @@
                </span>
             </td>
           </tr>
+          </tbody>
+        </table>
+        <div id="paging">
+          <!--            <span th:if= "${pageVO.prev}">-->
+          <!--                <a th:href="@{bboard(type=${boardVO.category})${pageVO.category}(page=${pageVO.startPage})}">-->
+          <!--                  <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>-->
+          <!--                </a>-->
+          <!--            </span>-->
+          <!--        <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">-->
+          <!--                    <a th:text="${idx}" th:href="@{bboard(type=${boardVO.category})(page=${idx})}"></a>-->
+          <!--                </span>-->
+          <!--        <span th:if="${pageVO.next}">-->
+          <!--                    <a th:href="@{bboard(type=${boardVO.category})(page=${pageVO.endPage+1})}">-->
+          <!--                      <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-right&#45;&#45;v1.png" alt="circled-chevron-right&#45;&#45;v1"/>-->
+          <!--                    </a>-->
+          <!--            </span>-->
+        </div>
+        <!--      onclick = "location.href = 'bboard/write'"-->
+        <form action="write" method="get" style="display: inline-block;" >
+          <button type="submit" id="write"><img style="display: inline-block" width="25" height="25" src="https://img.icons8.com/ios/50/pencil--v1.png" alt="pencil--v1"/ >글쓰기 </button>
+        </form>
+        <!--      <form action="bboard_health" method="get" style="display: inline-block;">-->
+        <!--        <input id="boardSearch" type="search" placeholder="검색어를 입력하세요" name="searchKeyword">-->
+        <!--        <input id="searchButton" type="submit" value="검색" >-->
+        <!--      </form>-->
+      </section>
+      <aside style="margin-right: 50px; margin-top: 20px;" id="aside2" th:insert="~{include/quickmenuinclude}">
         </tbody>
       </table>
       <div id="paging">
@@ -328,11 +327,12 @@
     </section>
     <aside id="aside2">
 
-    </aside>
+      </aside>
+    </div>
     <footer id="ad">
         <h1>광고</h1>
     </footer>
-    <footer id="footer">
+    <footer id="footer" th:insert="footer">
         <h1>footer</h1>
     </footer>
 

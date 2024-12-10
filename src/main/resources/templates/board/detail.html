@@ -83,92 +83,95 @@
 </style>
 <body>
 <div th:replace="include/topinclude"></div>
-<aside id="aside1">
+<div class="homeContainer">
 
-</aside>
-<section>
-  <div id="boardheader">게시판</div>
-  <div>
-    <form th:action="@{modboard(no=${boardVO.board_sequence})}" method="get">
+  <aside id="aside1" th:replace="asideMenuTemplates/noticeBoardAside">
+
+  </aside>
+  <section>
+    <div id="boardheader">게시판</div>
+    <div>
+      <form th:action="@{modboard(no=${boardVO.board_sequence})}" method="get">
+        <table>
+          <tr>
+            <td><h2 th:text="'제목: '+${boardVO.board_title}"></h2></td>
+          </tr>
+          <tr>
+            <td>Category</td>
+            <td class="header"></td>
+          </tr>
+          <tr>
+            <td>
+              <!--                        <select id="boardcategory" name="board_category">-->
+              <!--                            <option value="1">오늘의 건강</option>-->
+              <!--                            <option value="2">캠페인</option>-->
+              <!--                            <option value="3">의료기기</option>-->
+              <!--                            <option value="4">자유게시판</option>-->
+              <!--                        </select>-->
+              <input type="text" th:value="${boardVO.board_category}" readonly>
+            </td>
+            <td>
+
+
+            </td>
+          </tr>
+          <tr>
+            <td>작성자</td>
+            <td>작성날짜</td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" th:value="${boardVO.board_user_id}" readonly>
+            </td>
+            <td>
+              <input type="text" th:value="${#strings.substring(boardVO.board_date,0,10)}"readonly>
+            </td>
+          </tr>
+          <tr><td class="header">Content</td></tr>
+          <tr><td colspan="2"><textarea name="board_content" th:text="${boardVO.getBoard_content()}" readonly></textarea></td></tr>
+          <tr><td class="header">첨부파일</td></tr>
+          <tr>
+            <td><input type="text" name="board_binary" th:value="${boardVO.board_binary}" readonly></td>
+            <td><span id="heart"></span><span id="heartCount" th:text="${boardVO.board_goodcount}"></span></td>
+          </tr>
+          <tr>
+            <td><input type="hidden" th:value="${boardVO.board_user_id}" name="board_user_id"></td>
+            <td><input type="hidden" th:value="${boardVO.board_viewcount}" name="board_viewcount"></td>
+            <td><input type="hidden" th:value="${boardVO.board_goodcount}" name="board_goodcount"></td>
+            <td><input type="hidden" th:value="${boardVO.board_sequence}" name="board_sequence"></td>
+          </tr>
+          <tr>
+            <td><input type="submit" value="글 수정" ></td>
+            <!--                    <td th:if="likeVO.liked==true"><button onclick="board_like()"><i class="fa-solid fa-heart"></i></button></td>-->
+            <!--                    <td th:if="likeVO.liked==false"><button onclick="board_like()"><i class="fa-regular fa-heart"></i></button></td>-->
+          </tr>
+          <tr>
+            <td colspan="2">
+              <a th:href="@{detail(no=${boardVO.board_sequence}-1)}">[이전글 보기]</a>
+              <span id="back">[돌아가기]</span>
+              <a th:href="@{detail(no=${boardVO.board_sequence}+1)}">[다음글 보기}</a>
+            </td>
+          </tr>
+        </table>
+      </form>
       <table>
         <tr>
-          <td><h2 th:text="'제목: '+${boardVO.board_title}"></h2></td>
-        </tr>
-        <tr>
-          <td>Category</td>
-          <td class="header"></td>
-        </tr>
-        <tr>
-          <td>
-            <!--                        <select id="boardcategory" name="board_category">-->
-            <!--                            <option value="1">오늘의 건강</option>-->
-            <!--                            <option value="2">캠페인</option>-->
-            <!--                            <option value="3">의료기기</option>-->
-            <!--                            <option value="4">자유게시판</option>-->
-            <!--                        </select>-->
-            <input type="text" th:value="${boardVO.board_category}" readonly>
-          </td>
-          <td>
-
-
-          </td>
-        </tr>
-        <tr>
-          <td>작성자</td>
-          <td>작성날짜</td>
-        </tr>
-        <tr>
-          <td>
-            <input type="text" th:value="${boardVO.board_user_id}" readonly>
-          </td>
-          <td>
-            <input type="text" th:value="${#strings.substring(boardVO.board_date,0,10)}"readonly>
-          </td>
-        </tr>
-        <tr><td class="header">Content</td></tr>
-        <tr><td colspan="2"><textarea name="board_content" th:text="${boardVO.getBoard_content()}" readonly></textarea></td></tr>
-        <tr><td class="header">첨부파일</td></tr>
-        <tr>
-          <td><input type="text" name="board_binary" th:value="${boardVO.board_binary}" readonly></td>
-          <td><span id="heart"></span><span id="heartCount" th:text="${boardVO.board_goodcount}"></span></td>
-        </tr>
-        <tr>
-          <td><input type="hidden" th:value="${boardVO.board_user_id}" name="board_user_id"></td>
-          <td><input type="hidden" th:value="${boardVO.board_viewcount}" name="board_viewcount"></td>
-          <td><input type="hidden" th:value="${boardVO.board_goodcount}" name="board_goodcount"></td>
-          <td><input type="hidden" th:value="${boardVO.board_sequence}" name="board_sequence"></td>
-        </tr>
-        <tr>
-          <td><input type="submit" value="글 수정" ></td>
-          <!--                    <td th:if="likeVO.liked==true"><button onclick="board_like()"><i class="fa-solid fa-heart"></i></button></td>-->
-          <!--                    <td th:if="likeVO.liked==false"><button onclick="board_like()"><i class="fa-regular fa-heart"></i></button></td>-->
-        </tr>
-        <tr>
-          <td colspan="2">
-            <a th:href="@{detail(no=${boardVO.board_sequence}-1)}">[이전글 보기]</a>
-            <span id="back">[돌아가기]</span>
-            <a th:href="@{detail(no=${boardVO.board_sequence}+1)}">[다음글 보기}</a>
-          </td>
+          <!--                <td><span id="heart"><i class="fa-solid fa-heart"></i></span></td>-->
+          <!--                <td><button th:if="isliked" id="like" onclick="test()" style="width: 80px;height: 30px"><i class="fa-solid fa-heart"></i></button></td>-->
         </tr>
       </table>
-    </form>
-    <table>
-      <tr>
-        <!--                <td><span id="heart"><i class="fa-solid fa-heart"></i></span></td>-->
-        <!--                <td><button th:if="isliked" id="like" onclick="test()" style="width: 80px;height: 30px"><i class="fa-solid fa-heart"></i></button></td>-->
-      </tr>
-    </table>
 
-  </div>
+    </div>
 
-</section>
-<aside id="aside2">
+  </section>
+  <aside id="aside2" th:insert="~{include/quickmenuinclude}">
 
-</aside>
+  </aside>
+</div>
 <footer id="ad">
   <h1>광고</h1>
 </footer>
-<footer id="footer">
+<footer id="footer" th:insert="footer">
   <h1>footer</h1>
 </footer>
 
@@ -199,7 +202,7 @@
       contentType:"application/json",
       success:function (data){
         console.log(data);
-        if(data.liked){
+        if(data.likeVO.liked){
           alert("좋아요 취소");
           heart.innerHTML=`<img width="50" height="50" src="https://img.icons8.com/ios/50/hearts--v1.png" alt="hearts--v1"/>`
           heartCount.innerHTML=data.heart;

@@ -10,7 +10,6 @@
             crossorigin="anonymous"
     ></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <link rel="stylesheet" href="home.css" />
 <style>
@@ -204,190 +203,196 @@
      width: 30px;
      height: 30px;
    }
+   #reservation{
+     cursor:pointer;
+   }
 </style>
 <body>
 <div style="position: fixed" th:replace="~{include/topinclude}"></div>
-<aside id="aside1">
+<div class="homeContainer">
 
-</aside>
-<section>
+  <aside id="aside1" th:replace="~{asideMenuTemplates/hospitalListAside}">
+
+  </aside>
+  <section>
     <div id="search-header">검색결과</div>
     <div id="filter">
-        <span class="filter_button">진료과목</span>
-        <span class="filter_button" style="background: white">진료중</span>
-        <span class="filter_button">평일</span>
+      <span class="filter_button">진료과목</span>
+      <span class="filter_button" style="background: white">진료중</span>
+      <span class="filter_button">평일</span>
     </div>
     <div id="modal">
-        <div id="modalheader">
-            진료과목 선택
-          <div id="closebutton">
-            <img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/>
-          </div>
+      <div id="modalheader">
+        진료과목 선택
+        <div id="closebutton">
+          <img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/>
         </div>
-        <div class="subject">내과</div>
-        <div class="subject">이비인후과</div>
-        <div class="subject">정형외과</div>
-        <div class="subject">성형외과</div>
-        <div class="subject">정신건강의학과</div>
-        <div class="subject">피부과</div>
-        <div class="subject">안과</div>
-        <div class="subject">소아청소년과</div>
-        <div class="subject">산부인과</div>
-        <div class="subject">비뇨기과</div>
-        <div class="subject">외과</div>
+      </div>
+      <div class="subject">내과</div>
+      <div class="subject">이비인후과</div>
+      <div class="subject">정형외과</div>
+      <div class="subject">성형외과</div>
+      <div class="subject">정신건강의학과</div>
+      <div class="subject">피부과</div>
+      <div class="subject">안과</div>
+      <div class="subject">소아청소년과</div>
+      <div class="subject">산부인과</div>
+      <div class="subject">비뇨기과</div>
+      <div class="subject">외과</div>
     </div>
 
-   <div>
+    <div>
       <table id="hospitals">
-          <tbody id="tbody">
-          <tr th:each="hospitalVO:${hlist}" class="row">
-              <td>
-                  <div class="resultrow">
-                      <div class="rheader" th:text="${hospitalVO.hospital_name}"></div>
-                      <div class="time">
-                          <span class="info">진료시간: </span>
-                          <span class="info" th:text="${hospitalVO.hospital_time}"> </span>
-                          <span>|</span>
-                          <span class="info" th:text="${hospitalVO.medicals}"></span>
-                      </div>
-                      <div class="info" th:text="${hospitalVO.hospital_addr}"></div>
-                      <div class="info" th:text="${hospitalVO.hospital_tel}"></div>
-                  </div>
-              </td>
-
-          </tr>
-
-          </tbody>
-
-<!--            <tr>-->
-<!--                <td>-->
-<!--                    <div class="resultrow">-->
-<!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
-<!--                        <div class="time">-->
-<!--                            <span class="info">진료시간: 0900-1800 |</span>-->
-<!--                            <span class="info">내과</span>-->
-<!--                        </div>-->
-<!--                        <div class="info">수원시 영통구</div>-->
-<!--                        <div class="info">010-1234-1234</div>-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>-->
-<!--                    <div class="resultrow">-->
-<!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
-<!--                        <div class="time">-->
-<!--                            <span class="info">진료시간: 0900-1800 |</span>-->
-<!--                            <span class="info">내과</span>-->
-<!--                        </div>-->
-<!--                        <div class="info">수원시 영통구</div>-->
-<!--                        <div class="info">010-1234-1234</div>-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>-->
-<!--                    <div class="resultrow">-->
-<!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
-<!--                        <div class="time">-->
-<!--                            <span class="info">진료시간: 0900-1800 |</span>-->
-<!--                            <span class="info">내과</span>-->
-<!--                        </div>-->
-<!--                        <div class="info">수원시 영통구</div>-->
-<!--                        <div class="info">010-1234-1234</div>-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>-->
-<!--                    <div class="resultrow">-->
-<!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
-<!--                        <div class="time">-->
-<!--                            <span class="info">진료시간: 0900-1800 |</span>-->
-<!--                            <span class="info">내과</span>-->
-<!--                        </div>-->
-<!--                        <div class="info">수원시 영통구</div>-->
-<!--                        <div class="info">010-1234-1234</div>-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--            </tr>-->
-      </table>
-   </div>
-  <div id="modalInfo">
-    <div id="infoHeader">
-      <span id="hospitalName"></span>
-      <div id="closebutton2"><img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/></div>
-      <div>
-        <table>
-          <tbody id="infoTable">
-          <tr  class="row">
-            <td>
-              <div class="resultrow">
-                <div class="rheader" id="clickhospitalname" ></div>
-                <div class="time">
-                  <span class="info" >진료시간: </span>
-                  <span class="info" id="clickhospitaltime"> </span>
-                  <span>|</span>
-                  <span class="info" id="clickhospitalsubject" ></span>
-                </div>
-                <div class="info" id="clickhospitaladdr"></div>
-                <div class="info" id="clickhospitaltel"></div>
+        <tbody id="tbody">
+        <tr th:each="hospitalVO:${hlist}" class="row">
+          <td>
+            <div class="resultrow">
+              <div class="rheader" th:text="${hospitalVO.hospital_name}"></div>
+              <div class="time">
+                <span class="info">진료시간: </span>
+                <span class="info" th:text="${hospitalVO.hospital_time}"> </span>
+                <span>|</span>
+                <span class="info" th:text="${hospitalVO.medicals}"></span>
               </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+              <div class="info" th:text="${hospitalVO.hospital_addr}"></div>
+              <div class="info" th:text="${hospitalVO.hospital_tel}"></div>
+            </div>
+          </td>
+
+        </tr>
+
+        </tbody>
+
+        <!--            <tr>-->
+        <!--                <td>-->
+        <!--                    <div class="resultrow">-->
+        <!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
+        <!--                        <div class="time">-->
+        <!--                            <span class="info">진료시간: 0900-1800 |</span>-->
+        <!--                            <span class="info">내과</span>-->
+        <!--                        </div>-->
+        <!--                        <div class="info">수원시 영통구</div>-->
+        <!--                        <div class="info">010-1234-1234</div>-->
+        <!--                    </div>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+        <!--            <tr>-->
+        <!--                <td>-->
+        <!--                    <div class="resultrow">-->
+        <!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
+        <!--                        <div class="time">-->
+        <!--                            <span class="info">진료시간: 0900-1800 |</span>-->
+        <!--                            <span class="info">내과</span>-->
+        <!--                        </div>-->
+        <!--                        <div class="info">수원시 영통구</div>-->
+        <!--                        <div class="info">010-1234-1234</div>-->
+        <!--                    </div>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+        <!--            <tr>-->
+        <!--                <td>-->
+        <!--                    <div class="resultrow">-->
+        <!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
+        <!--                        <div class="time">-->
+        <!--                            <span class="info">진료시간: 0900-1800 |</span>-->
+        <!--                            <span class="info">내과</span>-->
+        <!--                        </div>-->
+        <!--                        <div class="info">수원시 영통구</div>-->
+        <!--                        <div class="info">010-1234-1234</div>-->
+        <!--                    </div>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+        <!--            <tr>-->
+        <!--                <td>-->
+        <!--                    <div class="resultrow">-->
+        <!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
+        <!--                        <div class="time">-->
+        <!--                            <span class="info">진료시간: 0900-1800 |</span>-->
+        <!--                            <span class="info">내과</span>-->
+        <!--                        </div>-->
+        <!--                        <div class="info">수원시 영통구</div>-->
+        <!--                        <div class="info">010-1234-1234</div>-->
+        <!--                    </div>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+      </table>
+    </div>
+    <div id="modalInfo">
+      <div id="infoHeader">
+        <span id="hospitalName"></span>
+        <div id="closebutton2"><img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/></div>
         <div>
-          <div class="infoTitle">소개</div>
-          <div id="infoIntro"></div>
-          <div class="infoTitle">공지사항</div>
-          <div id="infoNotice"></div>
-          <div class="infoTitle">리뷰</div>
-          <table id="reviewTable">
-            <thead>
+          <table>
+            <tbody id="infoTable">
+            <tr class="row">
+              <td>
+                <div class="resultrow">
+                  <div class="rheader" id="clickhospitalname" ></div>
+                  <div class="time">
+                    <span class="info" >진료시간: </span>
+                    <span class="info" id="clickhospitaltime"> </span>
+                    <span>|</span>
+                    <span class="info" id="clickhospitalsubject" ></span>
+                  </div>
+                  <div class="info" id="clickhospitaladdr"></div>
+                  <div class="info" id="clickhospitaltel"></div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div>
+            <div class="infoTitle">소개</div>
+            <div id="infoIntro"></div>
+            <div class="infoTitle">공지사항</div>
+            <div id="infoNotice"></div>
+            <div class="infoTitle">리뷰</div>
+            <table id="reviewTable">
+              <thead>
               <tr>
                 <td width="10%">ID</td>
                 <td width="55%">리뷰내용</td>
                 <td width="20%">날짜</td>
                 <td width="15%">별점</td>
               </tr>
-            </thead>
-            <tbody id="reviews">
+              </thead>
+              <tbody id="reviews">
 
-            </tbody>
-          </table>
-          <div class="infoTitle">의사정보</div>
-          <table id="doctorTable">
-            <tr>
-              <td>이름</td>
-              <td class="clickhospitaldoctorname"></td>
-            </tr>
-            <tr>
-              <td>진료과목</td>
-              <td class="clickhospitaldoctorsubject"></td>
-            </tr>
-            <tr>
-              <td>약력</td>
-              <td class="clickhospitaldoctorcareer"></td>
-            </tr>
-          </table>
-          <form action="reserve" method="post">
-            <input type="hidden" id="hospitalName2" name="hospitalName">
-            <input  type="hidden" id="doctorCode" name="doctorCode">
-            <input type="hidden" id="hospitalCode" name="hospitalCode">
-            <input type="hidden" id="userID" name="userID" value="test">
-            <input id="reservation" type="submit" style="width: 200px;height: 80px; font-size: 30px; background: #84b6ff; border-radius: 5px"  value="예약하기">
-          </form>
+              </tbody>
+            </table>
+            <div class="infoTitle">의사정보</div>
+            <table id="doctorTable">
+              <tr>
+                <td>이름</td>
+                <td class="clickhospitaldoctorname"></td>
+              </tr>
+              <tr>
+                <td>진료과목</td>
+                <td class="clickhospitaldoctorsubject"></td>
+              </tr>
+              <tr>
+                <td>약력</td>
+                <td class="clickhospitaldoctorcareer"></td>
+              </tr>
+            </table>
+            <form action="reserve" method="post">
+              <input type="hidden" id="hospitalName2" name="hospitalName">
+              <input  type="hidden" id="doctorCode" name="doctorCode">
+              <input type="hidden" id="hospitalCode" name="hospitalCode">
+              <input type="hidden" id="userID" name="userID" value="test">
+              <input id="reservation" type="submit" style="width: 200px;height: 80px; font-size: 30px; background: #84b6ff; border-radius: 5px"  value="예약하기">
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<aside id="aside2"></aside>
-<footer id="ad">
+  </section>
+  <aside id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
+</div>
+<footer id="ad" >
     <h1>광고</h1>
 </footer>
-<footer id="footer">
+<footer id="footer" th:replace="~{footer}">
     <h1>footer</h1>
 </footer>
 </body>

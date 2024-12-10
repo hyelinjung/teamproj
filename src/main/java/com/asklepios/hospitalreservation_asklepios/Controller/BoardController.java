@@ -22,7 +22,7 @@ public class BoardController {
   @Autowired
   FileDataUtil fileDataUtil;
 
-  
+
   @GetMapping("/bboard_all")
   public String board_all(Model model, @ModelAttribute PageVO pagevo) throws Exception{
     if(pagevo.getPage()==null){
@@ -79,7 +79,7 @@ public class BoardController {
     }
     String category="의료정보";
     pagevo.setTotalCount(boardService.boardCount(category));
-    List<BoardVO> boardlist=boardService.boardAll(pagevo);
+    List<BoardVO> boardlist=boardService.boardList(pagevo,category);
     model.addAttribute("boardlist",boardlist);
     model.addAttribute("category", category);
     return "board/main";
@@ -96,12 +96,12 @@ public class BoardController {
     model.addAttribute("category", category);
     return "board/main";
   }
-  @GetMapping("write")
+  @GetMapping("/write")
   public String write(){
     return "board/write";
   }
 
-  @PostMapping("bboard/submitwrite")
+  @PostMapping("/submitwrite")
   public String submitWrite(@ModelAttribute BoardVO boardVO,
                             @ModelAttribute MultipartFile[]file) throws Exception {
 
