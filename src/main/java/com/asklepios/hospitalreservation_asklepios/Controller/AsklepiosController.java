@@ -43,5 +43,14 @@ public class AsklepiosController {
 //        System.out.println(userservice.countTotalReservation(userId));
         return userservice.countTotalReservation(userId);
     }
-
+    @GetMapping("reservationStatusDoctor")
+    public String reservationStatusDoctor(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
+        model.addAttribute("user", user);
+        return "MyPage/reservationStatusDoctor";
+    }
+    @GetMapping("reservationStatusClient")
+    public String reservationStatusClient(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
+        model.addAttribute("user", user);
+        return "MyPage/reservationStatusClient";
+    }
 }

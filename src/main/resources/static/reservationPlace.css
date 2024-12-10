@@ -88,7 +88,6 @@ body {
 .asideSearchHospital {
   background-color: #3B82F6;
   color: white;
-  border-bottom-right-radius: 20px;
 }
 #modal{
   position: sticky;

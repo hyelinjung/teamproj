@@ -52,7 +52,7 @@
         <a href="registration">병원등록</a>
       </li>
       <li>
-        <a href="reservation" onclick="checkSession()">진료예약</a>
+        <a href="reservation">진료예약</a>
         <!--        <ul>-->
         <!--          <li><a href="#">text1</a></li>-->
         <!--          <li><a href="#">text2</a></li>-->
@@ -83,11 +83,3 @@
   </nav>
 </div>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script th:inline="javascript">
-  let user = /*[[${user}]]*/{};
-  function checkSession() {
-    if (user === null){
-      alert("로그인 후 이용해주세요.");
-    }
-  }
-</script>
