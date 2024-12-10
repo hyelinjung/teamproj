@@ -10,23 +10,28 @@
     ></script>
     <script src="https://cdn.tailwindcss.com"></script>
   <link rel="icon" href="logo_icon.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 <link rel="stylesheet" href="home.css" />
 
 <body>
 <div th:replace="~{include/topinclude}"></div>
-<aside id="aside1">
+<div class="homeContainer">
+  <aside id="aside1">
 
-</aside>
-<section>
+  </aside>
+  <section>
 
-</section>
-<aside id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
+  </section>
+  <aside style="margin-right: 50px; margin-top: 20px;" id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
+</div>
 <footer id="ad">
-	<h1>광고</h1>
+  <h1>광고</h1>
 </footer>
 <footer id="footer">
-	<h1>footer</h1>
+  <h1>footer</h1>
 </footer>
 
 </body>

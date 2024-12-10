@@ -25,6 +25,18 @@
         WHERE user_register_number = #{user_register_number}
     </select>
 
+    <select id="selectDoctorCode" resultType="String" parameterType="String">
+        SELECT user_doctor_code FROM user_doctor WHERE user_doctor_id = #{userId}
+    </select>
+
+    <select id="selectReservationCount" resultType="int" parameterType="String">
+        SELECT count(*) FROM reservation WHERE reservation_user_doctor_code = #{doctorCode} AND reservation_accept = '대기'
+    </select>
+
+    <select id="selectTotalReservationCount" resultType="int" parameterType="String">
+        SELECT count(*) FROM reservation WHERE reservation_user_id = #{userId}
+    </select>
+
     <select id="selectAllName" resultType="com.asklepios.hospitalreservation_asklepios.VO.UserVO">
         SELECT user_name
         FROM users

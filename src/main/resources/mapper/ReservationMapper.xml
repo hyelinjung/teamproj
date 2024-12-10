@@ -8,6 +8,10 @@
         SELECT hospital_name, hospital_addr FROM hospital
     </select>
 
+    <select id="selectHospital" parameterType="map" resultType="com.asklepios.hospitalreservation_asklepios.VO.HospitalVO">
+        SELECT * FROM hospital WHERE hospital_name LIKE CONCAT('%', #{hospitalName}, '%') AND hospital_addr LIKE CONCAT('%', #{hospitalAddr}, '%')
+    </select>
+
     <select id="getHospitalAddress" parameterType="String" resultType="String">
         SELECT hospital_addr
         FROM hospital
@@ -18,6 +22,10 @@
         SELECT hospital_code
         FROM hospital
         WHERE hospital_name LIKE CONCAT('%', #{hospitalName}, '%')
+    </select>
+
+    <select id="selectDoctor" parameterType="String" resultType="com.asklepios.hospitalreservation_asklepios.VO.Hospital_doctorVO">
+        SELECT * FROM hospital_doctor WHERE hospital_code = #{hospitalCode}
     </select>
 
     <select id="getDoctorName" parameterType="String" resultType="String">

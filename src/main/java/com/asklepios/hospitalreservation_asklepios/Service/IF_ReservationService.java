@@ -1,7 +1,6 @@
 package com.asklepios.hospitalreservation_asklepios.Service;
 
-import com.asklepios.hospitalreservation_asklepios.VO.ReservationStatusVO;
-import com.asklepios.hospitalreservation_asklepios.VO.ReservationVO;
+import com.asklepios.hospitalreservation_asklepios.VO.*;
 
 import java.util.List;
 
@@ -17,5 +16,8 @@ public interface IF_ReservationService {
   public List<ReservationStatusVO> findAllDoctorReservation(String user_id);
   public void accept(String reservation_code);
   public void cancel(String reservation_code);
+  public HospitalVO findHospital(String hospitalName, String hospitalAddr);
+  public List<Hospital_doctorVO> findDoctors(String hospitalCode);
+
 }
 

@@ -1,9 +1,7 @@
 package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation_asklepios.Repository.IF_ReservationMapper;
-import com.asklepios.hospitalreservation_asklepios.VO.HospitalVO;
-import com.asklepios.hospitalreservation_asklepios.VO.ReservationStatusVO;
-import com.asklepios.hospitalreservation_asklepios.VO.ReservationVO;
+import com.asklepios.hospitalreservation_asklepios.VO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -107,6 +105,25 @@ public class IM_ReservationService implements IF_ReservationService {
   @Override
   public void cancel(String reservation_code) {
     reservationmapper.updateCancel(reservation_code);
+  }
+
+  @Override
+  public HospitalVO findHospital(String hospitalName, String hospitalAddr) {
+    return reservationmapper.selectHospital(hospitalName, hospitalAddr);
+  }
+
+  @Override
+  public List<Hospital_doctorVO> findDoctors(String hospitalCode) {
+//    List<Hospital_doctorVO> hospitalDoctorList = reservationmapper.selectDoctor(hospitalCode);
+//    for(Hospital_doctorVO h : hospitalDoctorList){
+//      System.out.println(h.toString());
+//      if (h.getUser_image() == null) {
+//        System.out.println(h.toString());
+//        h.setUser_image("doctor_image.jpg");
+//        System.out.println(h.toString());
+//      }
+//    }
+    return reservationmapper.selectDoctor(hospitalCode);
   }
 
 }

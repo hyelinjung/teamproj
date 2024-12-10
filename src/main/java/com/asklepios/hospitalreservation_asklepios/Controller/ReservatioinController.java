@@ -1,12 +1,13 @@
 package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.Service.IF_ReservationService;
-import com.asklepios.hospitalreservation_asklepios.VO.ReservationVO;
-import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
+import com.asklepios.hospitalreservation_asklepios.VO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ReservatioinController {
@@ -18,12 +19,28 @@ public class ReservatioinController {
     model.addAttribute("user", user);
     return "reservationPlace";
   }
+  @ResponseBody
+  @PostMapping("/findHospital")
+  public HospitalVO findHospital(@RequestParam("hospital_name1") String hospitalName,
+                                 @RequestParam("hospital_address1") String hospitalAddr) {
+    System.out.println(hospitalName);
+    System.out.println(hospitalAddr);
+    System.out.println(reservationService.findHospital(hospitalName, hospitalAddr));
+    return reservationService.findHospital(hospitalName, hospitalAddr);
+  }
 
   @ResponseBody
   @PostMapping("/findHospitalName")
   public boolean findHospitalName(@RequestParam("hospital_name") String hospitalName,
                                   @RequestParam("hospital_address") String hospitalAddr) {
     return reservationService.checkHospitalName(hospitalName, hospitalAddr);
+  }
+
+  @ResponseBody
+  @PostMapping("/findDoctors")
+  public List<Hospital_doctorVO> findDoctor(@RequestParam("hospital_code") String hospitalCode){
+    System.out.println(reservationService.findDoctors(hospitalCode));
+    return reservationService.findDoctors(hospitalCode);
   }
   @PostMapping("/reserve")
   public String reserve(@SessionAttribute(name = "loginUser", required = false) UserVO user,
