@@ -16,6 +16,9 @@ aside {
   height: 100px;
   background-color: white;
   font-size: xx-large;
-  border-top-right-radius: 20px;
-
+}
+.asideButton:hover {
+  background-color: #3b82f6;
+  color: white;
+  cursor: pointer;
 }

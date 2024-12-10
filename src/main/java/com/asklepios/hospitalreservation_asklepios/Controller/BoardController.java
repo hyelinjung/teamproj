@@ -96,7 +96,7 @@ public class BoardController {
     model.addAttribute("category", category);
     return "board/main";
   }
-  @GetMapping("bboard/write")
+  @GetMapping("write")
   public String write(){
     return "board/write";
   }
