@@ -111,7 +111,7 @@ public class IM_BoardService implements IF_BoardService{
             } else if (category.equals("2")) {
                 boardVO.setBoard_category("캠페인");
             }else if (category.equals("3")) {
-                boardVO.setBoard_category("의료기기");
+                boardVO.setBoard_category("의료정보");
             }else if (category.equals("4")) {
                 boardVO.setBoard_category("자유게시판");
             }
