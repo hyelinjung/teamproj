@@ -25,7 +25,7 @@
             <hr style="margin-bottom: 10px; margin-top: 10px;">
             <h1>회원 정보</h1>
             <th:block th:if="${user == null}">
-                <span style="font-size: 20px"><a href="login">로그인 하기</a></span>
+                <span style="font-size: 20px"><a href="login">로그인 해주세요.</a></span>
                 <hr style="margin-top: 10px; margin-bottom: 10px">
             </th:block>
             <th:block th:unless="${user == null}">
@@ -38,12 +38,13 @@
                 <hr style="margin-top: 10px; margin-bottom: 10px">
                 <a href="/asklepios/reservation" onclick="checkSession()">예약하기</a>
                 <hr style="margin-top: 10px; margin-bottom: 10px">
-                <a href="/asklepios/home" onclick="checkSession()">예약현황</a>
                 <th:block th:if="${user.user_authority == 'client'}">
-                    <div>대기중인 예약 : <span id="reservationCount1"></span> 건</div>
+                    <a href="/asklepios/reservationStatusClient" onclick="checkSession()">예약현황</a>
+                    <div>총 예약 : <span id="reservationCount1"></span> 건</div>
                     <hr style="margin-top: 10px; margin-bottom: 10px">
                 </th:block>
                 <th:block th:if="${user.user_authority == 'doctor'}">
+                    <a href="/asklepios/reservationStatusDoctor" onclick="checkSession()">예약현황</a>
                     <div>대기중인 예약 : <span id="reservationCount2"></span> 건</div>
                     <hr style="margin-top: 10px; margin-bottom: 10px">
                 </th:block>
@@ -56,31 +57,31 @@
 <!--            </th:block>-->
 <!--            <a href="/vaccinationInfo">백신정보</a>-->
 <!--            <hr style="margin-top: 10px; margin-bottom: 10px">-->
-            <a href="/search?keyword=">병원검색</a>
+            <a href="/asklepios/search?keyword=">병원검색</a>
             <hr style="margin-top: 10px; margin-bottom: 10px">
         </div>
     </div>
 </aside>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script>
-    let userId = document.querySelector('#hiddenId').innerText;
+    let userId1 = document.querySelector('#hiddenId').innerText;
     let userAuth = document.querySelector('#hiddenAuth').innerText;
-    let doctorCode;
+    let doctorCode1;
     if(userAuth === 'doctor'){
         $.ajax({
             url: '/asklepios/findDoctorCode',
             type:'post',
             data:{
-                user_id : userId
+                user_id : userId1
             },
             success:function (data){
-                doctorCode = data;
-                if(doctorCode != null){
+                doctorCode1 = data;
+                if(doctorCode1 != null){
                     $.ajax({
                         url: '/asklepios/reservationCount',
                         type: 'post',
                         data: {
-                            doctor_code: doctorCode
+                            doctor_code: doctorCode1
                         },
                         success: function (data) {
                             document.querySelector('#reservationCount2').innerText = data;
@@ -101,7 +102,7 @@
             url: '/asklepios/totalReservationCount',
             type: 'post',
             data: {
-                user_id: userId
+                user_id: userId1
             },
             success: function (data) {
                 document.querySelector('#reservationCount1').innerText = data;

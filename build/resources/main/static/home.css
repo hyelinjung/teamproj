@@ -10,12 +10,6 @@
     font-weight: 400;
     font-style: normal;
 }
-/*@font-face {*/
-/*    font-family: 'BMkkubulimTTF-Regular';*/
-/*    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/BMkkubulimTTF-Regular.woff2') format('woff2');*/
-/*    font-weight: normal;*/
-/*    font-style: normal;*/
-/*}*/
 * {
     margin: 0;
     padding: 0;
@@ -39,12 +33,6 @@ header{
     padding-left: 30px;
     justify-content: space-between;
 }
-/*#logo{*/
-/*    margin-left: 100px;*/
-/*    height: 100%;*/
-/*    float: left;*/
-/*    display: inline-block;*/
-/*}*/
 .topContainer {
     height: 150px;
     align-content: center;
@@ -80,7 +68,7 @@ body{
 #aside1 {
     width: 300px;
     height: 1200px;
-    border: 1px solid;
+    /*border: 1px solid;*/
     margin-top: 10px;
 }
 section{

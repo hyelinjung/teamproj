@@ -299,6 +299,33 @@ section{
         <!--      </form>-->
       </section>
       <aside style="margin-right: 50px; margin-top: 20px;" id="aside2" th:insert="~{include/quickmenuinclude}">
+        </tbody>
+      </table>
+      <div id="paging">
+<!--            <span th:if= "${pageVO.prev}">-->
+<!--                <a th:href="@{bboard(type=${boardVO.category})${pageVO.category}(page=${pageVO.startPage})}">-->
+<!--                  <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>-->
+<!--                </a>-->
+<!--            </span>-->
+<!--        <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">-->
+<!--                    <a th:text="${idx}" th:href="@{bboard(type=${boardVO.category})(page=${idx})}"></a>-->
+<!--                </span>-->
+<!--        <span th:if="${pageVO.next}">-->
+<!--                    <a th:href="@{bboard(type=${boardVO.category})(page=${pageVO.endPage+1})}">-->
+<!--                      <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-right&#45;&#45;v1.png" alt="circled-chevron-right&#45;&#45;v1"/>-->
+<!--                    </a>-->
+<!--            </span>-->
+      </div>
+<!--      onclick = "location.href = 'bboard/write'"-->
+      <form action="write" method="get" style="display: inline-block;" >
+        <button type="submit" id="write"><img style="display: inline-block" width="25" height="25" src="https://img.icons8.com/ios/50/pencil--v1.png" alt="pencil--v1"/ >글쓰기 </button>
+      </form>
+<!--      <form action="bboard_health" method="get" style="display: inline-block;">-->
+<!--        <input id="boardSearch" type="search" placeholder="검색어를 입력하세요" name="searchKeyword">-->
+<!--        <input id="searchButton" type="submit" value="검색" >-->
+<!--      </form>-->
+    </section>
+    <aside id="aside2">
 
       </aside>
     </div>

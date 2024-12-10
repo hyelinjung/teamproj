@@ -202,7 +202,9 @@
 
                         if (reservationUserStatusVOList[i].reservation_accept === "승인") {
                             newCell5.style.color = "green";
-                        } else {
+                        } else if(reservationUserStatusVOList[i].reservation_accept === "대기"){
+                            newCell5.style.color = "#3b82f6";
+                        } else{
                             newCell5.style.color = "red";
                         }
                     }
@@ -894,14 +896,16 @@
         <button id="modalOpenButton"
                 class="bg-blue-500 hover:bg-blue-600 rounded-lg w-64 h-20 text-4xl my-10 text-white">수정하기
         </button>
-        <a href="/asklepios/myPage?user_id=gkgjfj">
+        <a href="/asklepios/myPage">
             <button id="cancelModify" class="bg-blue-500 hover:bg-blue-600 rounded-lg w-64 h-20 text-4xl my-10 text-white" style="display: none">수정취소
             </button>
         </a>
-        <button form="modifyProfile" id="saveModification" type="submit"
-                class="bg-blue-500 hover:bg-blue-600 rounded-lg w-64 h-20 text-4xl my-10 text-white"
-                style=" display: none">저장하기
-        </button>
+        <a href="/asklepios/home">
+            <button id="saveModification" type="submit"
+                    class="bg-blue-500 hover:bg-blue-600 rounded-lg w-64 h-20 text-4xl my-10 text-white"
+                    style=" display: none">저장하기
+            </button>
+        </a>
     </div>
     <!--예약 현황 정보-->
     <div id="reservationClientInfo" style="display: none; margin-top: 50px">
