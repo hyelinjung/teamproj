@@ -18,7 +18,7 @@ public interface IF_BoardMapper {
     public List<BoardVO> selectNotice();
     public List<BoardVO> selectBoard(PageVO pagevo,String category);
     public int countBoard(String category);
-
+    public int countAll();
     public BoardVO selectOne(String no);
     public void updateBoard(BoardVO boardVO);
     public void plusViewCount(BoardVO boardVO);
@@ -34,4 +34,5 @@ public interface IF_BoardMapper {
     public void plusLikeCount(LikeVO likeVO);
 
     public void addLike(LikeVO likeVO);
+    public int selectHeart(LikeVO likeVO);
 }

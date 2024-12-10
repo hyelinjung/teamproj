@@ -25,12 +25,13 @@ import java.util.UUID;
 @Controller
 public class FileDataUtil {
     private ArrayList<String>extNameArray=new ArrayList<>();
-    private String uploadPath;
-
     @Value("${upload.file.path}")
+    private String uploadPath;
     public void setUploadPath(String uploadPath) {
         this.uploadPath = uploadPath;
     }
+
+
 
     @RequestMapping(value = "/downloadfile", method = RequestMethod.GET)
     @ResponseBody

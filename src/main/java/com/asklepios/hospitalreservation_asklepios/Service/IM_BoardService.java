@@ -71,12 +71,15 @@ public class IM_BoardService implements IF_BoardService{
 
     @Override
     public int boardCount(String category) {
-        return boardMapper.countBoard(category);
+        if(category.equals("모든 글")){
+            return boardMapper.countAll();
+        }else{
+            return boardMapper.countBoard(category);
+        }
     }
 
     @Override
     public BoardVO modBoard(String no) throws Exception {
-
         return boardMapper.selectOne(no);
     }
 

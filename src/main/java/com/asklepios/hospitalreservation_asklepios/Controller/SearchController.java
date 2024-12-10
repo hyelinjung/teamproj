@@ -54,7 +54,7 @@ public class SearchController {
     }
     @PostMapping("/getreview")
     public List<ReviewVO> getReview(@RequestParam("hospitalCode") String hospitalCode){
-        System.out.println(hospitalCode);
+//        System.out.println(hospitalCode);
         return searchService.searchReview(hospitalCode);
     }
 }

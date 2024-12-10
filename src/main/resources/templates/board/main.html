@@ -67,7 +67,27 @@
   background: #84b6ff;
   border-radius: 10px;
 }
-#write:active{
+/*#boardSearch{*/
+/*  display: inline-block;*/
+/*  padding-left: 10px;*/
+/*  padding-right: 10px;*/
+/*  border: 1px solid #3B82F6 ;*/
+/*  border-radius: 10px ;*/
+/*  margin-left: 200px;*/
+/*  width: 300px;*/
+/*  height: 60px;*/
+/*  font-size: 25px;*/
+/*}*/
+/*#searchButton{*/
+/*  margin-top: 20px;*/
+/*  margin-left: 30px;*/
+/*  width: 120px;*/
+/*  height: 60px;*/
+/*  font-size: 25px;*/
+/*  background: #84b6ff;*/
+/*  border-radius: 10px;*/
+/*}*/
+#write :active{
   background: #3B82F6;
 }
 </style>
@@ -196,7 +216,7 @@
             <td class="left">
               <span class="category" th:text="${boardvo.board_category}"></span>
               <a th:text="${boardvo.board_title}" th:href="@{detail(no=${boardvo.board_sequence})}"></a>
-              <span class="newicon"></span>
+              <span class="newicon" style="display: inline-block"></span>
             </td>
             <td th:text="${boardvo.board_user_id}"></td>
             <td class="date" th:text="${#strings.substring(boardvo.board_date,2,10)}"></td>
@@ -204,78 +224,78 @@
             <td th:text="${boardvo.board_goodcount}"></td>
           </tr>
           <tr id="none">
-            <td colspan="6" th:if="${category=='오늘의 건강'}">
-               <span th:if= "${pageVO.prev}">
-                 <a th:href="@{bboard_health(page=${pageVO.startPage})}">
-                   <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
+            <td colspan="6" th:if="${category=='오늘의 건강'}" >
+               <span th:if= "${pageVO.prev}" style="display: inline-block">
+                 <a th:href="@{bboard_health(page=${pageVO.startPage-1})}">
+                   <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
                  </a>
                </span>
-              <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">
+              <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}" >
                    <a th:text="${idx}" th:href="@{bboard_health(page=${idx})}"></a>
                </span>
-              <span th:if="${pageVO.next}">
+              <span th:if="${pageVO.next}" style="display: inline-block">
                  <a th:href="@{bboard_health(page=${pageVO.endPage+1})}">
-                   <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-right--v1.png" alt="circled-chevron-right--v1"/>
+                   <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-right--v1.png" alt="circled-chevron-right--v1"/>
                  </a>
                </span>
             </td>
             <td colspan="6" th:if="${category=='모든 글'}">
-               <span th:if= "${pageVO.prev}">
-                 <a th:href="@{bboard_all(page=${pageVO.startPage})}">
-                   <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
+               <span th:if= "${pageVO.prev}" style="display: inline-block">
+                 <a th:href="@{bboard_all(page=${pageVO.startPage-1})}">
+                   <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
                  </a>
                </span>
               <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">
                    <a th:text="${idx}" th:href="@{bboard_all(page=${idx})}"></a>
                </span>
-              <span th:if="${pageVO.next}">
+              <span th:if="${pageVO.next}" style="display: inline-block">
                  <a th:href="@{bboard_all(page=${pageVO.endPage+1})}">
-                   <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-right--v1.png" alt="circled-chevron-right--v1"/>
+                   <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-right--v1.png" alt="circled-chevron-right--v1"/>
                  </a>
                </span>
             </td>
             <td colspan="6" th:if="${category=='의료정보'}">
-               <span th:if= "${pageVO.prev}">
-                 <a th:href="@{bboard_med(page=${pageVO.startPage})}">
-                   <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
+               <span th:if= "${pageVO.prev}" style="display: inline-block">
+                 <a th:href="@{bboard_med(page=${pageVO.startPage-1})}">
+                   <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
                  </a>
                </span>
               <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">
                    <a th:text="${idx}" th:href="@{bboard_med(page=${idx})}"></a>
                </span>
-              <span th:if="${pageVO.next}">
+              <span th:if="${pageVO.next}" style="display: inline-block">
                  <a th:href="@{bboard_med(page=${pageVO.endPage+1})}">
-                   <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-right--v1.png" alt="circled-chevron-right--v1"/>
+                   <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-right--v1.png" alt="circled-chevron-right--v1"/>
                  </a>
                </span>
             </td>
-            <td colspan="6" th:if="${category=='자유게시판'}">
-               <span th:if= "${pageVO.prev}">
-                 <a th:href="@{bboard_free(page=${pageVO.startPage})}">
-                   <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
+            <td colspan="6" th:if="${category=='자유게시판'}" >
+               <span th:if= "${pageVO.prev}" style="display: inline-block">
+                 <a th:href="@{bboard_free(page=${pageVO.startPage-1})}">
+                   <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
                  </a>
                </span>
               <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">
                    <a th:text="${idx}" th:href="@{bboard_free(page=${idx})}"></a>
                </span>
-              <span th:if="${pageVO.next}">
+              <span th:if="${pageVO.next}" style="display: inline-block">
                  <a th:href="@{bboard_free(page=${pageVO.endPage+1})}">
-                   <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-right--v1.png" alt="circled-chevron-right--v1"/>
+                   <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-right--v1.png" alt="circled-chevron-right--v1"/>
                  </a>
                </span>
             </td>
             <td colspan="6" th:if="${category=='캠페인'}">
-               <span th:if= "${pageVO.prev}">
-                 <a th:href="@{bboard_campaign(page=${pageVO.startPage})}">
-                   <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
+               <span th:if= "${pageVO.prev}" style="display: inline-block">
+                 <a th:href="@{bboard_campaign(page=${pageVO.startPage-1})}">
+                   <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
                  </a>
                </span>
               <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">
                    <a th:text="${idx}" th:href="@{bboard_campaign(page=${idx})}"></a>
                </span>
-              <span th:if="${pageVO.next}">
-                 <a th:href="@{bboard_campaign(page=${pageVO.endPage+1})}">
-                   <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-right--v1.png" alt="circled-chevron-right--v1"/>
+              <span th:if="${pageVO.next}" style="display: inline-block">
+                 <a th:href="@{bboard_campaign(page=${pageVO.endPage+1})}" style="display: inline-block">
+                   <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-right--v1.png" alt="circled-chevron-right--v1"/>
                  </a>
                </span>
             </td>
@@ -298,9 +318,13 @@
 <!--            </span>-->
       </div>
 <!--      onclick = "location.href = 'bboard/write'"-->
-      <form action="bboard/write" method="get">
-        <button type="submit" id="write"><img width="25" height="25" src="https://img.icons8.com/ios/50/pencil--v1.png" alt="pencil--v1"/>글쓰기 </button>
+      <form action="bboard/write" method="get" style="display: inline-block;" >
+        <button type="submit" id="write"><img style="display: inline-block" width="25" height="25" src="https://img.icons8.com/ios/50/pencil--v1.png" alt="pencil--v1"/ >글쓰기 </button>
       </form>
+<!--      <form action="bboard_health" method="get" style="display: inline-block;">-->
+<!--        <input id="boardSearch" type="search" placeholder="검색어를 입력하세요" name="searchKeyword">-->
+<!--        <input id="searchButton" type="submit" value="검색" >-->
+<!--      </form>-->
     </section>
     <aside id="aside2">
 

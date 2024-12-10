@@ -20,7 +20,9 @@ import java.util.List;
 public class HomeController {
   @Autowired
   IF_BoardService boardService;
+  @Autowired
   FileDataUtil fileDataUtil;
+
     @GetMapping("/home")
     public String main(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model){
         model.addAttribute("user", user);
@@ -34,20 +36,24 @@ public class HomeController {
     }
     String category="모든 글";
     pagevo.setTotalCount(boardService.boardCount(category));
+//    System.out.println(pagevo.getTotalCount());
+//    System.out.println(pagevo.getPage());
+//    System.out.println(pagevo.getStartNo());
     List<BoardVO> boardlist=boardService.boardAll(pagevo);
-    List<BoardVO> noticelist=boardService.boardNoticeList();
+//    List<BoardVO> noticelist=boardService.boardNoticeList();
     model.addAttribute("boardlist", boardlist);
-    model.addAttribute("noticelist", noticelist);
+//    model.addAttribute("noticelist", noticelist);
     model.addAttribute("category", category);
     return "board/main";
   }
 
   @GetMapping("/bboard_health")
-  public String board_health(Model model, @ModelAttribute PageVO pagevo) throws Exception {
+  public String board_health(Model model, @ModelAttribute PageVO pagevo)throws Exception {
     if(pagevo.getPage()==null){
       pagevo.setPage(1);
     }
     String category="오늘의 건강";
+//    System.out.println(pagevo.getSearchKeyword());
     pagevo.setTotalCount(boardService.boardCount(category));
     List<BoardVO> boardlist=boardService.boardList(pagevo,category);
 //        System.out.println(pagevo.getPage());
@@ -79,7 +85,7 @@ public class HomeController {
     }
     String category="의료정보";
     pagevo.setTotalCount(boardService.boardCount(category));
-    List<BoardVO> boardlist=boardService.boardList(pagevo,category);
+    List<BoardVO> boardlist=boardService.boardAll(pagevo);
     model.addAttribute("boardlist",boardlist);
     model.addAttribute("category", category);
     return "board/main";
@@ -106,8 +112,8 @@ public class HomeController {
                             @ModelAttribute MultipartFile[]file) throws Exception {
 
 //    System.out.println(file.length);
-    String [] newFileName=fileDataUtil.fileUpload(file);
-    boardVO.setBoard_binary(newFileName);
+//    String [] newFileName=fileDataUtil.fileUpload(file);
+//    boardVO.setBoard_binary(newFileName);
     boardService.addBoard(boardVO);
     return "redirect:/bboard_all";
 
@@ -134,6 +140,5 @@ public class HomeController {
     boardService.modBoard(boardVO);
     return "redirect:/bboard_health";
   }
-
 }
 

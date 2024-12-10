@@ -20,23 +20,31 @@ public class LikeController {
     @Autowired
     LikeService likeService;
 
+//    @PostMapping("/like")
+//    public boolean like(@RequestBody LikeVO likeVO) {
+//
+////        System.out.println(likeVO.getLike_id());
+////        System.out.println(likeVO.getBoard_sequence());
+////        likeVO.setLiked(true);
+//
+////        HashMap<String,Object> map = new HashMap<>();
+////        likeVO.setLiked(likeService.checkLike(likeVO));
+////        map.put("likeVO", likeVO);
+//        //        System.out.println(likeVO.toString());
+////        map.put("likeVO", likeVO);
+//
+//        return likeService.checkLike(likeVO);
+////        return map;
+//    }
     @PostMapping("/like")
-    public boolean like(@RequestBody LikeVO likeVO) {
-
-//        System.out.println(likeVO.getLike_id());
-//        System.out.println(likeVO.getBoard_sequence());
-//        likeVO.setLiked(true);
-
-//        HashMap<String,Object> map = new HashMap<>();
-//        likeVO.setLiked(likeService.checkLike(likeVO));
-//        map.put("likeVO", likeVO);
-        //        System.out.println(likeVO.toString());
-//        map.put("likeVO", likeVO);
-
-        return likeService.checkLike(likeVO);
-//        return map;
+    public HashMap<String,Object> like(@RequestBody LikeVO likeVO){
+        HashMap<String,Object> map = new HashMap<>();
+        likeVO.setLiked(likeService.checkLike(likeVO));
+        int heart= likeService.countHeart(likeVO);
+        map.put("heart",heart);
+        map.put("likeVO",likeVO);
+        return map;
     }
-
     @PostMapping("/likecheck")
     public boolean likecheck(@RequestBody LikeVO likeVO) {
         return likeService.firstLike(likeVO);
