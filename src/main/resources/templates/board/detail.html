@@ -82,6 +82,9 @@
     padding-left: 10px;
     background-color: #3B82F6;
   }
+  #back{
+    cursor: pointer;
+  }
 
 </style>
 <body>
@@ -133,7 +136,7 @@
         <tr><td class="header">첨부파일</td></tr>
         <tr>
           <td><input type="text" name="board_binary" th:value="${boardVO.board_binary}" readonly></td>
-          <td><span id="heart"></span></td>
+          <td><span id="heart"></span><span id="heartCount" th:text="${boardVO.board_goodcount}"></span></td>
         </tr>
         <tr>
           <td><input type="hidden" th:value="${boardVO.board_user_id}" name="board_user_id"></td>
@@ -149,7 +152,7 @@
         <tr>
           <td colspan="2">
             <a th:href="@{detail(no=${boardVO.board_sequence}-1)}">[이전글 보기]</a>
-            <a href="bboard_health">[돌아가기]</a>
+            <span id="back">[돌아가기]</span>
             <a th:href="@{detail(no=${boardVO.board_sequence}+1)}">[다음글 보기}</a>
           </td>
         </tr>
@@ -179,17 +182,18 @@
 </html>
 <script>
   // var userid=document.getElementById("userid").value;
-  var board_user_id="test2";
+  var board_user_id="test3";
   var board_sequence=document.getElementsByName("board_sequence")[0].value;
   var likevo= {
     "board_user_id": board_user_id,
     "board_sequence": board_sequence,
     "liked": true,
-    "like_id": "test"
+    "like_id": "test1"
 
   };
 
   let heart=document.getElementById("heart");
+  let heartCount=document.getElementById("heartCount");
   heart.addEventListener("click",test);
   function test(){
     // console.log(likevo);
@@ -200,14 +204,16 @@
       dataType: "json",
       contentType:"application/json",
       success:function (data){
-        // console.log(data);
-        if(data){
+        console.log(data);
+        if(data.liked){
           alert("좋아요 취소");
           heart.innerHTML=`<img width="50" height="50" src="https://img.icons8.com/ios/50/hearts--v1.png" alt="hearts--v1"/>`
+          heartCount.innerHTML=data.heart;
           return false;
         }else{
           alert("좋아요");
           heart.innerHTML=`<img width="48" height="48" src="https://img.icons8.com/color/48/hearts.png" alt="hearts"/>`;
+          heartCount.innerHTML=data.heart;
           return true;
         }
       },
@@ -240,6 +246,9 @@
       }
     })
   }
-
+  let back=document.getElementById("back");
+  back.addEventListener("click",()=>{
+    history.back()
+  })
 
 </script>

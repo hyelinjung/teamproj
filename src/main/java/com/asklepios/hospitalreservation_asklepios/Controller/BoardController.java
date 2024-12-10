@@ -19,8 +19,10 @@ import java.util.List;
 public class BoardController {
   @Autowired
   IF_BoardService boardService;
+  @Autowired
   FileDataUtil fileDataUtil;
 
+  
   @GetMapping("/bboard_all")
   public String board_all(Model model, @ModelAttribute PageVO pagevo) throws Exception{
     if(pagevo.getPage()==null){
@@ -28,10 +30,13 @@ public class BoardController {
     }
     String category="모든 글";
     pagevo.setTotalCount(boardService.boardCount(category));
+//    System.out.println(pagevo.getTotalCount());
+//    System.out.println(pagevo.getPage());
+//    System.out.println(pagevo.getStartNo());
     List<BoardVO> boardlist=boardService.boardAll(pagevo);
-    List<BoardVO> noticelist=boardService.boardNoticeList();
+//    List<BoardVO> noticelist=boardService.boardNoticeList();
     model.addAttribute("boardlist", boardlist);
-    model.addAttribute("noticelist", noticelist);
+//    model.addAttribute("noticelist", noticelist);
     model.addAttribute("category", category);
     return "board/main";
   }
@@ -42,6 +47,7 @@ public class BoardController {
       pagevo.setPage(1);
     }
     String category="오늘의 건강";
+//    System.out.println(pagevo.getSearchKeyword());
     pagevo.setTotalCount(boardService.boardCount(category));
     List<BoardVO> boardlist=boardService.boardList(pagevo,category);
 //        System.out.println(pagevo.getPage());
@@ -73,7 +79,7 @@ public class BoardController {
     }
     String category="의료정보";
     pagevo.setTotalCount(boardService.boardCount(category));
-    List<BoardVO> boardlist=boardService.boardList(pagevo,category);
+    List<BoardVO> boardlist=boardService.boardAll(pagevo);
     model.addAttribute("boardlist",boardlist);
     model.addAttribute("category", category);
     return "board/main";
@@ -100,8 +106,8 @@ public class BoardController {
                             @ModelAttribute MultipartFile[]file) throws Exception {
 
 //    System.out.println(file.length);
-    String [] newFileName=fileDataUtil.fileUpload(file);
-    boardVO.setBoard_binary(newFileName);
+//    String [] newFileName=fileDataUtil.fileUpload(file);
+//    boardVO.setBoard_binary(newFileName);
     boardService.addBoard(boardVO);
     return "redirect:/bboard_all";
 
