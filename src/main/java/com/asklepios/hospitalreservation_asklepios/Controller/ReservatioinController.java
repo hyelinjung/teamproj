@@ -23,16 +23,16 @@ public class ReservatioinController {
   @GetMapping("/reservationForm")
   public String reservationForm(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
     model.addAttribute("user", user);
-    return "redirect:/home";
+    return "redirect:/ home";
   }
 
   @ResponseBody
   @PostMapping("/findHospital")
   public HospitalVO findHospital(@RequestParam("hospital_name1") String hospitalName,
                                  @RequestParam("hospital_address1") String hospitalAddr) {
-    System.out.println(hospitalName);
-    System.out.println(hospitalAddr);
-    System.out.println(reservationService.findHospital(hospitalName, hospitalAddr));
+//    System.out.println(hospitalName);
+//    System.out.println(hospitalAddr);
+//    System.out.println(reservationService.findHospital(hospitalName, hospitalAddr));
     return reservationService.findHospital(hospitalName, hospitalAddr);
   }
 
@@ -46,7 +46,7 @@ public class ReservatioinController {
   @ResponseBody
   @PostMapping("/findDoctors")
   public List<Hospital_doctorVO> findDoctor(@RequestParam("hospital_code") String hospitalCode){
-    System.out.println(reservationService.findDoctors(hospitalCode));
+//    System.out.println(reservationService.findDoctors(hospitalCode));
     return reservationService.findDoctors(hospitalCode);
   }
   @PostMapping("/reserve")
@@ -55,7 +55,7 @@ public class ReservatioinController {
         @RequestParam("doctorCode") String doctorCode,
         @RequestParam("hospitalName") String hospitalName,
                         Model model){
-    System.out.println(user.toString());
+//    System.out.println(user.toString());
     model.addAttribute("user", user);
 //    String doctorCode ="4fb63188-1578-4a0a-ae21-5a2786cb85cf";
     String doctorName = reservationService.findDoctorName(doctorCode);
