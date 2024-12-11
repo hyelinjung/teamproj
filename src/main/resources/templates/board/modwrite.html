@@ -1,25 +1,15 @@
-<html xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Asklepios</title>
     <script
             src="https://kit.fontawesome.com/68dda164c0.js"
             crossorigin="anonymous"
     ></script>
 </head>
-
-<body>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<link rel="stylesheet" href="home.css" />
+<link rel="stylesheet" href="CSS/home.css" />
+<link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
 <style>
     #boardheader{
         display: block;
@@ -98,14 +88,12 @@
       padding-left: 10px;
       background-color: #3B82F6;
     }
-
-
 </style>
 <body>
     <div th:replace="~{include/topinclude}"></div>
     <div class="homeContainer">
 
-      <aside id="aside1" th:replace="asideMenuTemplates/noticeBoardAside">
+      <aside id="aside1" th:replace="~{asideMenuTemplates/noticeBoardAside}">
 
       </aside>
       <section>
@@ -154,14 +142,14 @@
         </div>
 
       </section>
-      <aside id="aside2" th:insert="include/quickmenuinclude">
+      <aside id="aside2" th:insert="~{include/quickmenuinclude}">
 
       </aside>
     </div>
-<footer id="ad">
-    <h1>광고</h1>
-</footer>
-<footer id="footer" th:insert="footer">
+<!--<footer id="ad">-->
+<!--    <h1>광고</h1>-->
+<!--</footer>-->
+<footer id="footer" th:insert="~{include/footer}">
     <h1>footer</h1>
 </footer>
 

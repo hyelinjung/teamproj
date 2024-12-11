@@ -2,8 +2,10 @@ package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.Service.IF_RegistrationService;
 import com.asklepios.hospitalreservation_asklepios.VO.HospitalVO;
+import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -13,8 +15,9 @@ public class RegistrationController {
   IF_RegistrationService registrationservice;
 
   @GetMapping("/registration")
-  public String registration() {
-    return "registrationForm";
+  public String registration(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
+    model.addAttribute("user", user);
+    return "registration/registrationForm";
   }
 
   @ResponseBody

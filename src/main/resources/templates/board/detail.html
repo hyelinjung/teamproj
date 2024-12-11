@@ -3,12 +3,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Asklepios</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://kit.fontawesome.com/68dda164c0.js" crossorigin="anonymous"></script>
 </head>
-<link rel="stylesheet" href="home.css" />
+<link rel="stylesheet" href="CSS/home.css" />
+<link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
 <style>
 
   /*table td{*/
@@ -82,10 +83,10 @@
 
 </style>
 <body>
-<div th:replace="include/topinclude"></div>
+<div th:replace="~{include/topinclude}"></div>
 <div class="homeContainer">
 
-  <aside id="aside1" th:replace="asideMenuTemplates/noticeBoardAside">
+  <aside id="aside1" th:replace="~{asideMenuTemplates/noticeBoardAside}">
 
   </aside>
   <section>
@@ -168,10 +169,10 @@
 
   </aside>
 </div>
-<footer id="ad">
-  <h1>광고</h1>
-</footer>
-<footer id="footer" th:insert="footer">
+<!--<footer id="ad">-->
+<!--  <h1>광고</h1>-->
+<!--</footer>-->
+<footer id="footer" th:insert="~{include/footer}">
   <h1>footer</h1>
 </footer>
 

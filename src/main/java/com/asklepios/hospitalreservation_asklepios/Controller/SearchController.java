@@ -4,6 +4,7 @@ import com.asklepios.hospitalreservation_asklepios.Service.IF_SearchService;
 
 import com.asklepios.hospitalreservation_asklepios.VO.Hospital_doctorVO;
 import com.asklepios.hospitalreservation_asklepios.VO.ReviewVO;
+import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,13 +23,15 @@ public class SearchController {
     @Autowired
     IF_SearchService searchService;
     @GetMapping("/search")
-    public ModelAndView search(@RequestParam("keyword") String keyword,
+    public ModelAndView search(@SessionAttribute(name = "loginUser", required = false) UserVO user,
+            @RequestParam("keyword") String keyword,
                          Model model) {
 //        System.out.println(keyword);
 //        List<HospitalVO> hlist =searchService.searchHospital(keyword);
         List<Hospital_doctorVO> hlist=searchService.searchInfo(keyword);
 //        System.out.println(hlist.size());
 //        System.out.println(hlist.toString());
+        model.addAttribute("user", user);
         model.addAttribute("hlist", hlist);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("search/searchmain");

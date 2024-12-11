@@ -1,40 +1,36 @@
-
 <html xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Asklepios</title>
     <script
             src="https://kit.fontawesome.com/68dda164c0.js"
             crossorigin="anonymous"
     ></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
-<link rel="stylesheet" href="home.css" />
+<link rel="stylesheet" href="CSS/home.css" />
+<link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
 <style>
     #search-header{
-        margin-top: 50px;
-        /*margin-left: 80px;*/
-        font-size: 30px;
-        text-align: center;
-        margin-bottom: 20px;
+      margin-top: 0px;
+      font-size: 50px;
+      color: #3b82f6;
+      border-bottom: 5px solid #3b82f6;
+      text-align: left;
+      font-weight: bold;
     }
     table{
-        margin: auto;
-        /*border: 1px solid;*/
-        width: 800px;
-        /*height: 800px;*/
+        width: 100%;
         box-sizing: border-box;
     }
     tr{
         height: 60px;
-        /*box-sizing: border-box;*/
         margin: 0;
     }
     td{
       border-top: 1px lightgray solid;
-      /*border-bottom: 1px lightgray solid;*/
         height: 60px;
     }
     thead{
@@ -44,34 +40,29 @@
     .rheader{
       width: 600px;
       height: 50px;
-      /*border: 1px solid;*/
       font-size: 35px;
       cursor: pointer;
     }
     .resultrow{
         width: 600px;
         height: 200px;
-        /*border: 1px solid;*/
-        margin-left: 50px;
         padding: 5px;
     }
     #filter{
-        /*position: fixed;*/
-        width: 800px;
-        /*border: 1px solid;*/
-        margin-left: 100px;
-        height: 40px;
-        text-align: center;
+      width: 100%;
+      text-align: center;
     }
     .filter_button{
-        display: inline-block;
-        border: 1px solid #3B82F6;
-        border-radius: 10px;
-        width: 150px;
-        height: 60px;
-        color: black;
-        font-size: 30px;
-        margin-right: 15px;
+      display: inline-block;
+      border: 1px solid #3B82F6;
+      border-radius: 10px;
+      width: 150px;
+      height: 60px;
+      color: black;
+      font-size: 30px;
+      margin-right: 15px;
+      text-align: center;
+      align-content: center;
     }
     #hospitals{
       margin-top: 30px;
@@ -88,13 +79,11 @@
 
       width: 600px;
       height: 850px;
-      /*border: 1px solid;*/
       border-radius: 30px;
       display:none;
     }
     #modalheader{
         margin: 0 0 30px;
-        /*border: 1px solid;*/
         border-top-left-radius: 30px;
         border-top-right-radius: 30px;
         font-size: 30px;
@@ -124,7 +113,6 @@
     section::-webkit-scrollbar {
       width: 10px;
     }
-
    section::-webkit-scrollbar-thumb {
       background-color: #2f3542;
       border-radius: 10px;
@@ -136,12 +124,9 @@
       border-radius: 10px;
       box-shadow: inset 0 0 5px white;
     }
-
-
     #modalInfo::-webkit-scrollbar {
       width: 10px;
     }
-
     #modalInfo::-webkit-scrollbar-thumb {
       background-color: #2f3542;
       border-radius: 10px;
@@ -160,14 +145,11 @@
       margin-left: 100px;
       width: 850px;
       height: 800px;
-      /*border: 1px solid;*/
       overflow: auto;
       border-radius:30px ;
-
     }
     #infoHeader{
       margin: 0;
-      /*border: 1px solid;*/
       width: 100%;
       height: 70px;
       text-align: center;
@@ -188,12 +170,10 @@
     text-align: left;
     font-size: 25px;
     color: #666666;
-    /*border: 1px solid;*/
   }
    #doctorTable,#reviewTable{
      margin-left: 80px;
      width: 600px;
-     /*border: 1px solid;*/
      font-size: 25px;
     }
    #reservation{
@@ -206,6 +186,12 @@
    #reservation{
      cursor:pointer;
    }
+   .modalResultRow{
+     width: 100%;
+     height: 200px;
+     padding: 5px;
+     text-align: center;
+   }
 </style>
 <body>
 <div style="position: fixed" th:replace="~{include/topinclude}"></div>
@@ -215,7 +201,7 @@
 
   </aside>
   <section>
-    <div id="search-header">검색결과</div>
+    <div id="search-header">병원검색</div>
     <div id="filter">
       <span class="filter_button">진료과목</span>
       <span class="filter_button" style="background: white">진료중</span>
@@ -258,63 +244,8 @@
               <div class="info" th:text="${hospitalVO.hospital_tel}"></div>
             </div>
           </td>
-
         </tr>
-
         </tbody>
-
-        <!--            <tr>-->
-        <!--                <td>-->
-        <!--                    <div class="resultrow">-->
-        <!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
-        <!--                        <div class="time">-->
-        <!--                            <span class="info">진료시간: 0900-1800 |</span>-->
-        <!--                            <span class="info">내과</span>-->
-        <!--                        </div>-->
-        <!--                        <div class="info">수원시 영통구</div>-->
-        <!--                        <div class="info">010-1234-1234</div>-->
-        <!--                    </div>-->
-        <!--                </td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--                <td>-->
-        <!--                    <div class="resultrow">-->
-        <!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
-        <!--                        <div class="time">-->
-        <!--                            <span class="info">진료시간: 0900-1800 |</span>-->
-        <!--                            <span class="info">내과</span>-->
-        <!--                        </div>-->
-        <!--                        <div class="info">수원시 영통구</div>-->
-        <!--                        <div class="info">010-1234-1234</div>-->
-        <!--                    </div>-->
-        <!--                </td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--                <td>-->
-        <!--                    <div class="resultrow">-->
-        <!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
-        <!--                        <div class="time">-->
-        <!--                            <span class="info">진료시간: 0900-1800 |</span>-->
-        <!--                            <span class="info">내과</span>-->
-        <!--                        </div>-->
-        <!--                        <div class="info">수원시 영통구</div>-->
-        <!--                        <div class="info">010-1234-1234</div>-->
-        <!--                    </div>-->
-        <!--                </td>-->
-        <!--            </tr>-->
-        <!--            <tr>-->
-        <!--                <td>-->
-        <!--                    <div class="resultrow">-->
-        <!--                        <div class="rheader"><a href="#">연세바다소아청소년의원</a></div>-->
-        <!--                        <div class="time">-->
-        <!--                            <span class="info">진료시간: 0900-1800 |</span>-->
-        <!--                            <span class="info">내과</span>-->
-        <!--                        </div>-->
-        <!--                        <div class="info">수원시 영통구</div>-->
-        <!--                        <div class="info">010-1234-1234</div>-->
-        <!--                    </div>-->
-        <!--                </td>-->
-        <!--            </tr>-->
       </table>
     </div>
     <div id="modalInfo">
@@ -326,8 +257,8 @@
             <tbody id="infoTable">
             <tr class="row">
               <td>
-                <div class="resultrow">
-                  <div class="rheader" id="clickhospitalname" ></div>
+                <div class="modalResultRow">
+                  <div class="rheader" id="clickhospitalname" style="width: 100%;" ></div>
                   <div class="time">
                     <span class="info" >진료시간: </span>
                     <span class="info" id="clickhospitaltime"> </span>
@@ -389,11 +320,10 @@
   </section>
   <aside id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
 </div>
-<footer id="ad" >
-    <h1>광고</h1>
-</footer>
-<footer id="footer" th:replace="~{footer}">
-    <h1>footer</h1>
+<!--<footer id="ad" >-->
+<!--    <h1>광고</h1>-->
+<!--</footer>-->
+<footer id="footer" th:replace="~{include/footer}">
 </footer>
 </body>
 </html>
@@ -413,16 +343,6 @@
     hospitalList.push(hospital[[${stat.count}]]);
     [/]
         console.log(hospitalList);
-        // Mod_hospitalList=hospitalList;
-    // for(let i=0;i<hospitalList.length;i++){
-    //     console.log(JSON.stringify(hospitalList[i]));
-    // }
-    // for(let i=0;i<hospitalList.length;i++){
-    //     if(hospitalList[i].hospital_date==="y"){
-    //         Mod_hospitalList.push(hospitalList[i]);
-    //     }
-    // }
-    // console.log(Mod_hospitalList);
 
     let JSON_hospitalList={
         "hospitalList":JSON.stringify(hospitalList)

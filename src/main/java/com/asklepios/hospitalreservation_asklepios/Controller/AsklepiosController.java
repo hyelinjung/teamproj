@@ -46,11 +46,11 @@ public class AsklepiosController {
     @GetMapping("reservationStatusDoctor")
     public String reservationStatusDoctor(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
         model.addAttribute("user", user);
-        return "MyPage/reservationStatusDoctor";
+        return "myPage/reservationStatusDoctor";
     }
     @GetMapping("reservationStatusClient")
     public String reservationStatusClient(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
         model.addAttribute("user", user);
-        return "MyPage/reservationStatusClient";
+        return "myPage/reservationStatusClient";
     }
 }
