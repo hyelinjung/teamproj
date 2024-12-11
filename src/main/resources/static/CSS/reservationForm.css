@@ -37,11 +37,11 @@ table {
   height: 200px;
 }
 .label {
-  font-size: 25px;
+  font-size: 30px;
 }
 .fillAuto {
   padding-left: 20px;
-  font-size: 25px;
+  font-size: 30px;
   width: 900px;
   height: 80px;
 }
