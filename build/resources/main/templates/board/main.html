@@ -1,15 +1,17 @@
+<!--문제-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Asklepios</title>
     <script
             src="https://kit.fontawesome.com/68dda164c0.js"
             crossorigin="anonymous"
     ></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="home.css" />
+  <link rel="stylesheet" href="CSS/home.css" />
+  <link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
 </head>
 <style>
   #boardtable{
@@ -67,9 +69,6 @@
   background: #84b6ff;
   border-radius: 10px;
 }
-
-
-
 section{
   display: inline-block;
 }
@@ -198,7 +197,7 @@ section{
           <tr id="none">
             <td colspan="6" th:if="${category=='오늘의 건강'}" >
                <span th:if= "${pageVO.prev}" style="display: inline-block">
-                 <a th:href="@{bboard_health(page=${pageVO.startPage-1})}">
+                 <a th:href="@{bboard_health(page=${pageVO.startPage}-1)}">
                    <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
                  </a>
                </span>
@@ -213,7 +212,7 @@ section{
             </td>
             <td colspan="6" th:if="${category=='모든 글'}">
                <span th:if= "${pageVO.prev}" style="display: inline-block">
-                 <a th:href="@{bboard_all(page=${pageVO.startPage-1})}">
+                 <a th:href="@{bboard_all(page=${pageVO.startPage}-1)}">
                    <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
                  </a>
                </span>
@@ -228,7 +227,7 @@ section{
             </td>
             <td colspan="6" th:if="${category=='의료정보'}">
                <span th:if= "${pageVO.prev}" style="display: inline-block">
-                 <a th:href="@{bboard_med(page=${pageVO.startPage-1})}">
+                 <a th:href="@{bboard_med(page=${pageVO.startPage}-1)}">
                    <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
                  </a>
                </span>
@@ -243,7 +242,7 @@ section{
             </td>
             <td colspan="6" th:if="${category=='자유게시판'}" >
                <span th:if= "${pageVO.prev}" style="display: inline-block">
-                 <a th:href="@{bboard_free(page=${pageVO.startPage-1})}">
+                 <a th:href="@{bboard_free(page=${pageVO.startPage}-1)}">
                    <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
                  </a>
                </span>
@@ -258,7 +257,7 @@ section{
             </td>
             <td colspan="6" th:if="${category=='캠페인'}">
                <span th:if= "${pageVO.prev}" style="display: inline-block">
-                 <a th:href="@{bboard_campaign(page=${pageVO.startPage-1})}">
+                 <a th:href="@{bboard_campaign(page=${pageVO.startPage}-1)}">
                    <img width="25" height="25" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>
                  </a>
                </span>
@@ -275,64 +274,17 @@ section{
           </tbody>
         </table>
         <div id="paging">
-          <!--            <span th:if= "${pageVO.prev}">-->
-          <!--                <a th:href="@{bboard(type=${boardVO.category})${pageVO.category}(page=${pageVO.startPage})}">-->
-          <!--                  <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>-->
-          <!--                </a>-->
-          <!--            </span>-->
-          <!--        <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">-->
-          <!--                    <a th:text="${idx}" th:href="@{bboard(type=${boardVO.category})(page=${idx})}"></a>-->
-          <!--                </span>-->
-          <!--        <span th:if="${pageVO.next}">-->
-          <!--                    <a th:href="@{bboard(type=${boardVO.category})(page=${pageVO.endPage+1})}">-->
-          <!--                      <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-right&#45;&#45;v1.png" alt="circled-chevron-right&#45;&#45;v1"/>-->
-          <!--                    </a>-->
-          <!--            </span>-->
         </div>
-        <!--      onclick = "location.href = 'bboard/write'"-->
         <form action="write" method="get" style="display: inline-block;" >
-          <button type="submit" id="write"><img style="display: inline-block" width="25" height="25" src="https://img.icons8.com/ios/50/pencil--v1.png" alt="pencil--v1"/ >글쓰기 </button>
+          <button type="submit" id="write"><img style="display: inline-block" width="25" height="25" src="https://img.icons8.com/ios/50/pencil--v1.png" alt="pencil--v1">글쓰기 </button>
         </form>
-        <!--      <form action="bboard_health" method="get" style="display: inline-block;">-->
-        <!--        <input id="boardSearch" type="search" placeholder="검색어를 입력하세요" name="searchKeyword">-->
-        <!--        <input id="searchButton" type="submit" value="검색" >-->
-        <!--      </form>-->
       </section>
-      <aside style="margin-right: 50px; margin-top: 20px;" id="aside2" th:insert="~{include/quickmenuinclude}">
-        </tbody>
-      </table>
-      <div id="paging">
-<!--            <span th:if= "${pageVO.prev}">-->
-<!--                <a th:href="@{bboard(type=${boardVO.category})${pageVO.category}(page=${pageVO.startPage})}">-->
-<!--                  <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-left.png" alt="circled-chevron-left"/>-->
-<!--                </a>-->
-<!--            </span>-->
-<!--        <span th:each="idx:${#numbers.sequence(pageVO.startPage,pageVO.endPage)}">-->
-<!--                    <a th:text="${idx}" th:href="@{bboard(type=${boardVO.category})(page=${idx})}"></a>-->
-<!--                </span>-->
-<!--        <span th:if="${pageVO.next}">-->
-<!--                    <a th:href="@{bboard(type=${boardVO.category})(page=${pageVO.endPage+1})}">-->
-<!--                      <img width="50" height="50" src="https://img.icons8.com/ios/50/circled-chevron-right&#45;&#45;v1.png" alt="circled-chevron-right&#45;&#45;v1"/>-->
-<!--                    </a>-->
-<!--            </span>-->
-      </div>
-<!--      onclick = "location.href = 'bboard/write'"-->
-      <form action="write" method="get" style="display: inline-block;" >
-        <button type="submit" id="write"><img style="display: inline-block" width="25" height="25" src="https://img.icons8.com/ios/50/pencil--v1.png" alt="pencil--v1"/ >글쓰기 </button>
-      </form>
-<!--      <form action="bboard_health" method="get" style="display: inline-block;">-->
-<!--        <input id="boardSearch" type="search" placeholder="검색어를 입력하세요" name="searchKeyword">-->
-<!--        <input id="searchButton" type="submit" value="검색" >-->
-<!--      </form>-->
-    </section>
-    <aside id="aside2">
-
-      </aside>
+      <aside style="margin-right: 50px; margin-top: 20px;" id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
     </div>
-    <footer id="ad">
-        <h1>광고</h1>
-    </footer>
-    <footer id="footer" th:insert="footer">
+<!--    <footer id="ad">-->
+<!--        <h1>광고</h1>-->
+<!--    </footer>-->
+    <footer id="footer" th:insert="~{include/footer}">
         <h1>footer</h1>
     </footer>
 

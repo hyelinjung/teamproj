@@ -8,8 +8,8 @@
 			src="https://kit.fontawesome.com/68dda164c0.js"
 			crossorigin="anonymous"
     ></script>
-  <link rel="stylesheet" href="home.css" />
-  <link rel="icon" href="logo_icon.png" type="image/x-icon">
+  <link rel="stylesheet" href="CSS/home.css" />
+  <link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
@@ -25,11 +25,11 @@
   </section>
   <aside style="margin-right: 50px; margin-top: 20px;" id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
 </div>
-<footer id="ad">
-  <h1>광고</h1>
-</footer>
-<footer id="footer" th:replace="~{footer}">
-  <h1>footer</h1>
+<!--동준 => 광고 집어넣을거면 여기에 추가-->
+<!--<footer id="ad">-->
+<!--  <h1>광고</h1>-->
+<!--</footer>-->
+<footer id="footer" th:replace="~{include/footer}">
 </footer>
 
 </body>

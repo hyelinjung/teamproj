@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>InsertCommonInfo</title>
+    <title>Asklepios</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src = "js/jquery-3.6.0.min.js"></script>
+    <script src ="js/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
 </head>
 <style>
     @font-face {
@@ -304,25 +305,6 @@
                 }
             });
 
-            // if(cnt >0){
-            //     let timer = null;
-            //     let isRunning = false;
-            //
-            //     $(function(){
-            //         var display = $('#timer');
-            //         var leftSec = 600;
-            //         // 남은 시간
-            //         // 이미 타이머가 작동중이면 중지
-            //         if (isRunning){
-            //             clearInterval(timer);
-            //             display.html("");
-            //             startTimer(leftSec, display);
-            //         }else{
-            //             startTimer(leftSec, display);
-            //
-            //         }
-            //     });
-            // }
             document.getElementById("sendAuthentication").style.display = "none";
             document.getElementById("checkAuthentication").style.display = "inline-block";
         }
@@ -348,28 +330,6 @@
         }
     }
 
-    // function startTimer(count, display) {
-    //     var minutes, seconds;
-    //     timer = setInterval(function () {
-    //         minutes = parseInt(count / 60, 10);
-    //         seconds = parseInt(count % 60, 10);
-    //
-    //         minutes = minutes < 10 ? "0" + minutes : minutes;
-    //         seconds = seconds < 10 ? "0" + seconds : seconds;
-    //
-    //         display.html(minutes + ":" + seconds);
-    //
-    //         // 타이머 끝
-    //         if (--count < 0) {
-    //             clearInterval(timer);
-    //             alert("시간초과");
-    //             display.html("시간초과");
-    //             $("button").attr("disabled", true);
-    //             isRunning = false;
-    //         }
-    //     }, 1000);
-    //     isRunning = true;
-    // }
 </script>
 <body class="mx-auto" style="margin-top: 50px">
 <h1 style="font-size: xx-large; text-align: center;">회원 정보 입력</h1>
@@ -482,7 +442,7 @@
             <tr>
                 <td>
                     <input type="text" id="authentication_number" class="mx-auto block bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 mx-20 p-5 focus:ring-2 focus:outline-none"
-                           placeholder="전송받은 인증번호를 입력해 주세요." style="display: inline-block; width: 49.5%" oninput="userID(this)">
+                           placeholder="전송받은 인증번호를 입력해 주세요." style="display: inline-block; width: 49.5%">
                     <button type="button" id="sendAuthentication" class="mx-auto block bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 mx-20 p-5 focus:ring-2 focus:outline-none" onclick="sendAuthenticationNumber()" style="width: 49.5%; display: inline-block; height: 70px; border-radius: 10px;">인증번호 전송</button>
                     <button type="button" id="checkAuthentication" class="mx-auto block bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 mx-20 p-5 focus:ring-2 focus:outline-none" onclick="checkAuthenticationNumber()" style="width: 49.5%; display: none; height: 70px; border-radius: 10px;">인증번호 확인</button>
                 </td>

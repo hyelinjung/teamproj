@@ -47,7 +47,7 @@ public class MyPageController {
             model.addAttribute("user", user);
             model.addAttribute("reservationStatusVOList", reservationStatusVOList);
 //            model.addAttribute("reservationDoctorStatusVOList", reservationDoctorStatusVOList);
-            return "MyPage/myPageClient";
+            return "myPage/myPageClient";
         }
         else {
             // UserVO 불러오기
@@ -69,7 +69,7 @@ public class MyPageController {
             model.addAttribute("doctorVO", doctorVO);
 //            model.addAttribute("reservationStatusVOList", reservationStatusVOList);
 //            model.addAttribute("reservationDoctorStatusVOList", reservationDoctorStatusVOList);
-            return "MyPage/myPageDoctor";
+            return "myPage/myPageDoctor";
         }
     }
 
@@ -118,7 +118,7 @@ public class MyPageController {
             userService.modifyUserDoctorInfo(doctorVO);
             userService.modifyUserCommonInfo(userVO);
     //        System.out.println(userVO.getUser_authority());
-            return "MyPage/myPageClient";
+            return "myPage/myPageClient";
         }else{
             String newFileName = profileImageUtil.storeFile(file);
             System.out.println(userVO.toString());
@@ -130,7 +130,7 @@ public class MyPageController {
             userService.modifyUserDoctorInfo(doctorVO);
             userService.modifyUserCommonInfo(userVO);
             //        System.out.println(userVO.getUser_authority());
-            return "MyPage/myPageDoctor";
+            return "myPage/myPageDoctor";
         }
     }
 }

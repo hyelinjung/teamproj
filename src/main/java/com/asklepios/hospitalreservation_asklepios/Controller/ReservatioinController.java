@@ -17,8 +17,15 @@ public class ReservatioinController {
   @GetMapping("/reservation")
   public String reservation(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
     model.addAttribute("user", user);
-    return "reservationPlace";
+    return "reservation/reservationPlace";
   }
+
+  @GetMapping("/reservationForm")
+  public String reservationForm(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
+    model.addAttribute("user", user);
+    return "redirect:/home";
+  }
+
   @ResponseBody
   @PostMapping("/findHospital")
   public HospitalVO findHospital(@RequestParam("hospital_name1") String hospitalName,
@@ -60,7 +67,7 @@ public class ReservatioinController {
     model.addAttribute("user_name",user.getUser_name());
     model.addAttribute("user_id",user.getUser_id());
     model.addAttribute("user_tel",user.getUser_tel());
-    return "reservationForm";
+    return "reservation/reservationForm";
   }
 
   @ResponseBody

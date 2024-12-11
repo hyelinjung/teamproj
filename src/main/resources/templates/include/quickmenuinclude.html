@@ -3,14 +3,14 @@
         <div class="profileImage">
             <a href="myPage">
                 <th:block th:if="${user == null}">
-                    <img src="defaultGuest.png" alt="기본 프로필">
+                    <img src="Img/defaultGuest.png" alt="기본 프로필">
                 </th:block>
                 <th:block th:unless="${user == null}">
                     <th:block th:if="${user.user_authority == 'client'}">
-                        <img src="defaultClient.png" alt="기본 프로필">
+                        <img src="Img/defaultClient.png" alt="기본 프로필">
                     </th:block>
                     <th:block th:if="${user.user_authority == 'doctor'}">
-                        <img src="defaultDoctor.png" alt="기본 프로필">
+                        <img src="Img/defaultDoctor.png" alt="기본 프로필">
                     </th:block>
                 </th:block>
             </a>
@@ -34,17 +34,17 @@
                 <p id="hiddenId" style="font-size: 20px" th:text="${user.user_id}" hidden></p>
                 <p id="hiddenAuth" style="font-size: 20px" th:text="${user.user_authority}" hidden></p>
                 <hr style="margin-top: 10px; margin-bottom: 10px">
-                <a href="/asklepios/myPage" onclick="checkSession()">마이페이지</a>
+                <a href="myPage" onclick="checkSession()">마이페이지</a>
                 <hr style="margin-top: 10px; margin-bottom: 10px">
-                <a href="/asklepios/reservation" onclick="checkSession()">예약하기</a>
+                <a href="reservation" onclick="checkSession()">예약하기</a>
                 <hr style="margin-top: 10px; margin-bottom: 10px">
                 <th:block th:if="${user.user_authority == 'client'}">
-                    <a href="/asklepios/reservationStatusClient" onclick="checkSession()">예약현황</a>
+                    <a href="reservationStatusClient" onclick="checkSession()">예약현황</a>
                     <div>총 예약 : <span id="reservationCount1"></span> 건</div>
                     <hr style="margin-top: 10px; margin-bottom: 10px">
                 </th:block>
                 <th:block th:if="${user.user_authority == 'doctor'}">
-                    <a href="/asklepios/reservationStatusDoctor" onclick="checkSession()">예약현황</a>
+                    <a href="reservationStatusDoctor" onclick="checkSession()">예약현황</a>
                     <div>대기중인 예약 : <span id="reservationCount2"></span> 건</div>
                     <hr style="margin-top: 10px; margin-bottom: 10px">
                 </th:block>
