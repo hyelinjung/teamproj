@@ -16,6 +16,7 @@ public class BoardInterceptor implements HandlerInterceptor {
     UserVO user = (UserVO) session.getAttribute("loginUser");
     response.setContentType("text/html; charset=UTF-8");
     response.setCharacterEncoding("UTF-8");
+    request.setCharacterEncoding("UTF-8");
     if(user == null) {
       response.getWriter().println("<script>alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.'); location.href='/asklepios/login';</script>");
       response.getWriter().flush();

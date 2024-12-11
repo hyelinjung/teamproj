@@ -19,4 +19,7 @@
     <select id="selectReview" resultType="com.asklepios.hospitalreservation_asklepios.VO.ReviewVO">
         select * from review where review_hospital_code=#{hospital_code}
     </select>
+    <select id="avgScore" resultType="int">
+        select truncate(avg(review_score),1) from review where review_hospital_code=#{hospitalCode};
+    </select>
 </mapper>

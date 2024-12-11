@@ -28,7 +28,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(reservationinterceptor).addPathPatterns("/reservation","/reserve");
     registry.addInterceptor(registrationinterceptor).addPathPatterns("/registration");
-    registry.addInterceptor(boardinterceptor).addPathPatterns("/bboard/write");
+    registry.addInterceptor(boardinterceptor).addPathPatterns("/write","/detail");
     registry.addInterceptor(reservationforminterceptor).addPathPatterns("/reservationForm");
   }
 

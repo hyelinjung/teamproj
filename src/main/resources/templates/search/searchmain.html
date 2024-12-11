@@ -173,7 +173,7 @@
   }
    #doctorTable,#reviewTable{
      margin-left: 80px;
-     width: 600px;
+     width: 700px;
      font-size: 25px;
     }
    #reservation{
@@ -191,6 +191,17 @@
      height: 200px;
      padding: 5px;
      text-align: center;
+   }
+   .score,.date{
+     text-align: center;
+   }
+   #reviewTable thead{
+     text-align: center;
+   }
+   #avgScore {
+     display: flex;
+     margin-left: 75px;
+     margin-bottom: 10px;
    }
 </style>
 <body>
@@ -278,6 +289,7 @@
             <div class="infoTitle">공지사항</div>
             <div id="infoNotice"></div>
             <div class="infoTitle">리뷰</div>
+            <div id="avgScore"></div>
             <table id="reviewTable">
               <thead>
               <tr>
@@ -310,8 +322,8 @@
               <input type="hidden" id="hospitalName2" name="hospitalName">
               <input  type="hidden" id="doctorCode" name="doctorCode">
               <input type="hidden" id="hospitalCode" name="hospitalCode">
-              <input type="hidden" id="userID" name="userID" value="test">
-              <input id="reservation" type="submit" style="width: 200px;height: 80px; font-size: 30px; background: #84b6ff; border-radius: 5px"  value="예약하기">
+              <input type="hidden" id="userID" name="userID" value="${user.user_id}">
+              <input id="reservation" type="submit" style="width: 200px;height: 80px; font-size: 30px; background: #3b82f6;color: white; border-radius: 5px"  value="예약하기">
             </form>
           </div>
         </div>
@@ -558,14 +570,34 @@
           success: function (data) {
             // alert('성공');
             // console.log(data);
-            let reviewArr=data;
+            let reviewArr=data.reviewList;
+            let avgScore=data.avgScore;
+            let avgStar = '';
+            for(let i=0; i<avgScore; i++){
+                if(i%2 === 0) {
+                  if(i === avgScore-1){
+                    if(i%2 === 0){
+                      avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star-half-empty.png" alt="star-half-empty"/>`;
+                      console.log(i);
+                    }else{
+                      avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
+                      // console.log(i);
+                    }
+                  }else{
+                    avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
+                    console.log(i);
+                  }
+                }
+            }
             let reviews=document.getElementById("reviews");
+            let avg=document.getElementById("avgScore");
+            avg.innerHTML=avgStar;
             for(let i=0;i<reviewArr.length;i++){
               reviews.innerHTML+=`<tr>
 <td>${reviewArr[i].review_user_id}</td>
 <td>${reviewArr[i].review_content}</td>
-<td>${reviewArr[i].review_date.substr(2,8)}</td>
-<td>${reviewArr[i].review_score}</td>
+<td class="date">${reviewArr[i].review_date.substr(2,8)}</td>
+<td class="score">${reviewArr[i].review_score}</td>
 </tr>`
             }
 

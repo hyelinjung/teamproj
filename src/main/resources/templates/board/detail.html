@@ -15,17 +15,18 @@
   /*table td{*/
   /*  border: 1px solid;*/
   /*}*/
-  table {
-    margin: 150px auto auto;
-    width: 1000px;
-    /*margin-left: 50px;*/
-    /*border: 1px solid;*/
-    padding: 20px;
-    font-size: 25px;
+  #boardheader{
+    font-size: 50px;
+    font-weight: bold;
+    color: #3B82F6;
+    border-bottom: 5px solid #3B82F6;
   }
-  /*table td{*/
-  /*  border: 1px solid;*/
-  /*}*/
+  table {
+    margin-top: 30px;
+    width: 100%;
+    padding: 20px;
+    font-size: 30px;
+  }
   table select{
     border: 1px lightgray solid;
     width: 450px;
@@ -46,7 +47,7 @@
   }
   textarea {
     border: 1px lightgray solid;
-    width: 930px;
+    width: 1050px;
     height: 400px;
     border-radius: 5px;
     padding-left: 10px;
@@ -59,17 +60,19 @@
   }
   table input[type="submit"] {
     width: 160px;
-    height: 80px;
+    height: 60px;
     font-size: 30px;
     border: 0;
     outline: 1.5px #3B82F6 solid;
     border-radius: 5px;
     padding-left: 10px;
-    background-color: #84b6ff;
+    background-color: #3b82f6;
+    color: white;
+    margin-top: 30px;
   }
   table input[type="submit"]:active {
     width: 160px;
-    height: 80px;
+    height: 60px;
     font-size: 25px;
     border: 0;
     border-radius: 5px;
@@ -79,6 +82,9 @@
   }
   #back{
     cursor: pointer;
+  }
+  #heart img{
+    display: inline-block;
   }
 
 </style>
@@ -135,7 +141,10 @@
             <td><input type="text" name="board_binary" th:value="${boardVO.board_binary}" readonly></td>
             <td><span id="heart"></span><span id="heartCount" th:text="${boardVO.board_goodcount}"></span></td>
           </tr>
+
+
           <tr>
+            <td th:if="${user.user_id!=null}"><input type="hidden" th:value="${user.user_id}" id="userId"></td>
             <td><input type="hidden" th:value="${boardVO.board_user_id}" name="board_user_id"></td>
             <td><input type="hidden" th:value="${boardVO.board_viewcount}" name="board_viewcount"></td>
             <td><input type="hidden" th:value="${boardVO.board_goodcount}" name="board_goodcount"></td>
@@ -178,12 +187,18 @@
 
 </body>
 </html>
-<script>
-  // var userid=document.getElementById("userid").value;
-  var board_user_id="test3";
+<script th:inline="javascript">
+  let userid;
+  if(document.getElementById("userId")!==null){
+    userid=document.getElementById("userId").value;
+  }else{
+  userid=`guest`;
+  }
+  console.log(userid);
+  // var board_user_id="test3";
   var board_sequence=document.getElementsByName("board_sequence")[0].value;
   var likevo= {
-    "board_user_id": board_user_id,
+    "board_user_id": userid,
     "board_sequence": board_sequence,
     "liked": true,
     "like_id": "test1"

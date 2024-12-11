@@ -25,7 +25,7 @@ import java.util.UUID;
 @Controller
 public class FileDataUtil {
     private ArrayList<String>extNameArray=new ArrayList<>();
-    @Value("${upload.file.path}")
+    @Value("${filePath}")
     private String uploadPath;
     public void setUploadPath(String uploadPath) {
         this.uploadPath = uploadPath;

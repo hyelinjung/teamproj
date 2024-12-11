@@ -15,18 +15,19 @@
 </head>
 <style>
   #boardtable{
-    margin-top: 150px;
-    margin-left: 150px;
-    width: 900px;
+    margin-top: 30px;
+    /*margin-left: 150px;*/
+    width: 100%;
     border-collapse: collapse;
     border-radius: 10px;
     color: #666666;
   }
 
   #boardheader{
-    margin-top: 15px;
-    margin-left: 15px;
     font-size: 50px;
+    font-weight: bold;
+    color: #3B82F6;
+    border-bottom: 5px solid #3B82F6;
   }
 
  thead,tr {
@@ -62,12 +63,13 @@
 }
 #write{
   margin-top: 20px;
-  margin-left: 150px;
-  width: 120px;
+  /*margin-left: 150px;*/
+  width: 160px;
   height: 60px;
-  font-size: 25px;
-  background: #84b6ff;
+  font-size: 30px;
+  background:#3b82f6 ;
   border-radius: 10px;
+  color: white;
 }
 section{
   display: inline-block;
@@ -173,10 +175,10 @@ section{
         <table id="boardtable">
           <thead>
           <tr>
-            <td width="10%">번호</td>
-            <td width="45%">제목</td>
-            <td width="10%">글쓴이</td>
-            <td width="15%">날짜</td>
+            <td width="15%">번호</td>
+            <td width="30%">제목</td>
+            <td width="15%">글쓴이</td>
+            <td width="12%">날짜</td>
             <td width="10%">조회수</td>
             <td width="10%">좋아요</td>
           </tr>
@@ -276,7 +278,7 @@ section{
         <div id="paging">
         </div>
         <form action="write" method="get" style="display: inline-block;" >
-          <button type="submit" id="write"><img style="display: inline-block" width="25" height="25" src="https://img.icons8.com/ios/50/pencil--v1.png" alt="pencil--v1">글쓰기 </button>
+          <button type="submit" id="write"><img style="display: inline-block;filter: invert(100%) " width="25" height="25" src="https://img.icons8.com/ios/50/pencil--v1.png" alt="pencil--v1">글쓰기 </button>
         </form>
       </section>
       <aside style="margin-right: 50px; margin-top: 20px;" id="aside2" th:insert="~{include/quickmenuinclude}"></aside>

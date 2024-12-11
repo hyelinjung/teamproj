@@ -12,4 +12,5 @@ public interface IF_SearchService {
     public List<Hospital_doctorVO> filterDate(List<Hospital_doctorVO> modHospitalList);
     public List<Hospital_doctorVO> filterIng(List<Hospital_doctorVO> modHospitalList);
     public List<ReviewVO> searchReview(String hospital_code);
+    public int getAvg(String hospitalCode);
 }

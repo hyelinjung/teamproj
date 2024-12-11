@@ -83,4 +83,9 @@ public class IM_SearchService implements IF_SearchService{
     public List<ReviewVO> searchReview(String hospital_code) {
         return searchMapper.selectReview(hospital_code);
     }
+
+    @Override
+    public int getAvg(String hospitalCode) {
+        return searchMapper.avgScore(hospitalCode);
+    }
 }

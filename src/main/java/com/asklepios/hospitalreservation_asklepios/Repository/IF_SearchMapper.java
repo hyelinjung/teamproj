@@ -15,4 +15,5 @@ public interface IF_SearchMapper {
     public List<ReviewVO> selectReview(String hospital_code);
 
 
+  public int avgScore(String hospitalCode);
 }

@@ -56,8 +56,18 @@ public class SearchController {
         return modHospitalList;
     }
     @PostMapping("/getreview")
-    public List<ReviewVO> getReview(@RequestParam("hospitalCode") String hospitalCode){
-//        System.out.println(hospitalCode);
-        return searchService.searchReview(hospitalCode);
+//    public List<ReviewVO> getReview(@RequestParam("hospitalCode") String hospitalCode){
+////        System.out.println(hospitalCode);
+//        return searchService.searchReview(hospitalCode);
+//    }
+    public HashMap<String,Object> getReview(@RequestParam("hospitalCode") String hospitalCode){
+        List<ReviewVO> reviewList=searchService.searchReview(hospitalCode);
+        int avgScore=searchService.getAvg(hospitalCode);
+//        System.out.println(avgScore);
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("avgScore",avgScore);
+        map.put("reviewList",reviewList);
+        return map;
+
     }
 }

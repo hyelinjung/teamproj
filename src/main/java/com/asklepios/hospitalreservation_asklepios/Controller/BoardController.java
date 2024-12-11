@@ -6,6 +6,8 @@ import com.asklepios.hospitalreservation_asklepios.Util.FileDataUtil;
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
 import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Controller
@@ -125,14 +130,25 @@ public class BoardController {
     return "board/detail";
   }
   @GetMapping("/modboard")
-  public String mod(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model,@ModelAttribute BoardVO boardVO
-  ) throws Exception {
+  public String mod(@SessionAttribute(name = "loginUser", required = false) UserVO user,
+                    @ModelAttribute BoardVO boardVO,
+                    Model model, HttpServletResponse response, HttpServletRequest request) throws Exception {
 //        System.out.println(no);
-    boardVO=boardService.modBoard(boardVO.getBoard_sequence());
+
+    if(user.getUser_id().equals(boardVO.getBoard_user_id())){
+      boardVO=boardService.modBoard(boardVO.getBoard_sequence());
 //        System.out.println(boardvo.getBoard_content());
-    model.addAttribute("user", user);
-    model.addAttribute("boardVO",boardVO);
-    return "board/modwrite";
+      model.addAttribute("user", user);
+      model.addAttribute("boardVO",boardVO);
+      return "board/modwrite";
+    }else{
+      response.setContentType("text/html; charset=UTF-8");
+      response.setCharacterEncoding("UTF-8");
+      request.setCharacterEncoding("UTF-8");
+      response.getWriter().println("<script> alert('게시글은 작성자만 수정이 가능합니다');history.back(-1);</script>");
+      response.getWriter().close();
+    }
+    return null;
   }
   @PostMapping("/save")
   public String save(@ModelAttribute BoardVO boardVO) throws Exception {
