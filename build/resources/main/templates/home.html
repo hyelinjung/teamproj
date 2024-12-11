@@ -13,12 +13,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
-
+<style>
+</style>
 <body>
 <div th:replace="~{include/topinclude}"></div>
 <div class="homeContainer">
   <aside id="aside1">
-
+    <div style="position: sticky; top: 0px;" onclick="animation()">
+      <img src="Img/tree_static.gif" alt="" class="location" style="position: absolute; width: 300px; z-index: 2;" id="static">
+      <img src="Img/tree_animated.gif" alt="" class="location" style="position: relative; width: 300px; z-index: 1; display: none;" id="animated">
+    </div>
   </aside>
   <section>
 
@@ -34,3 +38,18 @@
 
 </body>
 </html>
+<script>
+  function animation(){
+    append();
+    setTimeout(disappear, 5000);
+  }
+  function append(){
+    document.querySelector('#static').style.display = "none";
+    document.querySelector('#animated').style.removeProperty("display");
+  }
+  function disappear(){
+    document.querySelector('#static').style.removeProperty("display");
+    document.querySelector('#animated').style.display = "none";
+  }
+
+</script>
