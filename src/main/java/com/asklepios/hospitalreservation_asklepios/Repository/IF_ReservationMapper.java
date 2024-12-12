@@ -25,4 +25,5 @@ public interface IF_ReservationMapper {
   void updateCancel(String reservation_code);
   List<Hospital_doctorVO> selectDoctor(String hospitalCode);
   HospitalVO selectHospital(@Param("hospitalName") String hospitalName, @Param("hospitalAddr") String HospitalAddr);
+  String[] getPopularHospital();
 }

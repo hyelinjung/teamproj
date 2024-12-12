@@ -129,6 +129,7 @@ public class BoardController {
     model.addAttribute("boardVO",boardVO);
     return "board/detail";
   }
+
   @GetMapping("/modboard")
   public String mod(@SessionAttribute(name = "loginUser", required = false) UserVO user,
                     @ModelAttribute BoardVO boardVO,

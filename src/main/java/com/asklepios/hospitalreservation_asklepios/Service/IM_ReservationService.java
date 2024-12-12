@@ -126,4 +126,9 @@ public class IM_ReservationService implements IF_ReservationService {
     return reservationmapper.selectDoctor(hospitalCode);
   }
 
+  @Override
+  public String[] popularHospital() {
+    return reservationmapper.getPopularHospital();
+  }
+
 }
