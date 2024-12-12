@@ -86,7 +86,6 @@
   #heart img{
     display: inline-block;
   }
-
 </style>
 <body>
 <div th:replace="~{include/topinclude}"></div>
@@ -139,12 +138,12 @@
           <tr><td class="header">첨부파일</td></tr>
           <tr>
             <td><input type="text" name="board_binary" th:value="${boardVO.board_binary}" readonly></td>
-            <td><span id="heart"></span><span id="heartCount" th:text="${boardVO.board_goodcount}"></span></td>
+            <td th:if="${user!=null}"><span id="heart"></span><span id="heartCount" th:text="${boardVO.board_goodcount}"></span></td>
           </tr>
 
 
           <tr>
-            <td th:if="${user.user_id!=null}"><input type="hidden" th:value="${user.user_id}" id="userId"></td>
+            <td th:if="${user!=null}"><input type="hidden" th:value="${user.user_id}" id="userId"></td>
             <td><input type="hidden" th:value="${boardVO.board_user_id}" name="board_user_id"></td>
             <td><input type="hidden" th:value="${boardVO.board_viewcount}" name="board_viewcount"></td>
             <td><input type="hidden" th:value="${boardVO.board_goodcount}" name="board_goodcount"></td>

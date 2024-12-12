@@ -54,6 +54,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+    //엑셀 다운로드 org.apach.poi 빌드
+    implementation 'org.apache.poi:poi:5.2.3'
+    implementation 'org.apache.poi:poi-ooxml:5.2.3'
+
 }
 
 tasks.named('test') {

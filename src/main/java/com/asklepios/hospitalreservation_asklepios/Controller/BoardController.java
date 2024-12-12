@@ -112,11 +112,11 @@ public class BoardController {
 
   @PostMapping("/submitwrite")
   public String submitWrite(@ModelAttribute BoardVO boardVO,
-                            @ModelAttribute MultipartFile[]file) throws Exception {
+                            @ModelAttribute MultipartFile [] file) throws Exception {
 
-//    System.out.println(file.length);
-//    String [] newFileName=fileDataUtil.fileUpload(file);
-//    boardVO.setBoard_binary(newFileName);
+//    System.out.println(file.toString());
+    String []newFileName=fileDataUtil.fileUpload(file);
+    boardVO.setBoard_binary(newFileName);
     boardService.addBoard(boardVO);
     return "redirect:/bboard_all";
 

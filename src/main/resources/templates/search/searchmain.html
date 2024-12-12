@@ -1,6 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Asklepios</title>
@@ -205,6 +204,12 @@
      margin-left: 75px;
      margin-bottom: 10px;
    }
+   #excel{
+     cursor: pointer;
+     float: right;
+     margin-right: 30px;
+     font-size: 20px;
+   }
 </style>
 <body>
 <div style="position: fixed" th:replace="~{include/topinclude}"></div>
@@ -213,13 +218,18 @@
   <aside id="aside1" th:replace="~{asideMenuTemplates/hospitalListAside}">
 
   </aside>
-  <section>
+  <section id="section">
     <div id="search-header">병원검색</div>
     <div id="filter">
       <span class="filter_button">진료과목</span>
       <span class="filter_button" style="background: white">진료중</span>
       <span class="filter_button">평일</span>
     </div>
+     <div id="excel">
+       <a href="excelDownload"><img width="70" height="70" src="https://img.icons8.com/color/48/ms-excel.png" alt="ms-excel"/> <span>병원목록 다운로드</span></a>
+     </div>
+
+
     <div id="modal">
       <div id="modalheader">
         진료과목 선택
@@ -351,7 +361,6 @@
     let tbody=document.getElementById("tbody");
     //렌더링 시 받은 병원리스트
     let hospitalList=[];
-
     [# th:each='hospitalVO, stat:${hlist}']
     let hospital[[${stat.count}]]=[[${hospitalVO}]];
     hospitalList.push(hospital[[${stat.count}]]);
@@ -387,7 +396,7 @@
                         resultrow[i].innerHTML=
                         `<div class="rheader" >${data[i].hospital_name}</div>
                             <div class="info">
-                              <span class="info" >${data[i].user_doctor_medical}</span>
+                              <span class="info" >${data[i].medicals}</span>
                             </div>
                             <div class="time">
                               <span class="info">${data[i].hospital_time}</span>
@@ -407,15 +416,15 @@
             for(let i=0;i<hospitalList.length;i++){
                 tbody.innerHTML+="<tr class='row'><td><div class='resultrow' ></div></td></tr>";
                 resultrow[i].innerHTML=
-                    `<div class="rheader" >${data[i].hospital_name}</div>
+                    `<div class="rheader" >${hospitalList[i].hospital_name}</div>
                             <div class="info">
-                              <span class="info" >${data[i].user_doctor_medical}</span>
+                              <span class="info" >${hospitalList[i].medicals}</span>
                             </div>
                             <div class="time">
-                              <span class="info">${data[i].hospital_time}</span>
+                              <span class="info">${hospitalList[i].hospital_time}</span>
                             </div>
-                            <div class="info" >${data[i].hospital_tel}</div>
-                            <div class="info" >${data[i].hospital_addr}</div>`
+                            <div class="info" >${hospitalList[i].hospital_tel}</div>
+                            <div class="info" >${hospitalList[i].hospital_addr}</div>`
             }
           addEvent();
         }
@@ -446,7 +455,7 @@
         body.style.background="white";
         modal.style.display="none";
         if(selSub!=null){
-          alert(selSub);
+          // alert(selSub);
           tbody.innerHTML="";
           hospitalList.forEach(hospital=>{
             if(hospital.medicals!==null){
@@ -466,7 +475,7 @@
             resultrow[i].innerHTML=
                 `<div class="rheader" >${mod_hospitalList[i].hospital_name}</div>
                   <div class="info">
-<!--                      <span class="info" >${mod_hospitalList[i].user_doctor_medical}</span>-->
+                  <span class="info" >${mod_hospitalList[i].medicals}</span>
                   </div>
                   <div class="time">
                       <span class="info">${mod_hospitalList[i].hospital_time}</span>
@@ -495,12 +504,14 @@
                 data: JSON_hospitalList,
                 success: function (data) {
                     // alert("성공");
+                    console.log("test");
+                    console.log(data);
                     for(let i=0;i<data.length;i++){
                         tbody.innerHTML+="<tr class='row'><td><div class='resultrow'></div></td></tr>";
                         resultrow[i].innerHTML=
                             `<div class="rheader" >${data[i].hospital_name}</div>
                             <div class="info">
-                              <span class="info" >${data[i].user_doctor_medical}</span>
+                              <span class="info" >${data[i].medicals}</span>
                             </div>
                             <div class="time">
                               <span class="info">${data[i].hospital_time}</span>
@@ -520,15 +531,15 @@
             for(let i=0;i<hospitalList.length;i++){
                 tbody.innerHTML+="<tr class='row'><td><div class=resultrow></div></td></tr>";
                 resultrow[i].innerHTML=
-                    `<div class="rheader" >${data[i].hospital_name}</div>
+                    `<div class="rheader" >${hospitalList[i].hospital_name}</div>
                             <div class="info">
-                              <span class="info" >${data[i].user_doctor_medical}</span>
+                              <span class="info" >${hospitalList[i].medicals}</span>
                             </div>
                             <div class="time">
-                              <span class="info">${data[i].hospital_time}</span>
+                              <span class="info">${hospitalList[i].hospital_time}</span>
                             </div>
-                            <div class="info" >${data[i].hospital_tel}</div>
-                            <div class="info" >${data[i].hospital_addr}</div>`
+                            <div class="info" >${hospitalList[i].hospital_tel}</div>
+                            <div class="info" >${hospitalList[i].hospital_addr}</div>`
             }
             addEvent();
         }
@@ -561,8 +572,7 @@
       if(clickHospital == null){
         alert(title+"을/를 찾지못했습니다")
       }else{
-        // //병원코드로 리뷰 받아오기
-
+        //병원코드로 리뷰 받아오기
         $.ajax({
           type: "POST",
           url: "getreview",
@@ -576,24 +586,25 @@
             let avgScore=data.avgScore;
             let avgStar = '';
             for(let i=0; i<avgScore; i++){
-                if(i%2 === 0) {
-                  if(i === avgScore-1){
-                    if(i%2 === 0){
-                      avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star-half-empty.png" alt="star-half-empty"/>`;
-                      console.log(i);
-                    }else{
-                      avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
-                      // console.log(i);
-                    }
+              if(i%2 === 0) {
+                if(i === avgScore-1){
+                  if(i%2 === 0){
+                    avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star-half-empty.png" alt="star-half-empty"/>`;
+                    console.log(i);
                   }else{
                     avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
-                    console.log(i);
+                    // console.log(i);
                   }
+                }else{
+                  avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
+                  console.log(i);
                 }
+              }
             }
             let reviews=document.getElementById("reviews");
             let avg=document.getElementById("avgScore");
             avg.innerHTML=avgStar;
+            reviews.innerHTML='';
             for(let i=0;i<reviewArr.length;i++){
               reviews.innerHTML+=`<tr>
 <td>${reviewArr[i].review_user_id}</td>
@@ -602,7 +613,6 @@
 <td class="score">${reviewArr[i].review_score}</td>
 </tr>`
             }
-
           },
           error: function (data) {
             alert("실패");
@@ -680,9 +690,7 @@
           }
           let idx=findIdx();
           document.getElementById("doctorCode").value=doctorCodeArr[idx];
-
         }
-
       }
       document.body.style.backgroundColor="gray";
       modalInfo.style.backgroundColor="white";
@@ -710,6 +718,20 @@
         }
       }
     }
+    //병원 리스트 엑셀 다운로드받기
+    // let excel=document.getElementById("excel");
+    // excel.addEventListener("click",()=>{
+    //   $.ajax({
+    //     type: "GET",
+    //     url: "excelDownload",
+    //     data: JSON_hospitalList,
+    //     success(data){
+    //       alert("성공")
+    //     },error(data){
+    //       alert("실패")
+    //     }
+    //   })
+    // })
 </script>
 
 
