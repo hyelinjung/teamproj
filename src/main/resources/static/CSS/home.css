@@ -59,6 +59,8 @@ body{
     padding-left: 0px;
     overflow-x: hidden;
 }
+
+
 .homeContainer{
     display: flex;
     width: 1920px;
