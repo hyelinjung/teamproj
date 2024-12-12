@@ -69,19 +69,17 @@ body{
 
 #aside1 {
     width: 300px;
-    height: 1200px;
-    /*border: 1px solid;*/
     margin-top: 10px;
 }
 section{
     margin-left: 30px;
     width: 1200px;
-    height: 1170px;
+    height: 1500px;
     margin-top: 30px;
+    /*background-color: black;*/
 }
 #aside2 {
     width: 300px;
-    height: 1200px;
     margin-left: 50px;
     margin-top: 10px;
 }
