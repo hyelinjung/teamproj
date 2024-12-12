@@ -11,10 +11,7 @@ body {
   box-sizing: border-box;
   margin-top: 30px;
   margin-left: 30px;
-  /* border: 5px solid black; */
-  /*display: inline-block;*/
   }
-
 .title {
   font-size: 50px;
   font-weight: bold;
@@ -28,7 +25,6 @@ body {
   display: flex;
   border-top: 5px solid #3B82F6;
   border-bottom: 1px solid #3B82F6;
-  /* border-radius: 20px; */
 }
 .shopSchList {
   width: 1200px;
@@ -37,13 +33,7 @@ body {
 .list {
   width: 530px;
   height: 800px;
-  /*border: 1px solid gray;*/
-  /* border-radius: 20px; */
-  /*background-color: #888888;*/
-  /*border-top: 5px solid #3B82F6;*/
-  /*border-bottom: 1px solid #3B82F6;*/
   border: 1px solid #bfdbfe;
-  /*background-color: #bfdbfe;*/
   margin-right: 20px;
   float: left;
   position: relative;
@@ -54,8 +44,6 @@ body {
 .map {
   width: 650px;
   height: 800px;
-  /*border: 1px solid gray;*/
-  /* border-radius: 20px; */
 }
 .magnify {
   z-index: 1;
@@ -83,7 +71,6 @@ body {
 }
 .item.selected {
   background-color: #bfdbfe;
-  /*border: 1px solid #bfdbfe;*/
 }
 .asideSearchHospital {
   background-color: #3B82F6;
@@ -95,13 +82,11 @@ body {
   margin-top: 50px;
   width: 600px;
   height: 850px;
-  /*border: 1px solid;*/
   border-radius: 30px;
   display:none;
 }
 #modalheader{
   margin: 0 0 30px;
-  /*border: 1px solid;*/
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   font-size: 30px;
@@ -138,6 +123,12 @@ body {
   background-color: grey;
   border-radius: 10px;
   box-shadow: inset 0 0 5px white;
+}
+#modalInfo::-webkit-scrollbar-button:vertical:start:decrement,
+#modalInfo::-webkit-scrollbar-button:vertical:start:increment,
+#modalInfo::-webkit-scrollbar-button:vertical:end:decrement{
+  display: block;
+  height: 35px;
 }
 #modalInfo{
   position: fixed;

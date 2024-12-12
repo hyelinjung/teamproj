@@ -18,6 +18,7 @@ public interface IF_ReservationService {
   public void cancel(String reservation_code);
   public HospitalVO findHospital(String hospitalName, String hospitalAddr);
   public List<Hospital_doctorVO> findDoctors(String hospitalCode);
+  public String[] popularHospital();
 
 }
 

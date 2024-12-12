@@ -109,4 +109,7 @@
         UPDATE reservation SET reservation_accept = '취소' WHERE reservation_code = #{reservation_code}
     </update>
 
+    <select id="getPopularHospital" resultType="String">
+        select ho.hospital_name from reservation as rs inner join hospital as ho on rs.reservation_hospital_code = ho.hospital_code group by reservation_hospital_code order by count(*) desc limit 5;
+    </select>
 </mapper>

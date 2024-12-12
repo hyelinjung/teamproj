@@ -1,5 +1,6 @@
 package com.asklepios.hospitalreservation_asklepios.Controller;
 
+import com.asklepios.hospitalreservation_asklepios.Service.IF_ReservationService;
 import com.asklepios.hospitalreservation_asklepios.Service.IF_UserService;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 public class AsklepiosController {
     @Autowired
     IF_UserService userservice;
+
+    @Autowired
+    IF_ReservationService reservationservice;
 
     @GetMapping("/")
     public String home() {
@@ -28,6 +36,12 @@ public class AsklepiosController {
     public String findDoctorCode(@RequestParam("user_id") String userId) {
 //        System.out.println(userservice.findDoctorCode(userId));
         return userservice.findDoctorCode(userId);
+    }
+
+    @ResponseBody
+    @PostMapping("popularHospital")
+    public String[] popularHospital(){
+        return reservationservice.popularHospital();
     }
 
     @ResponseBody
