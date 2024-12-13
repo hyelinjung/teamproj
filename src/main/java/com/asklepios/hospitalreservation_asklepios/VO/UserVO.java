@@ -1,17 +1,15 @@
 package com.asklepios.hospitalreservation_asklepios.VO;
 
 import lombok.*;
+import org.springframework.security.core.userdetails.User;
 
 import java.io.Serializable;
 
 @Data
-//@Getter
-//@Setter
 @Builder
-//@ToString
-public class UserVO implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserVO {
     private String user_id;
     private String user_password;
     private String user_name;
@@ -71,4 +69,6 @@ public class UserVO implements Serializable {
             this.user_email_last = divideEmail[1];
         }
     };
+
+
 }

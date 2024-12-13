@@ -3,7 +3,6 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div class="topContainer">
   <header>
-    <!--  <img src="asklepios_logo2.png" width="300px" height="100%" style="display: inline-block">-->
     <div id="header">
       <div>
         <a href="home" style="margin-top: 5px; margin-right: 25px;"><span class="text-blue-500 font-bold" style="font-size: 60px;">ASKLEPIOS</span></a>
@@ -17,16 +16,6 @@
         </form>
       </div>
       <div id="loginSession">
-<!--        <th:block th:if="${user == null}">-->
-<!--          <span style="padding-right: 20px;"><a href="login">로그인<i class="fa-solid fa-right-to-bracket"></i></a></span>-->
-<!--          <span><a href="/asklepios/userjoin">회원가입<i class="fa-solid fa-user-plus"></i></a></span>-->
-<!--        </th:block>-->
-<!--        <th:block th:unless="${user == null}">-->
-<!--          <form th:action="@{logout}" method="post" style="display: inline; padding-right: 20px;">-->
-<!--            <button type="submit">로그아웃&nbsp;<i class="fa-solid fa-arrow-right-from-bracket"></i></button>-->
-<!--          </form>-->
-<!--          <span><a href="myPage">마이페이지&nbsp;<i class="fa-solid fa-user"></i></a></span>-->
-<!--        </th:block>-->
         <div sec:authorize="isAnonymous()">
           <span style="padding-right: 20px;"><a href="login">로그인<i class="fa-solid fa-right-to-bracket"></i></a></span>
           <span><a href="/asklepios/userjoin">회원가입<i class="fa-solid fa-user-plus"></i></a></span>
@@ -67,7 +56,7 @@
         <a href="reservation">예약하기</a>
           <ul>
             <li><a href="reservation">병원예약</a></li>
-            <li><a href="reservationForm">진료예약</a></li>
+            <li><a href="reservation" onclick="reservationFirst()">진료예약</a></li>
           </ul>
       </li>
 <!--      <li>-->
@@ -93,3 +82,8 @@
   </nav>
 </div>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script>
+  function reservationFirst(){
+    alert("예약하기를 통해 진행해주세요.");
+  }
+</script>

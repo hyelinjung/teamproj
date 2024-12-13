@@ -1,6 +1,7 @@
 package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.Service.IF_RegistrationService;
+import com.asklepios.hospitalreservation_asklepios.Service.IF_UserService;
 import com.asklepios.hospitalreservation_asklepios.VO.HospitalVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,17 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class RegistrationController {
+  @Autowired
+  IF_UserService userservice;
+
+  @GetMapping("/registration")
+  public String registration(Model model) {
+    model.addAttribute("user",  userservice.findMember());
+    return "registration/registrationForm";
+  }
 
   @Autowired
   IF_RegistrationService registrationservice;
-
-  @GetMapping("/registration")
-  public String registration(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
-    model.addAttribute("user", user);
-    return "registration/registrationForm";
-  }
 
   @ResponseBody
   @PostMapping("/duplicateHospital")

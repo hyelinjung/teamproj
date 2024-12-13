@@ -4,6 +4,7 @@ import com.asklepios.hospitalreservation_asklepios.Service.IF_ReservationService
 import com.asklepios.hospitalreservation_asklepios.Service.IF_UserService;
 import com.asklepios.hospitalreservation_asklepios.Util.Profile_ImageUtil;
 import com.asklepios.hospitalreservation_asklepios.VO.DoctorVO;
+import com.asklepios.hospitalreservation_asklepios.VO.MemberVO;
 import com.asklepios.hospitalreservation_asklepios.VO.ReservationStatusVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,24 @@ public class MyPageController {
 //    private String filePath;
 
     @GetMapping("/myPage")
-    public String myPage(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
+    public String myPage(Model model) {
+        MemberVO member = userService.findMember();
+        System.out.println("0");
+        System.out.println(member.toString());
+        String id = member.getUser_id();
+        System.out.println(id);
+        UserVO user=userService.printOneInfo(id);
+        System.out.println("0.1");
         if (user == null) {
+            System.out.println("1");
             return "redirect:/login";
         } else if(user.getUser_authority().equals("client")) {
+            System.out.println("2");
             user.divideEngName();
             user.divideAddr();
             user.divideEmail();
             user.divideTel();
+            System.out.println("3");
             String filePath = "profile_image/" + user.getUser_image();
             // Reservation 불러오기
             List<ReservationStatusVO> reservationStatusVOList = reservationService.findAllReservation(user.getUser_id());

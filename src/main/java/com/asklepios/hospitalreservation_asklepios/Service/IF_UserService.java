@@ -24,4 +24,5 @@ public interface IF_UserService {
     public int countReservation(String doctorCode);
     public int countTotalReservation(String userId);
     public MemberVO findUser(String user_id);
+    public MemberVO findMember();
 }

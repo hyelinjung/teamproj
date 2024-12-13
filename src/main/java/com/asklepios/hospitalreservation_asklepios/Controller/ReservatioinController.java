@@ -1,6 +1,7 @@
 package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.Service.IF_ReservationService;
+import com.asklepios.hospitalreservation_asklepios.Service.IF_UserService;
 import com.asklepios.hospitalreservation_asklepios.VO.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,18 +13,21 @@ import java.util.List;
 @Controller
 public class ReservatioinController {
   @Autowired
+  IF_UserService userservice;
+
+  @Autowired
   IF_ReservationService reservationService;
 
   @GetMapping("/reservation")
-  public String reservation(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
-    model.addAttribute("user", user);
+  public String reservation(Model model) {
+    model.addAttribute("user", userservice.findMember());
     return "reservation/reservationPlace";
   }
 
   @GetMapping("/reservationForm")
-  public String reservationForm(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
-    model.addAttribute("user", user);
-    return "redirect:/ home";
+  public String reservationForm(Model model) {
+    model.addAttribute("user", userservice.findMember());
+    return "redirect:/home";
   }
 
   @ResponseBody
@@ -50,11 +54,9 @@ public class ReservatioinController {
     return reservationService.findDoctors(hospitalCode);
   }
   @PostMapping("/reserve")
-  public String reserve(@SessionAttribute(name = "loginUser", required = false) UserVO user,
-        @RequestParam("hospitalCode") String hospitalCode,
-        @RequestParam("doctorCode") String doctorCode,
-        @RequestParam("hospitalName") String hospitalName,
-                        Model model){
+  public String reserve(@RequestParam("hospitalCode") String hospitalCode, @RequestParam("doctorCode") String doctorCode,
+                        @RequestParam("hospitalName") String hospitalName, Model model){
+    MemberVO user = userservice.findMember();
 //    System.out.println(user.toString());
     model.addAttribute("user", user);
 //    String doctorCode ="4fb63188-1578-4a0a-ae21-5a2786cb85cf";

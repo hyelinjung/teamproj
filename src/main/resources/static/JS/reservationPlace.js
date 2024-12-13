@@ -6,7 +6,7 @@ let customOverlay = new kakao.maps.CustomOverlay({
 });
 let mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+      center: new kakao.maps.LatLng(37.277232, 127.027966), // 지도의 중심좌표
       level: 1 // 지도의 확대 레벨
     };
 let currentAddr;
@@ -24,6 +24,7 @@ const ps = new kakao.maps.services.Places();
 window.onload = getLocation();
 
 function getLocation(){
+  let locPosition;
   // geolocation으로 사용
   if (navigator.geolocation) {
 
@@ -33,7 +34,7 @@ function getLocation(){
       let lat = position.coords.latitude, // 위도
           lon = position.coords.longitude; // 경도
 
-      let locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+      locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
           message = '<div class="customoverlay"><a><span class="title" style="font-size:20px;">여기에 계신가요?!</span></a></div>'; // 인포윈도우에 표시될 내용입니다
 
       // 마커와 인포윈도우를 표시합니다
@@ -83,7 +84,7 @@ function getLocation(){
 
     // 지도 중심좌표를 접속위치로 변경합니다
     map.setCenter(locPosition);
-    map.setLevel(2);
+    map.setLevel(1);
   }
 
 }
