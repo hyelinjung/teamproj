@@ -48,10 +48,9 @@ public class SecurityConfig  {
                 "bboard_all","bboard_campaign","bboard_med",
                 "bboard_health","bboard_free","/detail",
                 "search").permitAll() // 요청은 허용
-            .requestMatchers("/myPage","/reservation","/reservationForm"
-                ,"/excelDownload").hasAnyRole("doctor","client")
+            .requestMatchers("/myPage","/excelDownload",
+                    "/reservation","/reservationForm","/reserve").hasAnyRole("doctor","client")
             .requestMatchers("/registration").hasRole("doctor")
-            .requestMatchers("/reserve").hasRole("client")
             .anyRequest().authenticated()
         )
         .exceptionHandling(exception -> exception
