@@ -1,6 +1,7 @@
 package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation_asklepios.VO.DoctorVO;
+import com.asklepios.hospitalreservation_asklepios.VO.MemberVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 
 import java.util.List;
@@ -22,5 +23,5 @@ public interface IF_UserService {
     public String findDoctorCode(String userId);
     public int countReservation(String doctorCode);
     public int countTotalReservation(String userId);
-
+    public MemberVO findUser(String user_id);
 }
