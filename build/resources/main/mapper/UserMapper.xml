@@ -86,9 +86,12 @@
 
     <select id="selectUserByID" parameterType="String"
             resultType="com.asklepios.hospitalreservation_asklepios.VO.UserVO">
-        SELECT *
-        FROM users
-        WHERE user_id = #{user_id}
+        SELECT * FROM users WHERE user_id = #{user_id}
+    </select>
+
+    <select id="selectMember" parameterType="String"
+            resultType="com.asklepios.hospitalreservation_asklepios.VO.MemberVO">
+        SELECT * FROM users WHERE user_id = #{user_id}
     </select>
 
     <select id="selectDoctorByID" parameterType="String"

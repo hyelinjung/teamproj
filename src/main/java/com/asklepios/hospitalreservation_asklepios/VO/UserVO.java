@@ -5,10 +5,10 @@ import lombok.*;
 import java.io.Serializable;
 
 @Data
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+//@Getter
+//@Setter
+@Builder
+//@ToString
 public class UserVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
