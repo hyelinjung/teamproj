@@ -1,4 +1,6 @@
 <!--<html xmlns:th="http://www.thymeleaf.org">-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div class="topContainer">
   <header>
     <!--  <img src="asklepios_logo2.png" width="300px" height="100%" style="display: inline-block">-->
@@ -15,16 +17,26 @@
         </form>
       </div>
       <div id="loginSession">
-        <th:block th:if="${user == null}">
+<!--        <th:block th:if="${user == null}">-->
+<!--          <span style="padding-right: 20px;"><a href="login">로그인<i class="fa-solid fa-right-to-bracket"></i></a></span>-->
+<!--          <span><a href="/asklepios/userjoin">회원가입<i class="fa-solid fa-user-plus"></i></a></span>-->
+<!--        </th:block>-->
+<!--        <th:block th:unless="${user == null}">-->
+<!--          <form th:action="@{logout}" method="post" style="display: inline; padding-right: 20px;">-->
+<!--            <button type="submit">로그아웃&nbsp;<i class="fa-solid fa-arrow-right-from-bracket"></i></button>-->
+<!--          </form>-->
+<!--          <span><a href="myPage">마이페이지&nbsp;<i class="fa-solid fa-user"></i></a></span>-->
+<!--        </th:block>-->
+        <div sec:authorize="isAnonymous()">
           <span style="padding-right: 20px;"><a href="login">로그인<i class="fa-solid fa-right-to-bracket"></i></a></span>
           <span><a href="/asklepios/userjoin">회원가입<i class="fa-solid fa-user-plus"></i></a></span>
-        </th:block>
-        <th:block th:unless="${user == null}">
+        </div>
+        <div sec:authorize="isAuthenticated()">
           <form th:action="@{logout}" method="post" style="display: inline; padding-right: 20px;">
             <button type="submit">로그아웃&nbsp;<i class="fa-solid fa-arrow-right-from-bracket"></i></button>
           </form>
           <span><a href="myPage">마이페이지&nbsp;<i class="fa-solid fa-user"></i></a></span>
-        </th:block>
+        <div>
       </div>
     </div>
   </header>
