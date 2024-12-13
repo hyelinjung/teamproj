@@ -37,12 +37,12 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "logout")
-    public String logoutGET(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        session.invalidate();
-        return "redirect:/home";
-    }
+//    @PostMapping(value = "logout")
+//    public String logoutGET(HttpServletRequest request) {
+//        HttpSession session = request.getSession();
+//        session.invalidate();
+//        return "redirect:/home";
+//    }
 
     @GetMapping("/findId")
     public String findId() {

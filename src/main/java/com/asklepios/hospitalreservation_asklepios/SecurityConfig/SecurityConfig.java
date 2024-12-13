@@ -21,9 +21,10 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig  {
   @Autowired
   MyUserDetailService myUserDetailService;
+
 
   @Bean
   AuthenticationManager authenticationManager(
@@ -31,24 +32,33 @@ public class SecurityConfig {
     return authenticationConfiguration.getAuthenticationManager();
   }
 
+
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf((csrfConfig) -> csrfConfig.disable())
         .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 
             .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-            .requestMatchers("/", "/home", "/reservation", "Img/**", "CSS/**", "JS/**", "profile_image/**", "/login","/popularHospital").permitAll() // 요청은 허용
-            .requestMatchers("/registration").hasRole("USER")
+            .requestMatchers("/", "/home", "/reservation", "Img/**", "CSS/**", "JS/**", "profile_image/**","/login","/popularHospital").permitAll() // 요청은 허용
+            .requestMatchers("/registration").hasRole("doctor")
+            .requestMatchers("/reservation").hasAnyRole("doctor","client")
             .anyRequest().authenticated())
 
         .formLogin((formLogin) ->
                 formLogin
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/")
+                    .loginPage("/login")  //로그인 페이지
+                    .defaultSuccessUrl("/")   //로그인 성공시
                     .loginProcessingUrl("/loginProc")
-                    .usernameParameter("user_id")
-                    .passwordParameter("user_password")
-                    .failureUrl("/login")
+                    .usernameParameter("user_id")   // 입력한 ID
+                    .passwordParameter("user_password")   //입력한 PW
+                    .failureUrl("/login")   //로그인 실패시
+        )
+
+        .logout((logout)->logout
+                  .logoutSuccessUrl("/")  //로그아웃
+                  .logoutUrl("/logout")
+                  .invalidateHttpSession(true)   //전체 세션 삭제
         );
     return http.build();
   }
