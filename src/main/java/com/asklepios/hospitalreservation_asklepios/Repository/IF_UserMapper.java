@@ -2,6 +2,7 @@ package com.asklepios.hospitalreservation_asklepios.Repository;
 
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
 import com.asklepios.hospitalreservation_asklepios.VO.DoctorVO;
+import com.asklepios.hospitalreservation_asklepios.VO.MemberVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -30,4 +31,5 @@ public interface IF_UserMapper {
     String selectDoctorCode(String userId);
     int selectReservationCount(String doctorCode);
     int selectTotalReservationCount(String userId);
+    MemberVO selectMember(String user_id);
 }

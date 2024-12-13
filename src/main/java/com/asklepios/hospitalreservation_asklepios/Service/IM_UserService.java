@@ -2,6 +2,7 @@ package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation_asklepios.Repository.IF_UserMapper;
 import com.asklepios.hospitalreservation_asklepios.VO.DoctorVO;
+import com.asklepios.hospitalreservation_asklepios.VO.MemberVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,6 +156,12 @@ public class IM_UserService implements IF_UserService{
     @Override
     public int countTotalReservation(String userId) {
         return usermapper.selectTotalReservationCount(userId);
+    }
+
+    @Override
+    public MemberVO  findUser(String user_id) {
+
+        return usermapper.selectMember(user_id);
     }
 
 
