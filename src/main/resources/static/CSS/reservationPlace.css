@@ -109,6 +109,7 @@ body {
   float: right;
   margin-right: 20px;
   margin-top: 10px;
+  cursor: pointer;
 }
 #modalInfo::-webkit-scrollbar {
   width: 10px;

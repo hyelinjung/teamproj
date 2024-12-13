@@ -52,7 +52,7 @@
     border-radius: 5px;
     padding-left: 10px;
     padding-top: 10px;
-    resize: none;
+
     font-size: 25px;
   }
   .header {
@@ -69,6 +69,7 @@
     background-color: #3b82f6;
     color: white;
     margin-top: 30px;
+    cursor: pointer;
   }
   table input[type="submit"]:active {
     width: 160px;
@@ -85,6 +86,9 @@
   }
   #heart img{
     display: inline-block;
+  }
+  #heart{
+    cursor: pointer;
   }
 </style>
 <body>
@@ -134,7 +138,7 @@
             </td>
           </tr>
           <tr><td class="header">Content</td></tr>
-          <tr><td colspan="2"><textarea name="board_content" th:text="${boardVO.getBoard_content()}" readonly></textarea></td></tr>
+          <tr><td colspan="2"><textarea style="resize: none" name="board_content" th:text="${boardVO.getBoard_content()}" readonly></textarea></td></tr>
           <tr><td class="header">첨부파일</td></tr>
           <tr>
             <td><input type="text" name="board_binary" th:value="${boardVO.board_binary}" readonly></td>
@@ -219,12 +223,12 @@
         console.log(data);
         if(data.likeVO.liked){
           alert("좋아요 취소");
-          heart.innerHTML=`<img width="50" height="50" src="https://img.icons8.com/ios/50/hearts--v1.png" alt="hearts--v1"/>`
+          heart.innerHTML=`<img width="65" height="65" src="https://img.icons8.com/ios/50/hearts--v1.png" alt="hearts--v1"/>`
           heartCount.innerHTML=data.heart;
           return false;
         }else{
           alert("좋아요");
-          heart.innerHTML=`<img width="48" height="48" src="https://img.icons8.com/color/48/hearts.png" alt="hearts"/>`;
+          heart.innerHTML=`<img width="65" height="65" src="https://img.icons8.com/color/48/hearts.png" alt="hearts"/>`;
           heartCount.innerHTML=data.heart;
           return true;
         }
@@ -248,9 +252,9 @@
       success:function (data){
         // console.log(data);
         if(data){
-          heart.innerHTML=`<img width="48" height="48" src="https://img.icons8.com/color/48/hearts.png" alt="hearts"/>`;
+          heart.innerHTML=`<img width="65" height="65" src="https://img.icons8.com/color/48/hearts.png" alt="hearts"/>`;
         }else{
-          heart.innerHTML=`<img width="50" height="50" src="https://img.icons8.com/ios/50/hearts--v1.png" alt="hearts--v1"/>`
+          heart.innerHTML=`<img width="65" height="65" src="https://img.icons8.com/ios/50/hearts--v1.png" alt="hearts--v1"/>`
         }
       },
       error:function (errorThrown){

@@ -6,6 +6,7 @@ import com.asklepios.hospitalreservation_asklepios.VO.MemberVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -160,8 +161,13 @@ public class IM_UserService implements IF_UserService{
 
     @Override
     public MemberVO  findUser(String user_id) {
-
         return usermapper.selectMember(user_id);
+    }
+
+    @Override
+    public MemberVO findMember(){
+        String username= SecurityContextHolder.getContext().getAuthentication().getName();
+        return usermapper.selectMember(username);
     }
 
 

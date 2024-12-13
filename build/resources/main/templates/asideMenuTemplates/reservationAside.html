@@ -23,8 +23,8 @@
       </div>
     </a>
     <div class="asideStyle">
-      <a href="/asklepios/reservationForm">
-        <input type="button" class="asideForm asideButton asideReservation rounded-lg hover:rounded-lg" value="진료예약">
+      <a href="/asklepios/reservation">
+        <input type="button" class="asideForm asideButton asideReservation rounded-lg hover:rounded-lg" value="진료예약" onclick="reservationFirst()">
       </a>
     </div>
     <th:block th:if="${user.user_authority == 'client'}">
@@ -44,4 +44,9 @@
   </th:block>
 </aside>
 </body>
-<!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script>
+  function reservationFirst(){
+    alert("예약하기를 통해 진행해주세요.");
+  }
+</script>

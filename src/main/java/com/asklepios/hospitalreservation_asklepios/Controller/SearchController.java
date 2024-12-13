@@ -2,6 +2,7 @@ package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.Service.IF_SearchService;
 
+import com.asklepios.hospitalreservation_asklepios.Service.IF_UserService;
 import com.asklepios.hospitalreservation_asklepios.VO.Hospital_doctorVO;
 import com.asklepios.hospitalreservation_asklepios.VO.ReviewVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
@@ -27,16 +28,18 @@ import java.util.Map;
 public class SearchController {
     @Autowired
     IF_SearchService searchService;
+    @Autowired
+    IF_UserService userservice;
+
     @GetMapping("/search")
-    public ModelAndView search(@SessionAttribute(name = "loginUser", required = false) UserVO user,
-            @RequestParam("keyword") String keyword) {
+    public ModelAndView search(@RequestParam("keyword") String keyword) {
 //        System.out.println(keyword);
 //        List<HospitalVO> hlist =searchService.searchHospital(keyword);
         List<Hospital_doctorVO> hlist=searchService.searchInfo(keyword);
 //        System.out.println(hlist.size());
 //        System.out.println(hlist.toString());
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("user", userservice.findMember());
         modelAndView.addObject("hlist", hlist);
         modelAndView.setViewName("search/searchmain");
         return modelAndView;

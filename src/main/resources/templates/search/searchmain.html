@@ -1,4 +1,5 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
@@ -64,6 +65,7 @@
       margin-right: 15px;
       text-align: center;
       align-content: center;
+      cursor: pointer;
     }
     #hospitals{
       margin-top: 30px;
@@ -101,12 +103,14 @@
         margin-left: 20px;
     }
     .subject:hover{
-      background: #84b6ff;
+      background: #3B82F6;
+      color: white;
     }
     #closebutton,#closebutton2{
       float: right;
       margin-right: 40px;
       margin-top: 20px;
+      cursor: pointer;
     }
     .searchList{
       height: 1340px;
@@ -238,7 +242,7 @@
         <span class="filter_button" style="background: white">진료중</span>
         <span class="filter_button">평일</span>
       </div>
-       <div id="excel" style="position: absolute; top: 350px; left: 1380px;">
+       <div id="excel"  style="position: absolute; top: 350px; left: 1380px;">
          <a href="excelDownload"><img width="50" height="50" src="https://img.icons8.com/color/48/ms-excel.png" alt="ms-excel"/> <span>병원목록 다운로드</span></a>
        </div>
     </div>

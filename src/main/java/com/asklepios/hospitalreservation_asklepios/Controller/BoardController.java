@@ -1,9 +1,11 @@
 package com.asklepios.hospitalreservation_asklepios.Controller;
 
 import com.asklepios.hospitalreservation_asklepios.Service.IF_BoardService;
+import com.asklepios.hospitalreservation_asklepios.Service.IF_UserService;
 import com.asklepios.hospitalreservation_asklepios.Util.FileDataUtil;
 //import com.asklepios.hospitalreservation_asklepios.Util.FileDataUtil;
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
+import com.asklepios.hospitalreservation_asklepios.VO.MemberVO;
 import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
 import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,10 +28,12 @@ public class BoardController {
   IF_BoardService boardService;
   @Autowired
   FileDataUtil fileDataUtil;
-
+  @Autowired
+  IF_UserService userService;
 
   @GetMapping("/bboard_all")
-  public String board_all(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model, @ModelAttribute PageVO pagevo) throws Exception{
+  public String board_all(Model model, @ModelAttribute PageVO pagevo) throws Exception{
+    MemberVO user=userService.findMember();
     model.addAttribute("user", user);
     if(pagevo.getPage()==null){
       pagevo.setPage(1);
@@ -48,7 +52,8 @@ public class BoardController {
   }
 
   @GetMapping("/bboard_health")
-  public String board_health(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model, @ModelAttribute PageVO pagevo) throws Exception {
+  public String board_health(Model model, @ModelAttribute PageVO pagevo) throws Exception {
+    MemberVO user=userService.findMember();
     if(pagevo.getPage()==null){
       pagevo.setPage(1);
     }
@@ -66,7 +71,8 @@ public class BoardController {
     return "board/main";
   }
   @GetMapping("/bboard_campaign")
-  public String board_cam(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model, @ModelAttribute PageVO pageVO ) throws Exception {
+  public String board_cam(Model model, @ModelAttribute PageVO pageVO ) throws Exception {
+    MemberVO user=userService.findMember();
     if(pageVO.getPage()==null){
       pageVO.setPage(1);
     }
@@ -79,7 +85,8 @@ public class BoardController {
     return "board/main";
   }
   @GetMapping("/bboard_med")
-  public String board_med(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model , @ModelAttribute PageVO pagevo) throws Exception {
+  public String board_med(Model model , @ModelAttribute PageVO pagevo) throws Exception {
+    MemberVO user=userService.findMember();
     if(pagevo.getPage()==null){
       pagevo.setPage(1);
     }
@@ -92,21 +99,21 @@ public class BoardController {
     return "board/main";
   }
   @GetMapping("/bboard_free")
-  public String board_free(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model , @ModelAttribute PageVO pagevo) throws Exception {
+  public String board_free(Model model , @ModelAttribute PageVO pagevo) throws Exception {
     if(pagevo.getPage()==null){
       pagevo.setPage(1);
     }
     String category="자유게시판";
     pagevo.setTotalCount(boardService.boardCount(category));
     List<BoardVO> boardlist=boardService.boardList(pagevo,category);
-    model.addAttribute("user", user);
+    model.addAttribute("user", userService.findMember());
     model.addAttribute("boardlist",boardlist);
     model.addAttribute("category", category);
     return "board/main";
   }
   @GetMapping("/write")
-  public String write(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model){
-    model.addAttribute("user", user);
+  public String write(  Model model){
+    model.addAttribute("user", userService.findMember());
     return "board/write";
   }
 
@@ -122,20 +129,19 @@ public class BoardController {
 
   }
   @GetMapping("/detail")
-  public String detail(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model, @ModelAttribute PageVO pagevo,
+  public String detail(Model model, @ModelAttribute PageVO pagevo,
                        @RequestParam("no") String no) throws Exception {
     BoardVO boardVO=boardService.detail(no);
-    model.addAttribute("user", user);
+    model.addAttribute("user", userService.findMember());
     model.addAttribute("boardVO",boardVO);
     return "board/detail";
   }
 
   @GetMapping("/modboard")
-  public String mod(@SessionAttribute(name = "loginUser", required = false) UserVO user,
-                    @ModelAttribute BoardVO boardVO,
+  public String mod(@ModelAttribute BoardVO boardVO,
                     Model model, HttpServletResponse response, HttpServletRequest request) throws Exception {
 //        System.out.println(no);
-
+    MemberVO user=userService.findMember();
     if(user.getUser_id().equals(boardVO.getBoard_user_id())){
       boardVO=boardService.modBoard(boardVO.getBoard_sequence());
 //        System.out.println(boardvo.getBoard_content());

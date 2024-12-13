@@ -6,20 +6,14 @@ import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class AsklepiosController {
     @Autowired
     IF_UserService userservice;
-
     @Autowired
     IF_ReservationService reservationservice;
 
@@ -29,9 +23,10 @@ public class AsklepiosController {
     }
 
     @GetMapping("/home")
-    public String main(@AuthenticationPrincipal UserDetails user, Model model){
-        model.addAttribute("user", user);
-//        System.out.println(user.toString());
+    public String main(Model model) {
+//        String username= SecurityContextHolder.getContext().getAuthentication().getName();
+//        System.out.println(userservice.findUser(username));
+        model.addAttribute("user", userservice.findMember());
         return "home";
     }
 
@@ -62,13 +57,13 @@ public class AsklepiosController {
         return userservice.countTotalReservation(userId);
     }
     @GetMapping("reservationStatusDoctor")
-    public String reservationStatusDoctor(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
-        model.addAttribute("user", user);
+    public String reservationStatusDoctor( Model model) {
+        model.addAttribute("user", userservice.findMember());
         return "myPage/reservationStatusDoctor";
     }
     @GetMapping("reservationStatusClient")
-    public String reservationStatusClient(@SessionAttribute(name = "loginUser", required = false) UserVO user, Model model) {
-        model.addAttribute("user", user);
+    public String reservationStatusClient( Model model) {
+        model.addAttribute("user", userservice.findMember());
         return "myPage/reservationStatusClient";
     }
 }
