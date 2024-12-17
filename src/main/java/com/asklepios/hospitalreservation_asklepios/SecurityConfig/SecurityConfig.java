@@ -47,13 +47,13 @@ public class SecurityConfig  {
             .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
             .requestMatchers("Img/**", "CSS/**","JS/**", "profile_image/**",
                 "/", "/home","/login","/findId","/resultId","/findPw","findEmail","/resultPw","mailSend","mailCheck",
-                "/agreement","/commoninfo","/doctorinfo","/userjoin","/getreview","/filter",
-                "/bboard_all","/bboard_campaign","/bboard_med",
-                "/bboard_health","/bboard_free","/detail",
+                "/agreement","/commoninfo","/doctorinfo","/userjoin","/getreview","/filter","/insertedID","/hospitalList",
+                "/bboard_all","/bboard_campaign","/bboard_med","/doctorreservationstatus","/acceptreservation","/cancelreservation","/verify_password_mypage",
+                "/bboard_health","/bboard_free","/detail", "/updateUserInfo",
                 "/search").permitAll() // 요청은 허용
-            .requestMatchers("/myPage","/excelDownload",
-                    "/reservation","/reservationForm","/reserve").hasAnyRole("doctor","client")
+                .requestMatchers("/reservation","/reservationForm","/reserve").hasRole("client")
             .requestMatchers("/registration").hasRole("doctor")
+            .requestMatchers("/myPage","/excelDownload").hasAnyRole("doctor","client")
             .anyRequest().authenticated()
         )
         .exceptionHandling(exception -> exception
