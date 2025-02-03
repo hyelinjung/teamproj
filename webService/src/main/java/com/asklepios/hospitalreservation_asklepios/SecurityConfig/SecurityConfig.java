@@ -43,7 +43,6 @@ public class SecurityConfig  {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf((csrfConfig) -> csrfConfig.disable())
         .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-
             .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
             .requestMatchers("Img/**", "CSS/**","JS/**", "profile_image/**",
                 "/", "/home","/login","/findId","/resultId","/findPw","findEmail","/resultPw","mailSend","mailCheck",
