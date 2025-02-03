@@ -23,18 +23,18 @@
     <div class="bg-blue-500 border border-gray-200 rounded-lg shadow dark:bg-green-800 dark:border-gray-700">
         <div class="profileImage">
             <a href="myPage">
-                    <img sec:authorize="isAnonymous()" src="Img/defaultGuest.png" alt="기본 프로필">
-<!--                <th:block >-->
-<!--                </th:block>-->
+                <img sec:authorize="isAnonymous()" src="Img/defaultGuest.png" alt="기본 프로필">
+                <!--                <th:block >-->
+                <!--                </th:block>-->
                 <div sec:authorize="isAuthenticated()">
-                  <img sec:authorize="hasRole('ROLE_client')"  src="Img/defaultClient.png" alt="기본 프로필">
-<!--                    <th:block th:if="${user.user_authority == 'client'}">-->
-<!--                        <img src="Img/defaultClient.png" alt="기본 프로필">-->
-<!--                    </th:block>-->
-                  <img sec:authorize="hasRole('ROLE_doctor')"  src="Img/defaultDoctor.png" alt="기본 프로필">
-<!--                    <th:block th:if="${user.user_authority == 'doctor'}">-->
-<!--                        <img src="Img/defaultDoctor.png" alt="기본 프로필">-->
-<!--                    </th:block>-->
+                    <img sec:authorize="hasRole('ROLE_client')"  src="Img/defaultClient.png" alt="기본 프로필">
+                    <!--                    <th:block th:if="${user.user_authority == 'client'}">-->
+                    <!--                        <img src="Img/defaultClient.png" alt="기본 프로필">-->
+                    <!--                    </th:block>-->
+                    <img sec:authorize="hasRole('ROLE_doctor')"  src="Img/defaultDoctor.png" alt="기본 프로필">
+                    <!--                    <th:block th:if="${user.user_authority == 'doctor'}">-->
+                    <!--                        <img src="Img/defaultDoctor.png" alt="기본 프로필">-->
+                    <!--                    </th:block>-->
                 </div>
             </a>
         </div>
@@ -72,14 +72,14 @@
                     <hr style="margin-top: 10px; margin-bottom: 10px">
                 </th:block>
             </th:block>
-<!--            <th:block th:if="${user == null}">-->
-<!--                <hr style="margin-top: 10px; margin-bottom: 10px">-->
-<!--            </th:block>-->
-<!--            <th:block th:unless="${user == null}">-->
-<!--                -->
-<!--            </th:block>-->
-<!--            <a href="/vaccinationInfo">백신정보</a>-->
-<!--            <hr style="margin-top: 10px; margin-bottom: 10px">-->
+            <!--            <th:block th:if="${user == null}">-->
+            <!--                <hr style="margin-top: 10px; margin-bottom: 10px">-->
+            <!--            </th:block>-->
+            <!--            <th:block th:unless="${user == null}">-->
+            <!--                -->
+            <!--            </th:block>-->
+            <!--            <a href="/vaccinationInfo">백신정보</a>-->
+            <!--            <hr style="margin-top: 10px; margin-bottom: 10px">-->
             <a href="/asklepios/search?keyword=">병원검색</a>
             <hr style="margin-top: 10px; margin-bottom: 10px">
         </div>
@@ -89,7 +89,7 @@
             <div class="toTop" style="top:760px;">
                 <i class="fa-solid fa-angle-up" style="position: relative; top: 8px;"></i>
                 <span style="position: relative; bottom: 8px;">TOP</span>
-    <!--            <div style="color: #3b82f6;font-size: 40px;font-weight: bold;position: relative;top: 60px;">TOP</div>-->
+                <!--            <div style="color: #3b82f6;font-size: 40px;font-weight: bold;position: relative;top: 60px;">TOP</div>-->
             </div>
         </div>
     </div>
