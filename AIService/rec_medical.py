@@ -1,11 +1,8 @@
-# app.py
 from flask import Flask, request, jsonify
 import joblib
 from flask_cors import CORS
 
 app = Flask(__name__)
-# CORS(app, resources={r"/predict": {"origins": "http://localhost:8080"}})  # Spring Boot 포트 지정
-
 
 # 모델 로드
 model = joblib.load('model.joblib')
