@@ -23,7 +23,7 @@ print(df.isnull().sum())
 print("==================================\n")
 
 # 텍스트 벡터화
-tfidf = TfidfVectorizer(max_features=1000, stop_words=['은', '는', '이', '가'], ngram_range=(1, 2))
+tfidf = TfidfVectorizer(max_features=1000, stop_words=['은', '는', '이', '가', '을', '를'], ngram_range=(1, 2))
 X = tfidf.fit_transform(df['memo'])
 y = df['medical']
 
