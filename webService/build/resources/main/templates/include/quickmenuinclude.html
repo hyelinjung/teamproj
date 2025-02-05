@@ -18,6 +18,97 @@
         cursor: pointer;
         flex-direction: column;
     }
+    .chat-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 300px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+    }
+
+    .chat-header {
+        background: #007bff;
+        color: white;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+    }
+
+    .chat-body {
+        padding: 10px;
+        height: 250px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-input {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #ddd;
+    }
+
+    .chat-input textarea {
+        flex: 1;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        resize: none;
+    }
+
+    .chat-input button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+
+    .message {
+        padding: 8px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+
+    .user-message {
+        background: #007bff;
+        color: white;
+        align-self: flex-end;
+    }
+
+    .bot-message {
+        background: #eee;
+        align-self: flex-start;
+    }
+
+    .chat-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #007bff;
+        color: white;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
 </style>
 <aside class="quickMenu" style="position: sticky; top: 30px;">
     <div class="bg-blue-500 border border-gray-200 rounded-lg shadow dark:bg-green-800 dark:border-gray-700">
@@ -103,6 +194,25 @@
         </div>
     </div>
 </aside>
+<!-- 메시지 아이콘 -->
+<div class="chat-icon" id="chatIcon" onclick="toggleChat()">
+    💬
+</div>
+
+<!-- 채팅 박스 -->
+<div class="chat-container" id="chatContainer">
+    <div class="chat-header">
+        챗봇 상담
+        <span style="cursor:pointer;" onclick="toggleChat()">❌</span>
+    </div>
+    <div class="chat-body" id="chatBody">
+        <div class="bot-message message">안녕하세요! 증상을 입력하면 진료과를 추천해드릴게요.</div>
+    </div>
+    <div class="chat-input">
+        <textarea id="chatInput" placeholder="증상을 입력하세요..." rows="1"></textarea>
+        <button onclick="sendMessage()">전송</button>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script>
     let userId1 = document.querySelector('#hiddenId').innerText;
@@ -155,5 +265,56 @@
     }
     function animation() {
         window.scrollTo({top:0, left:0, behavior:'smooth'});
+    }
+
+    function toggleChat() {
+        let chatContainer = document.getElementById("chatContainer");
+        let chatIcon = document.getElementById("chatIcon");
+
+        if (chatContainer.style.display === "none" || chatContainer.style.display === "") {
+            chatContainer.style.display = "flex";
+            chatIcon.style.display = "none";
+        } else {
+            chatContainer.style.display = "none";
+            chatIcon.style.display = "flex";
+        }
+    }
+
+    function sendMessage() {
+        let chatInput = document.getElementById("chatInput");
+        let chatBody = document.getElementById("chatBody");
+        let userMessage = chatInput.value.trim();
+
+        if (userMessage === "") {
+            alert("증상을 입력해주세요.");
+            return;
+        }
+
+        // 사용자 메시지 표시
+        let userMsgElement = document.createElement("div");
+        userMsgElement.classList.add("message", "user-message");
+        userMsgElement.innerText = userMessage;
+        chatBody.appendChild(userMsgElement);
+        chatInput.value = "";
+
+        // 챗봇 응답 받기
+        $.ajax({
+            url: "/asklepios/api/chat/recommend",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ symptoms: userMessage }),
+            success: function(response) {
+                let botMsgElement = document.createElement("div");
+                botMsgElement.classList.add("message", "bot-message");
+                botMsgElement.innerText = "추천 진료과: " + response;
+                chatBody.appendChild(botMsgElement);
+
+                // 자동 스크롤
+                chatBody.scrollTop = chatBody.scrollHeight;
+            },
+            error: function() {
+                alert("진료과 추천 요청 실패");
+            }
+        });
     }
 </script>
