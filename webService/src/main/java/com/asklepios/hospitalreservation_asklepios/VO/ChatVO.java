@@ -4,6 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChatVO {
     private String symptoms;
 }

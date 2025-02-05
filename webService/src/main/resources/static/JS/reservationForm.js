@@ -78,12 +78,30 @@ function removeAllChildNods(buttonContainer) {
 }
 
 function validateForm(){
-  let flag = confirm("예약하시겠습니까?");
-  if(flag){
-    alert("예약되었습니다.")
-    return flag;
-  }else{
-    return flag;
+  let reservationDate = document.querySelector('#calender').value;
+  let reservationTime = document.querySelector('#time').value;
+  let reservationMemo = document.querySelector('#memo').value;
+  let formFlag = false;
+
+  if(reservationDate === ""){
+    Swal.fire('필수항목 미입력', '예약할 날짜를 선택해주세요.','error');
+    return formFlag;
+  }
+  if(reservationTime === ""){
+    Swal.fire('필수항목 미입력', '예약할 시간대를 선택해주세요.', 'error');
+    return formFlag;
+  }
+  if(reservationMemo === ""){
+    Swal.fire('필수항목 미입력', '메모를 작성해주세요.', 'error');
+    return formFlag;
+  }
+
+  if(confirm("예약하시겠습니까?")){
+    formFlag = true;
+    return formFlag;
+  }else {
+    formFlag = false;
+    return formFlag;
   }
 }
 
