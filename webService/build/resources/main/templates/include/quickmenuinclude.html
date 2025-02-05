@@ -20,92 +20,125 @@
     }
     .chat-container {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 300px;
+        bottom: 180px;
+        right: 10px;
+        width: 600px;
+        height: 700px;
         background: white;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         display: none;
         flex-direction: column;
-        justify-content: space-between;
         overflow: hidden;
+        opacity: 0; /* 초기에는 투명하게 */
+        transform: translateY(20px); /* 아래에서 올라오는 효과 */
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .chat-container.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
     }
 
+    /* 닫힐 때 애니메이션 */
+    .chat-container.closing {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
     .chat-header {
-        background: #007bff;
+        background: #3b82f6;
         color: white;
-        padding: 10px;
+        padding: 15px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         font-weight: bold;
+        font-size: 30px;
     }
-
     .chat-body {
         padding: 10px;
-        height: 250px;
+        height: 540px;
         overflow-y: auto;
         display: flex;
         flex-direction: column;
     }
-
     .chat-input {
         display: flex;
         padding: 10px;
         border-top: 1px solid #ddd;
     }
-
     .chat-input textarea {
         flex: 1;
         padding: 5px;
         border-radius: 5px;
         border: 1px solid #ddd;
         resize: none;
+        font-size: 30px;
     }
-
+    .chat-input textarea:focus {
+        border-color: #3b82f6;
+        outline: none;
+    }
     .chat-input button {
-        background: #007bff;
+        background: #3b82f6;
         color: white;
         border: none;
-        padding: 8px 12px;
+        padding: 10px 30px;
         border-radius: 5px;
-        margin-left: 5px;
+        margin-left: 10px;
         cursor: pointer;
+        font-size: 30px;
     }
-
+    .chat-input button:focus{
+        outline: none;
+    }
+    .message-wrapper {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+    }
+    .bot-message-wrapper {
+        justify-content: flex-start;
+    }
+    .user-message-wrapper {
+        justify-content: flex-end;
+    }
+    .chat-icon-small {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        margin-right: 10px;
+        background: #3b82f6;
+    }
     .message {
-        padding: 8px;
-        border-radius: 5px;
-        margin-bottom: 5px;
-        max-width: 80%;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 75%;
         word-wrap: break-word;
+        font-size: 25px;
     }
-
     .user-message {
-        background: #007bff;
+        background: #3b82f6;
         color: white;
         align-self: flex-end;
     }
-
     .bot-message {
         background: #eee;
         align-self: flex-start;
     }
-
     .chat-icon {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #007bff;
+        bottom: 200px;
+        right: 15px;
+        background: #3b82f6;
         color: white;
         border-radius: 50%;
-        width: 50px;
-        height: 50px;
+        width: 100px;
+        height: 100px;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 24px;
         cursor: pointer;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     }
@@ -196,20 +229,24 @@
 </aside>
 <!-- 메시지 아이콘 -->
 <div class="chat-icon" id="chatIcon" onclick="toggleChat()">
-    💬
+    <img src="Img/chatbot.png" class="chat-icon-small" style="margin: 0px; width: 90px; height: 90px;">
 </div>
 
 <!-- 채팅 박스 -->
 <div class="chat-container" id="chatContainer">
     <div class="chat-header">
-        챗봇 상담
-        <span style="cursor:pointer;" onclick="toggleChat()">❌</span>
+       ASKLEPIOS 챗봇
+        <span style="cursor:pointer; position: relative; left: 150px;" onclick="toggleChat()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="size-10">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg></span>
     </div>
     <div class="chat-body" id="chatBody">
-        <div class="bot-message message">안녕하세요! 증상을 입력하면 진료과를 추천해드릴게요.</div>
+        <div class="message-wrapper bot-message-wrapper">
+            <img src="Img/chatbot.png" class="chat-icon-small">
+            <div class="message bot-message">안녕하세요? ASKLEPIOS 챗봇 입니다.<br>증상을 입력하면 진료과를 추천해드릴게요.</div>
+        </div>
     </div>
     <div class="chat-input">
-        <textarea id="chatInput" placeholder="증상을 입력하세요..." rows="1"></textarea>
+        <textarea id="chatInput" placeholder="증상을 입력해주세요..." rows="1"></textarea>
         <button onclick="sendMessage()">전송</button>
     </div>
 </div>
@@ -271,12 +308,21 @@
         let chatContainer = document.getElementById("chatContainer");
         let chatIcon = document.getElementById("chatIcon");
 
-        if (chatContainer.style.display === "none" || chatContainer.style.display === "") {
+        if (!chatContainer.classList.contains("active")) {
+            // 열기 애니메이션 적용
             chatContainer.style.display = "flex";
+            setTimeout(() => {
+                chatContainer.classList.add("active");
+            }, 10);
             chatIcon.style.display = "none";
         } else {
-            chatContainer.style.display = "none";
-            chatIcon.style.display = "flex";
+            // 닫기 애니메이션 적용
+            chatContainer.classList.add("closing");
+            setTimeout(() => {
+                chatContainer.classList.remove("active", "closing");
+                chatContainer.style.display = "none";
+                chatIcon.style.display = "flex";
+            }, 400); // transition 시간과 동일하게 설정
         }
     }
 
@@ -291,10 +337,15 @@
         }
 
         // 사용자 메시지 표시
+        let userMsgWrapper = document.createElement("div");
+        userMsgWrapper.classList.add("message-wrapper", "user-message-wrapper");
+
         let userMsgElement = document.createElement("div");
         userMsgElement.classList.add("message", "user-message");
         userMsgElement.innerText = userMessage;
-        chatBody.appendChild(userMsgElement);
+
+        userMsgWrapper.appendChild(userMsgElement);
+        chatBody.appendChild(userMsgWrapper);
         chatInput.value = "";
 
         // 챗봇 응답 받기
@@ -304,10 +355,20 @@
             contentType: "application/json",
             data: JSON.stringify({ symptoms: userMessage }),
             success: function(response) {
+                let botMsgWrapper = document.createElement("div");
+                botMsgWrapper.classList.add("message-wrapper", "bot-message-wrapper");
+
+                let botIcon = document.createElement("img");
+                botIcon.src = "Img/chatbot.png";
+                botIcon.classList.add("chat-icon-small");
+
                 let botMsgElement = document.createElement("div");
                 botMsgElement.classList.add("message", "bot-message");
-                botMsgElement.innerText = "추천 진료과: " + response;
-                chatBody.appendChild(botMsgElement);
+                botMsgElement.innerText = "\" " + userMessage + " \" 증상에 대해 추천드리는 진료과는 [ " + response + " ] 입니다.";
+
+                botMsgWrapper.appendChild(botIcon);
+                botMsgWrapper.appendChild(botMsgElement);
+                chatBody.appendChild(botMsgWrapper);
 
                 // 자동 스크롤
                 chatBody.scrollTop = chatBody.scrollHeight;
