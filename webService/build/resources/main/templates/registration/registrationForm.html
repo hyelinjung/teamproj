@@ -16,9 +16,9 @@
 
 </head>
 <body>
-<div th:replace="~{include/topinclude}"></div>
+<div th:replace="~{include/header}"></div>
 <div style="display:flex; width: 1920px; height: 1200px; margin-bottom: 80px;">
-  <div style="display: inline-block;" th:replace="~{asideMenuTemplates/reservationAside}"></div>
+  <div style="display: inline-block;" th:replace="~{include/leftAside/reservationAside}"></div>
   <div class="container1">
     <!--    onsubmit="return validateForm()"-->
     <form action="register" method="post" onsubmit="return validateForm()">
@@ -149,7 +149,7 @@
       </table>
     </form>
   </div>
-  <aside id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
+  <aside id="aside2" th:insert="~{include/rightAside}"></aside>
 </div>
 <footer id="footer" th:replace="~{include/footer}">
 </footer>

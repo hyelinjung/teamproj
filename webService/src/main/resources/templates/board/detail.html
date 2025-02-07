@@ -92,10 +92,10 @@
   }
 </style>
 <body>
-<div th:replace="~{include/topinclude}"></div>
+<div th:replace="~{include/header}"></div>
 <div class="homeContainer">
 
-  <aside id="aside1" th:replace="~{asideMenuTemplates/noticeBoardAside}">
+  <aside id="aside1" th:replace="~{include/leftAside/noticeBoardAside}">
 
   </aside>
   <section>
@@ -178,7 +178,7 @@
     </div>
 
   </section>
-  <aside id="aside2" th:insert="~{include/quickmenuinclude}">
+  <aside id="aside2" th:insert="~{include/rightAside}">
 
   </aside>
 </div>

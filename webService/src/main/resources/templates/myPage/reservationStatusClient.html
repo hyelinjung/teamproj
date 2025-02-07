@@ -96,10 +96,10 @@
   }
 </script>
 <body>
-<div th:replace="~{include/topinclude}"></div>
+<div th:replace="~{include/header}"></div>
 <div id="homeContainer" style="display: flex; height: 1200px;">
   <aside id="aside1">
-    <div style="display: inline-block;" th:replace="~{asideMenuTemplates/reservationAside}"></div>
+    <div style="display: inline-block;" th:replace="~{leftAside/reservationAside}"></div>
   </aside>
   <div id="reservationClientInfo" style="margin-top: 30px; margin-left: 30px; width: 1200px;">
     <div style="border-bottom: 5px solid #3b82f6;">
@@ -144,7 +144,7 @@
       </div>
     </div>
   </div>
-  <aside style="margin-right: 50px; margin-top: 10px; margin-left: 40px;" id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
+  <aside style="margin-right: 50px; margin-top: 10px; margin-left: 40px;" id="aside2" th:insert="~{include/rightAside}"></aside>
 </div>
 <footer id="footer" th:replace="~{include/footer}">
 </footer>
