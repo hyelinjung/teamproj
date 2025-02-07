@@ -155,6 +155,7 @@
           </tr>
           <tr>
             <td><input type="submit" value="글 수정" ></td>
+            <td><span id="delete"></span></td>
             <!--                    <td th:if="likeVO.liked==true"><button onclick="board_like()"><i class="fa-solid fa-heart"></i></button></td>-->
             <!--                    <td th:if="likeVO.liked==false"><button onclick="board_like()"><i class="fa-regular fa-heart"></i></button></td>-->
           </tr>
@@ -240,7 +241,8 @@
 
   }
   window.onload=heartCheck();
-
+  window.onload=checkWriter();
+  //현재 사용자의 좋아요 여부판단
   function heartCheck(){
     $.ajax({
       url:"likecheck",
@@ -266,4 +268,17 @@
     history.back()
   })
 
+  //작성자와 사용자의 아이디 확인해 글 삭제가능여부 체크
+  function checkWriter(){
+    let userId=document.getElementById("userId").value;
+    let writerId=document.getElementsByName("board_user_id")[0].value;
+    let deleteButton=document.getElementById("delete");
+    let boardSequence=document.getElementsByName("board_sequence")[0].value;
+    console.log(userId);
+    console.log(writerId);
+    if(userId===writerId){
+      deleteButton.innerHTML=`<a href="deleteboard?board_sequence=${boardSequence}"><img width="50" height="50" src="https://img.icons8.com/ios/50/delete-trash.png" alt="delete-trash"/></a>`;
+    }
+
+  }
 </script>

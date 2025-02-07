@@ -119,4 +119,9 @@ public class IM_BoardService implements IF_BoardService{
         }
     }
 
+    @Override
+    public void delBoard(String no) throws Exception {
+        boardMapper.deleteBoard(no);
+    }
+
 }

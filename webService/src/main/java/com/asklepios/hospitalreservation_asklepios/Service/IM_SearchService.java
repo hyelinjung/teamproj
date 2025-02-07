@@ -1,6 +1,7 @@
 package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation_asklepios.Repository.IF_SearchMapper;
+import com.asklepios.hospitalreservation_asklepios.VO.ChartVO;
 import com.asklepios.hospitalreservation_asklepios.VO.HospitalVO;
 import com.asklepios.hospitalreservation_asklepios.VO.Hospital_doctorVO;
 import com.asklepios.hospitalreservation_asklepios.VO.ReviewVO;
@@ -185,5 +186,51 @@ public class IM_SearchService implements IF_SearchService{
         e.printStackTrace();
       }
       return workbook;
+    }
+
+    @Override
+    public int[] getGenderData(String hospital_code) {
+        List<ChartVO> chartData=searchMapper.selectGenderData(hospital_code);
+//         System.out.println(chartData.size());
+        int[] genderdata=new int[2];
+        int countMen=0;
+        int countWomen=0;
+        for(ChartVO chartVO:chartData){
+            if(chartVO.getReservation_accept().equals("승인")){
+                if(chartVO.getGender().equals("1")||chartVO.getGender().equals("3")){
+                    countMen++;
+                }else if(chartVO.getGender().equals("2")||chartVO.getGender().equals("4")){
+                    countWomen++;
+                }
+            }
+        }
+        genderdata[0]=countMen;
+        genderdata[1]=countWomen;
+
+        return genderdata;
+    }
+
+    @Override
+    public HashMap<String, Object> getTimeData(String hospital_code) {
+        List<ChartVO> chartData=searchMapper.selectTimeData(hospital_code);
+
+
+        //시간 순서대로 입력하기 위해 LinkedHashMap 사용
+        HashMap<String,Object> timeData=new LinkedHashMap<>();
+        String []timeArray={"09:00","09:30","10:00","10:30","11:00","11:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00"};
+        for(String time:timeArray){
+            timeData.put(time,0);
+        }
+
+        for(ChartVO chartVO:chartData){
+            for(String time:timeArray){
+                if(chartVO.getReservation_time().equals(time)
+                        &&chartVO.getReservation_accept().equals("승인")){
+                    timeData.replace(time,chartVO.getCount());
+                }
+            }
+        }
+//        System.out.println(timeData);
+        return timeData;
     }
 }
