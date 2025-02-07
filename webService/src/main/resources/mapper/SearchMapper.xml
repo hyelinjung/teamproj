@@ -22,4 +22,22 @@
     <select id="avgScore" resultType="int">
         select truncate(avg(review_score),1) from review where review_hospital_code=#{hospitalCode};
     </select>
+    <select id="selectGenderData" resultType="com.asklepios.hospitalreservation_asklepios.VO.ChartVO">
+        select ru.*
+        from (select r.*, u.*, substring(u.user_register_number,8,1) as gender
+              from reservation as r
+                       left outer join users as u
+                                       on r.reservation_user_id=u.user_id) as ru
+        where reservation_hospital_code=#{hospital_code}
+    </select>
+    <select id="selectTimeData" resultType="com.asklepios.hospitalreservation_asklepios.VO.ChartVO">
+        select ru.reservation_time, ru.reservation_accept ,count(*) as count
+        from (select r.*, u.*, substring(u.user_register_number,8,1) as gender
+            from reservation as r
+            left outer join users as u
+            on r.reservation_user_id=u.user_id) as ru
+        where ru.reservation_hospital_code=#{hospital_code}
+        group by ru.reservation_time, ru.reservation_accept
+        order by ru.reservation_time asc
+    </select>
 </mapper>

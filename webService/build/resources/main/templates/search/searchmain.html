@@ -9,6 +9,7 @@
             crossorigin="anonymous"
     ></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <link rel="stylesheet" href="CSS/home.css" />
 <link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
@@ -112,68 +113,79 @@
       margin-top: 20px;
       cursor: pointer;
     }
-    .searchList{
-      height: 1340px;
-      overflow: auto;
+    .searchList,
+    #detailsView {
+        height: 1340px;
+        overflow: auto;
     }
+
     .searchList::-webkit-scrollbar-button:vertical:start:decrement,
-    .searchList::-webkit-scrollbar-button:vertical:start:increment {
-      display: block;
-      height: 15px;
+    .searchList::-webkit-scrollbar-button:vertical:start:increment,
+    #detailsView::-webkit-scrollbar-button:vertical:start:decrement,
+    #detailsView::-webkit-scrollbar-button:vertical:start:increment {
+        display: block;
+        height: 15px;
     }
-    .searchList::-webkit-scrollbar {
-      width: 10px;
+
+    .searchList::-webkit-scrollbar,
+    #detailsView::-webkit-scrollbar {
+        width: 10px;
     }
-   .searchList::-webkit-scrollbar-thumb {
-      background-color: #2f3542;
-      border-radius: 10px;
-      background-clip: padding-box;
-      border: 2px solid transparent;
+
+    .searchList::-webkit-scrollbar-thumb,
+    #detailsView::-webkit-scrollbar-thumb {
+        background-color: #2f3542;
+        border-radius: 10px;
+        background-clip: padding-box;
+        border: 2px solid transparent;
     }
-    .searchList::-webkit-scrollbar-track {
-      background-color: grey;
-      border-radius: 10px;
-      box-shadow: inset 0 0 5px white;
+
+    .searchList::-webkit-scrollbar-track,
+    #detailsView::-webkit-scrollbar-track {
+        background-color: grey;
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px white;
     }
-    #modalInfo::-webkit-scrollbar {
-      width: 10px;
-    }
-    #modalInfo::-webkit-scrollbar-button:vertical:start:decrement,
-    #modalInfo::-webkit-scrollbar-button:vertical:start:increment,
-    #modalInfo::-webkit-scrollbar-button:vertical:end:decrement{
-      display: block;
-      height: 35px;
-    }
-    #modalInfo::-webkit-scrollbar-thumb {
-      background-color: #2f3542;
-      border-radius: 10px;
-      background-clip: padding-box;
-      border: 2px solid transparent;
-    }
-    #modalInfo::-webkit-scrollbar-track {
-      background-color: grey;
-      border-radius: 10px;
-      box-shadow: inset 0 0 5px white;
-    }
-    #modalInfo{
-      position: fixed;
-      top: 240px;
-      left: 680px;
-      display: none;
-      width: 850px;
-      height: 850px;
-      overflow: auto;
-      border-radius:30px ;
-    }
-    #infoHeader{
-      margin: 0;
-      width: 100%;
-      height: 70px;
-      text-align: center;
-      font-size: 30px;
-      border-top-left-radius:30px ;
-      border-top-right-radius:30px ;
-    }
+
+<!--    #modalInfo::-webkit-scrollbar {-->
+<!--      width: 10px;-->
+<!--    }-->
+<!--    #modalInfo::-webkit-scrollbar-button:vertical:start:decrement,-->
+<!--    #modalInfo::-webkit-scrollbar-button:vertical:start:increment,-->
+<!--    #modalInfo::-webkit-scrollbar-button:vertical:end:decrement{-->
+<!--      display: block;-->
+<!--      height: 35px;-->
+<!--    }-->
+<!--    #modalInfo::-webkit-scrollbar-thumb {-->
+<!--      background-color: #2f3542;-->
+<!--      border-radius: 10px;-->
+<!--      background-clip: padding-box;-->
+<!--      border: 2px solid transparent;-->
+<!--    }-->
+<!--    #modalInfo::-webkit-scrollbar-track {-->
+<!--      background-color: grey;-->
+<!--      border-radius: 10px;-->
+<!--      box-shadow: inset 0 0 5px white;-->
+<!--    }-->
+<!--    #modalInfo{-->
+<!--      position: fixed;-->
+<!--      top: 240px;-->
+<!--      left: 680px;-->
+<!--      display: none;-->
+<!--      width: 850px;-->
+<!--      height: 850px;-->
+<!--      overflow: auto;-->
+<!--      border-radius:30px ;-->
+<!--    }-->
+<!--    #infoHeader{-->
+<!--      margin: 0;-->
+<!--      width: 100%;-->
+<!--      height: 70px;-->
+<!--      text-align: center;-->
+<!--      font-size: 30px;-->
+<!--      border-top-left-radius:30px ;-->
+<!--      border-top-right-radius:30px ;-->
+<!--    }-->
   #infoIntro,#infoNotice{
     width: 600px;
     font-size: 25px;
@@ -189,13 +201,15 @@
     color: #666666;
   }
    #doctorTable,#reviewTable{
-     /*margin-left: 80px;*/
-     width: 800px;
-     font-size: 25px;
-     margin: auto;
+    width: 900px;
+    margin-left: 80px; /* 좌측 여백 */
+    font-size: 25px;
+    border-collapse: collapse;
     }
    #reservation{
      margin-top: 30px;
+     margin-left: auto;
+    margin-right: auto;  /* 좌우 여백을 자동으로 설정하여 가운데 정렬 */
    }
    .radio{
      width: 30px;
@@ -227,6 +241,12 @@
      margin-right: 30px;
      font-size: 20px;
    }
+   #genderChart{
+     display: inline-block;
+   }
+   #timeChart{
+     display:inline-block;
+   }
 </style>
 <body>
 <div style="position: fixed" th:replace="~{include/topinclude}"></div>
@@ -237,7 +257,6 @@
   </aside>
   <section id="section">
     <div id="search-header">병원검색</div>
-    <div>
       <div id="filter" style="display: flex; justify-content: center;">
         <span class="filter_button">진료과목</span>
         <span class="filter_button" style="background: white">진료중</span>
@@ -246,7 +265,7 @@
        <div id="excel"  style="position: absolute; top: 350px; left: 1380px;">
          <a href="excelDownload"><img width="50" height="50" src="https://img.icons8.com/color/48/ms-excel.png" alt="ms-excel"/> <span>병원목록 다운로드</span></a>
        </div>
-    </div>
+
 
 
     <div id="modal">
@@ -290,10 +309,12 @@
         </tbody>
       </table>
     </div>
-    <div id="modalInfo">
+    <div id="detailsView" style="display: none;">
       <div id="infoHeader">
         <span id="hospitalName"></span>
-        <div id="closebutton2"><img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/></div>
+        <div id="closebutton2" onclick="closeInfo()">
+          <img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/>
+        </div>
         <div>
           <table>
             <tbody id="infoTable">
@@ -334,6 +355,10 @@
 
               </tbody>
             </table>
+            <div id="chart">
+              <canvas id="genderChart"></canvas>
+              <canvas id="timeChart"></canvas>
+            </div>
             <div class="infoTitle">의사정보</div>
             <table id="doctorTable">
               <tr>
@@ -456,6 +481,9 @@
           addEvent();
         }
     }
+
+
+
     //진료과목 클릭시 모달창
     function subSelect(){
         let modal=document.getElementById("modal");
@@ -464,7 +492,10 @@
         modal.style.display="inline-block";
         modal.style.background="white";
     }
+
+
     let subjects=document.getElementsByClassName("subject");
+
     //진료과목 리스너 등록
     for(let i=0;i<subjects.length;i++){
         subjects[i].addEventListener("click",()=>{
@@ -582,17 +613,29 @@
       }
     }
     addEvent();
-    let modalInfo=document.getElementById("modalInfo");
+    let detailsView=document.getElementById("detailsView");
     let hospitalname=document.getElementById("hospitalName");
     let closeButton2=document.getElementById("closebutton2");
+
+
     //병원정보모달 닫기
-    closeButton2.addEventListener("click",()=>{
-      modalInfo.style.display="none";
-      document.body.style.backgroundColor="white";
-    })
+    function closeInfo() {
+    // 리스트 다시 표시
+    document.querySelector('.searchList').style.display = 'block';
+
+    // 필터와 엑셀 다운로드 버튼 다시 표시
+    document.getElementById("filter").style.display = 'flex';
+    document.getElementById("excel").style.display = 'block';
+
+    // 상세 정보 숨기기
+    document.getElementById("detailsView").style.display = 'none';
+    }
+
+
     //병원이름 클릭시 병원정보모달
     let clickHospitalInfo;
     function showInfo(title){
+      console.log('클릭');
       let clickHospital=findHospital(title);
       clickHospitalInfo=clickHospital;
 
@@ -600,57 +643,16 @@
         alert(title+"을/를 찾지못했습니다")
       }else{
         //병원코드로 리뷰 받아오기
-        $.ajax({
-          type: "POST",
-          url: "getreview",
-          data: {
-            "hospitalCode": clickHospital.hospital_code
-          },
-          success: function (data) {
-            // alert('성공');
-            console.log(data);
-            let reviewArr=data.reviewList;
-            reviewArr.sort((a, b) => {
-              let dateA = new Date(a.review_date);
-              let dateB = new Date(b.review_date);
-              return dateA - dateB; // 오름차순
-            });
-            let avgScore=data.avgScore;
-            let avgStar = '';
-            for(let i=0; i<avgScore; i++){
-              if(i%2 === 0) {
-                if(i === avgScore-1){
-                  if(i%2 === 0){
-                    avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star-half-empty.png" alt="star-half-empty"/>`;
-                    console.log(i);
-                  }else{
-                    avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
-                    // console.log(i);
-                  }
-                }else{
-                  avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
-                  console.log(i);
-                }
-              }
-            }
-            let reviews=document.getElementById("reviews");
-            let avg=document.getElementById("avgScore");
-            avg.innerHTML=avgStar;
-            reviews.innerHTML='';
-            for(let i=0;i<reviewArr.length;i++){
-              reviews.innerHTML+=`<tr>
-<td>${reviewArr[i].review_user_id}</td>
-<td>${reviewArr[i].review_content}</td>
-<td class="date">${reviewArr[i].review_date.substr(2,8)}</td>
-<td class="score">${reviewArr[i].review_score}</td>
-</tr>`
-            }
-          },
-          error: function (data) {
-            alert("실패");
-          }
-        })
+        getreview(clickHospital);
+        //병원코드로 성비 차트 그리기
+        getGenderData(clickHospital);
+        //병원코드로 시간대별 방문자 수 차트 그리기
+        getTimeData(clickHospital);
         //모달창 병원정보 입력
+        //혜린 리스트 숨기기
+        document.querySelector('.searchList').style.display = 'none';
+        document.getElementById("filter").style.display = 'none';
+        document.getElementById("excel").style.display = 'none';
         document.getElementById("clickhospitalname").innerText=clickHospital.hospital_name;
         document.getElementById("clickhospitaltime").innerText=clickHospital.hospital_time;
         document.getElementById("clickhospitalsubject").innerText=clickHospital.medicals;
@@ -724,11 +726,11 @@
           document.getElementById("doctorCode").value=doctorCodeArr[idx];
         }
       }
-      document.body.style.backgroundColor="gray";
-      modalInfo.style.backgroundColor="white";
-      modalInfo.style.display="flex";
-      hospitalname.innerText="상세정보";
+
+       detailsView.style.display = 'block';
     }
+
+
 
 
     //병원이름으로 배열에서 병원정보 가져오기
@@ -764,6 +766,202 @@
     //     }
     //   })
     // })
+
+  //병원 코드로 병원리뷰 받아오기
+  function getreview(clickHospital) {
+    $.ajax({
+      type: "GET",
+      url: "getreview",
+      data: {
+        "hospitalCode": clickHospital.hospital_code
+      },
+      success: function (data) {
+        // alert('성공');
+        console.log(data);
+        let reviewArr = data.reviewList;
+        reviewArr.sort((a, b) => {
+          let dateA = new Date(a.review_date);
+          let dateB = new Date(b.review_date);
+          return dateA - dateB; // 오름차순
+        });
+        let avgScore = data.avgScore;
+        let avgStar = '';
+        for (let i = 0; i < avgScore; i++) {
+          if (i % 2 === 0) {
+            if (i === avgScore - 1) {
+              if (i % 2 === 0) {
+                avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star-half-empty.png" alt="star-half-empty"/>`;
+                console.log(i);
+              } else {
+                avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
+                // console.log(i);
+              }
+            } else {
+              avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
+              console.log(i);
+            }
+          }
+        }
+        let reviews = document.getElementById("reviews");
+        let avg = document.getElementById("avgScore");
+        avg.innerHTML = avgStar;
+        reviews.innerHTML = '';
+        for (let i = 0; i < reviewArr.length; i++) {
+          reviews.innerHTML += `<tr>
+<td>${reviewArr[i].review_user_id}</td>
+<td>${reviewArr[i].review_content}</td>
+<td class="date">${reviewArr[i].review_date.substr(2, 8)}</td>
+<td class="score">${reviewArr[i].review_score}</td>
+</tr>`
+        }
+      },
+      error: function (data) {
+        alert("실패");
+      }
+    })
+  }
+
+  //병원코드로 예약자 성별받아오기
+  function getGenderData(clickHospital ){
+    $.ajax({
+      type: "GET",
+      url: "getgenderdata",
+      data: {
+        "hospitalCode": clickHospital.hospital_code
+      },
+      success:function (data){
+        // alert(data);
+        drawGenderChart(data);
+        // setInterval(drawGenderChart,30000)
+      },
+      error(){
+        alert("데이터를 불러올 수 없습니다.");
+      }
+
+
+    })
+  }
+
+  //성별정보로 파이차트 그리기
+  function drawGenderChart(data){
+    let genderChart=document.getElementById("genderChart");
+    genderChart.innerHTML="";
+    new Chart(genderChart, {
+      type: 'doughnut',
+      data: {
+        labels: ["Men", "Women"],
+        datasets: [
+          {
+            label: "CNT",
+            backgroundColor: ["#3e95cd", "#8e5ea2"],
+            data: [data.Men,data.Women]
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: '방문자 성비',
+          fontSize: 20
+        },
+        tooltips:{
+          titleFontSize: 20,
+          bodyFontSize: 20,
+        },
+        legend:{
+          display: false,
+        },
+      }
+    });
+  }
+
+  //병원 코드로 시간대별 방문자 수 정보 받아오기
+  function getTimeData(clickHospital){
+    $.ajax({
+      type: "GET",
+      url: "gettimedata",
+      data: {
+        "hospitalCode": clickHospital.hospital_code
+      },
+      success:function (data){
+        // alert(data);
+        // console.log(data);
+        console.log(Object.values(data));
+        drawTimeChart(data);
+      },
+      error(){
+        alert("데이터를 불러올 수 없습니다.");
+      }
+    })
+  }
+
+  //시간대별 방문자 수 차트 그리기
+  function drawTimeChart(data){
+    let timeChart=document.getElementById("timeChart");
+    timeChart.innerHTML="";
+    new Chart(timeChart,{
+      type:"line",
+      data: {
+        labels: Object.keys(data),
+        datasets: [
+          {
+            label: "시간대별 방문자 수",
+            data: Object.values(data),
+            borderColor: 'rgba(75, 192, 192, 1)', // 선 색상
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // 선 아래 배경 색상
+            fill: true, // 선 아래 배경 채우기
+            tension: 0.4 // 곡선의 곡률
+          }
+        ]
+      },
+      options: {
+        responsive: true, // 반응형 차트
+        title: {
+          display: true,
+          text: '시간대별 방문자 수',
+          fontSize: 20
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Time'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Visitor Count'
+            },
+
+          },
+          xAxes:[{
+            ticks:{
+              fontSize:20,
+            }
+          }],
+          yAxes:[{
+            ticks:{
+              beginAtZero: true,
+              fontSize : 14,
+              stepSize: 5,
+            }
+          }]
+
+        },
+        //라벨 위에서도 hover 동작하도록 설정
+        tooltips:{
+          mode:"index",
+          intersect:false,
+          titleFontSize: 20,
+          bodyFontSize: 20,
+        },
+        legend:{
+          display: false,
+        }
+      }
+    })
+  }
 </script>
 
 

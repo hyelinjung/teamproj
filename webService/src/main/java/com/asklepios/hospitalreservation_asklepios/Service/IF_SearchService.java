@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +20,7 @@ public interface IF_SearchService {
     public Integer getAvg(String hospitalCode);
 
     public Workbook excelPrint(List<Hospital_doctorVO> hospitalList) throws IOException;
+    public int[] getGenderData(String hospital_code);
+    public HashMap<String, Object> getTimeData(String hospital_code);
+
 }

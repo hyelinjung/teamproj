@@ -9,6 +9,7 @@
             crossorigin="anonymous"
     ></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <link rel="stylesheet" href="CSS/home.css" />
 <link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
@@ -240,6 +241,12 @@
      margin-right: 30px;
      font-size: 20px;
    }
+   #genderChart{
+     display: inline-block;
+   }
+   #timeChart{
+     display:inline-block;
+   }
 </style>
 <body>
 <div style="position: fixed" th:replace="~{include/topinclude}"></div>
@@ -348,6 +355,10 @@
 
               </tbody>
             </table>
+            <div id="chart">
+              <canvas id="genderChart"></canvas>
+              <canvas id="timeChart"></canvas>
+            </div>
             <div class="infoTitle">의사정보</div>
             <table id="doctorTable">
               <tr>
@@ -632,56 +643,11 @@
         alert(title+"을/를 찾지못했습니다")
       }else{
         //병원코드로 리뷰 받아오기
-        $.ajax({
-          type: "POST",
-          url: "getreview",
-          data: {
-            "hospitalCode": clickHospital.hospital_code
-          },
-          success: function (data) {
-            // alert('성공');
-            console.log(data);
-            let reviewArr=data.reviewList;
-            reviewArr.sort((a, b) => {
-              let dateA = new Date(a.review_date);
-              let dateB = new Date(b.review_date);
-              return dateA - dateB; // 오름차순
-            });
-            let avgScore=data.avgScore;
-            let avgStar = '';
-            for(let i=0; i<avgScore; i++){
-              if(i%2 === 0) {
-                if(i === avgScore-1){
-                  if(i%2 === 0){
-                    avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star-half-empty.png" alt="star-half-empty"/>`;
-                    console.log(i);
-                  }else{
-                    avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
-                    // console.log(i);
-                  }
-                }else{
-                  avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
-                  console.log(i);
-                }
-              }
-            }
-            let reviews=document.getElementById("reviews");
-            let avg=document.getElementById("avgScore");
-            avg.innerHTML=avgStar;
-            reviews.innerHTML='';
-            for(let i=0;i<reviewArr.length;i++){
-                          reviews.innerHTML+=`<tr>
-            <td>${reviewArr[i].review_user_id}</td>
-            <td>${reviewArr[i].review_content}</td>
-            <td class="date">${reviewArr[i].review_date.substr(2,8)}</td>
-            <td class="score">${reviewArr[i].review_score}</td>
-            </tr>`
-            }
-          },
-          error: function (data) {
-            alert("실패");
-          }
-        })
+        getreview(clickHospital);
+        //병원코드로 성비 차트 그리기
+        getGenderData(clickHospital);
+        //병원코드로 시간대별 방문자 수 차트 그리기
+        getTimeData(clickHospital);
         //모달창 병원정보 입력
         //혜린 리스트 숨기기
         document.querySelector('.searchList').style.display = 'none';
@@ -800,6 +766,202 @@
     //     }
     //   })
     // })
+
+  //병원 코드로 병원리뷰 받아오기
+  function getreview(clickHospital) {
+    $.ajax({
+      type: "GET",
+      url: "getreview",
+      data: {
+        "hospitalCode": clickHospital.hospital_code
+      },
+      success: function (data) {
+        // alert('성공');
+        console.log(data);
+        let reviewArr = data.reviewList;
+        reviewArr.sort((a, b) => {
+          let dateA = new Date(a.review_date);
+          let dateB = new Date(b.review_date);
+          return dateA - dateB; // 오름차순
+        });
+        let avgScore = data.avgScore;
+        let avgStar = '';
+        for (let i = 0; i < avgScore; i++) {
+          if (i % 2 === 0) {
+            if (i === avgScore - 1) {
+              if (i % 2 === 0) {
+                avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star-half-empty.png" alt="star-half-empty"/>`;
+                console.log(i);
+              } else {
+                avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
+                // console.log(i);
+              }
+            } else {
+              avgStar += `<img width="48" height="48" src="https://img.icons8.com/fluency/48/star--v1.png" alt="star--v1"/>`;
+              console.log(i);
+            }
+          }
+        }
+        let reviews = document.getElementById("reviews");
+        let avg = document.getElementById("avgScore");
+        avg.innerHTML = avgStar;
+        reviews.innerHTML = '';
+        for (let i = 0; i < reviewArr.length; i++) {
+          reviews.innerHTML += `<tr>
+<td>${reviewArr[i].review_user_id}</td>
+<td>${reviewArr[i].review_content}</td>
+<td class="date">${reviewArr[i].review_date.substr(2, 8)}</td>
+<td class="score">${reviewArr[i].review_score}</td>
+</tr>`
+        }
+      },
+      error: function (data) {
+        alert("실패");
+      }
+    })
+  }
+
+  //병원코드로 예약자 성별받아오기
+  function getGenderData(clickHospital ){
+    $.ajax({
+      type: "GET",
+      url: "getgenderdata",
+      data: {
+        "hospitalCode": clickHospital.hospital_code
+      },
+      success:function (data){
+        // alert(data);
+        drawGenderChart(data);
+        // setInterval(drawGenderChart,30000)
+      },
+      error(){
+        alert("데이터를 불러올 수 없습니다.");
+      }
+
+
+    })
+  }
+
+  //성별정보로 파이차트 그리기
+  function drawGenderChart(data){
+    let genderChart=document.getElementById("genderChart");
+    genderChart.innerHTML="";
+    new Chart(genderChart, {
+      type: 'doughnut',
+      data: {
+        labels: ["Men", "Women"],
+        datasets: [
+          {
+            label: "CNT",
+            backgroundColor: ["#3e95cd", "#8e5ea2"],
+            data: [data.Men,data.Women]
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: '방문자 성비',
+          fontSize: 20
+        },
+        tooltips:{
+          titleFontSize: 20,
+          bodyFontSize: 20,
+        },
+        legend:{
+          display: false,
+        },
+      }
+    });
+  }
+
+  //병원 코드로 시간대별 방문자 수 정보 받아오기
+  function getTimeData(clickHospital){
+    $.ajax({
+      type: "GET",
+      url: "gettimedata",
+      data: {
+        "hospitalCode": clickHospital.hospital_code
+      },
+      success:function (data){
+        // alert(data);
+        // console.log(data);
+        console.log(Object.values(data));
+        drawTimeChart(data);
+      },
+      error(){
+        alert("데이터를 불러올 수 없습니다.");
+      }
+    })
+  }
+
+  //시간대별 방문자 수 차트 그리기
+  function drawTimeChart(data){
+    let timeChart=document.getElementById("timeChart");
+    timeChart.innerHTML="";
+    new Chart(timeChart,{
+      type:"line",
+      data: {
+        labels: Object.keys(data),
+        datasets: [
+          {
+            label: "시간대별 방문자 수",
+            data: Object.values(data),
+            borderColor: 'rgba(75, 192, 192, 1)', // 선 색상
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // 선 아래 배경 색상
+            fill: true, // 선 아래 배경 채우기
+            tension: 0.4 // 곡선의 곡률
+          }
+        ]
+      },
+      options: {
+        responsive: true, // 반응형 차트
+        title: {
+          display: true,
+          text: '시간대별 방문자 수',
+          fontSize: 20
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Time'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Visitor Count'
+            },
+
+          },
+          xAxes:[{
+            ticks:{
+              fontSize:20,
+            }
+          }],
+          yAxes:[{
+            ticks:{
+              beginAtZero: true,
+              fontSize : 14,
+              stepSize: 5,
+            }
+          }]
+
+        },
+        //라벨 위에서도 hover 동작하도록 설정
+        tooltips:{
+          mode:"index",
+          intersect:false,
+          titleFontSize: 20,
+          bodyFontSize: 20,
+        },
+        legend:{
+          display: false,
+        }
+      }
+    })
+  }
 </script>
 
 
