@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asklepios.hospitalreservation_asklepios.Repository.IF_QandAMapper">
+
+    <select id="list" resultType="com.asklepios.hospitalreservation_asklepios.VO.QuestionlistVO">
+        SELECT
+        q.id,
+        q.title,
+        q.content,
+        q.date,
+        q.tag,
+        q.sub,
+        u.user_name
+        FROM question as q
+        JOIN users as u ON q.user_id = u.user_id
+    </select>
+
+    <resultMap id="UserResultMap" type="com.asklepios.hospitalreservation_asklepios.VO.QuestionlistVO">
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="date" column="date"/>
+        <result property="tag" column="tag"/>
+        <result property="sub" column="sub"/>
+        <result property="user_name" column="user_name"/>
+        <collection property="imgs" ofType="com.asklepios.hospitalreservation_asklepios.VO.Question_imgVO">
+            <result property="fileName" column="fileName"/>
+        </collection>
+    </resultMap>
+
+<!--    질문 보기 자세히-->
+    <select id="detailQandA"  resultMap="UserResultMap">
+        SELECT
+        q.title,
+        q.content,
+        q.date,
+        q.tag,
+        q.sub,
+        u.user_name,
+        img.fileName
+        FROM question as q
+        LEFT JOIN users as u ON q.user_id = u.user_id
+        LEFT JOIN img_question as img ON q.id = img.question_id
+        where q.id=#{id}
+    </select>
+
+    <!--의사 답변 테이블생성을 위한 pre데이터(join 개수가 너무 많아서 먼저 데이터를 구하고 테이블에 삽입할 데이터 생성하기로함)-->
+    <select id="pre_getDoctorInfo"  resultType="com.asklepios.hospitalreservation_asklepios.VO.QuestionlistVO">
+        select ud.user_doctor_id as user_name,ud.user_doctor_medical as tag,h.hospital_name as sub from user_doctor as ud left join hospital as h on ud.user_doctor_hospital_code =h.hospital_code where ud.user_doctor_id =#{doctor_id};
+    </select>
+
+    <!--큐엔에이 디테일 보기에서 의사관련 정보만 가져오기-->
+    <select id="show_detail_getDoctorInfo"  resultType="com.asklepios.hospitalreservation_asklepios.VO.QuestionlistVO">
+        select a.content,a.`date`,u.user_name,a.hospital_name as sub,a.user_doctor_medical as tag from answer a left join users u on a.user_doctor_id =u.user_id where a.question_id =#{question_id};
+    </select>
+
+
+
+
+</mapper>
