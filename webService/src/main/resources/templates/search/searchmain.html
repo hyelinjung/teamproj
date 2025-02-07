@@ -112,68 +112,79 @@
       margin-top: 20px;
       cursor: pointer;
     }
-    .searchList{
-      height: 1340px;
-      overflow: auto;
+    .searchList,
+    #detailsView {
+        height: 1340px;
+        overflow: auto;
     }
+
     .searchList::-webkit-scrollbar-button:vertical:start:decrement,
-    .searchList::-webkit-scrollbar-button:vertical:start:increment {
-      display: block;
-      height: 15px;
+    .searchList::-webkit-scrollbar-button:vertical:start:increment,
+    #detailsView::-webkit-scrollbar-button:vertical:start:decrement,
+    #detailsView::-webkit-scrollbar-button:vertical:start:increment {
+        display: block;
+        height: 15px;
     }
-    .searchList::-webkit-scrollbar {
-      width: 10px;
+
+    .searchList::-webkit-scrollbar,
+    #detailsView::-webkit-scrollbar {
+        width: 10px;
     }
-   .searchList::-webkit-scrollbar-thumb {
-      background-color: #2f3542;
-      border-radius: 10px;
-      background-clip: padding-box;
-      border: 2px solid transparent;
+
+    .searchList::-webkit-scrollbar-thumb,
+    #detailsView::-webkit-scrollbar-thumb {
+        background-color: #2f3542;
+        border-radius: 10px;
+        background-clip: padding-box;
+        border: 2px solid transparent;
     }
-    .searchList::-webkit-scrollbar-track {
-      background-color: grey;
-      border-radius: 10px;
-      box-shadow: inset 0 0 5px white;
+
+    .searchList::-webkit-scrollbar-track,
+    #detailsView::-webkit-scrollbar-track {
+        background-color: grey;
+        border-radius: 10px;
+        box-shadow: inset 0 0 5px white;
     }
-    #modalInfo::-webkit-scrollbar {
-      width: 10px;
-    }
-    #modalInfo::-webkit-scrollbar-button:vertical:start:decrement,
-    #modalInfo::-webkit-scrollbar-button:vertical:start:increment,
-    #modalInfo::-webkit-scrollbar-button:vertical:end:decrement{
-      display: block;
-      height: 35px;
-    }
-    #modalInfo::-webkit-scrollbar-thumb {
-      background-color: #2f3542;
-      border-radius: 10px;
-      background-clip: padding-box;
-      border: 2px solid transparent;
-    }
-    #modalInfo::-webkit-scrollbar-track {
-      background-color: grey;
-      border-radius: 10px;
-      box-shadow: inset 0 0 5px white;
-    }
-    #modalInfo{
-      position: fixed;
-      top: 240px;
-      left: 680px;
-      display: none;
-      width: 850px;
-      height: 850px;
-      overflow: auto;
-      border-radius:30px ;
-    }
-    #infoHeader{
-      margin: 0;
-      width: 100%;
-      height: 70px;
-      text-align: center;
-      font-size: 30px;
-      border-top-left-radius:30px ;
-      border-top-right-radius:30px ;
-    }
+
+<!--    #modalInfo::-webkit-scrollbar {-->
+<!--      width: 10px;-->
+<!--    }-->
+<!--    #modalInfo::-webkit-scrollbar-button:vertical:start:decrement,-->
+<!--    #modalInfo::-webkit-scrollbar-button:vertical:start:increment,-->
+<!--    #modalInfo::-webkit-scrollbar-button:vertical:end:decrement{-->
+<!--      display: block;-->
+<!--      height: 35px;-->
+<!--    }-->
+<!--    #modalInfo::-webkit-scrollbar-thumb {-->
+<!--      background-color: #2f3542;-->
+<!--      border-radius: 10px;-->
+<!--      background-clip: padding-box;-->
+<!--      border: 2px solid transparent;-->
+<!--    }-->
+<!--    #modalInfo::-webkit-scrollbar-track {-->
+<!--      background-color: grey;-->
+<!--      border-radius: 10px;-->
+<!--      box-shadow: inset 0 0 5px white;-->
+<!--    }-->
+<!--    #modalInfo{-->
+<!--      position: fixed;-->
+<!--      top: 240px;-->
+<!--      left: 680px;-->
+<!--      display: none;-->
+<!--      width: 850px;-->
+<!--      height: 850px;-->
+<!--      overflow: auto;-->
+<!--      border-radius:30px ;-->
+<!--    }-->
+<!--    #infoHeader{-->
+<!--      margin: 0;-->
+<!--      width: 100%;-->
+<!--      height: 70px;-->
+<!--      text-align: center;-->
+<!--      font-size: 30px;-->
+<!--      border-top-left-radius:30px ;-->
+<!--      border-top-right-radius:30px ;-->
+<!--    }-->
   #infoIntro,#infoNotice{
     width: 600px;
     font-size: 25px;
@@ -189,13 +200,15 @@
     color: #666666;
   }
    #doctorTable,#reviewTable{
-     /*margin-left: 80px;*/
-     width: 800px;
-     font-size: 25px;
-     margin: auto;
+    width: 900px;
+    margin-left: 80px; /* 좌측 여백 */
+    font-size: 25px;
+    border-collapse: collapse;
     }
    #reservation{
      margin-top: 30px;
+     margin-left: auto;
+    margin-right: auto;  /* 좌우 여백을 자동으로 설정하여 가운데 정렬 */
    }
    .radio{
      width: 30px;
@@ -237,7 +250,6 @@
   </aside>
   <section id="section">
     <div id="search-header">병원검색</div>
-    <div>
       <div id="filter" style="display: flex; justify-content: center;">
         <span class="filter_button">진료과목</span>
         <span class="filter_button" style="background: white">진료중</span>
@@ -246,7 +258,7 @@
        <div id="excel"  style="position: absolute; top: 350px; left: 1380px;">
          <a href="excelDownload"><img width="50" height="50" src="https://img.icons8.com/color/48/ms-excel.png" alt="ms-excel"/> <span>병원목록 다운로드</span></a>
        </div>
-    </div>
+
 
 
     <div id="modal">
@@ -290,10 +302,12 @@
         </tbody>
       </table>
     </div>
-    <div id="modalInfo">
+    <div id="detailsView" style="display: none;">
       <div id="infoHeader">
         <span id="hospitalName"></span>
-        <div id="closebutton2"><img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/></div>
+        <div id="closebutton2" onclick="closeInfo()">
+          <img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/>
+        </div>
         <div>
           <table>
             <tbody id="infoTable">
@@ -456,6 +470,9 @@
           addEvent();
         }
     }
+
+
+
     //진료과목 클릭시 모달창
     function subSelect(){
         let modal=document.getElementById("modal");
@@ -464,7 +481,10 @@
         modal.style.display="inline-block";
         modal.style.background="white";
     }
+
+
     let subjects=document.getElementsByClassName("subject");
+
     //진료과목 리스너 등록
     for(let i=0;i<subjects.length;i++){
         subjects[i].addEventListener("click",()=>{
@@ -582,17 +602,29 @@
       }
     }
     addEvent();
-    let modalInfo=document.getElementById("modalInfo");
+    let detailsView=document.getElementById("detailsView");
     let hospitalname=document.getElementById("hospitalName");
     let closeButton2=document.getElementById("closebutton2");
+
+
     //병원정보모달 닫기
-    closeButton2.addEventListener("click",()=>{
-      modalInfo.style.display="none";
-      document.body.style.backgroundColor="white";
-    })
+    function closeInfo() {
+    // 리스트 다시 표시
+    document.querySelector('.searchList').style.display = 'block';
+
+    // 필터와 엑셀 다운로드 버튼 다시 표시
+    document.getElementById("filter").style.display = 'flex';
+    document.getElementById("excel").style.display = 'block';
+
+    // 상세 정보 숨기기
+    document.getElementById("detailsView").style.display = 'none';
+    }
+
+
     //병원이름 클릭시 병원정보모달
     let clickHospitalInfo;
     function showInfo(title){
+      console.log('클릭');
       let clickHospital=findHospital(title);
       clickHospitalInfo=clickHospital;
 
@@ -638,12 +670,12 @@
             avg.innerHTML=avgStar;
             reviews.innerHTML='';
             for(let i=0;i<reviewArr.length;i++){
-              reviews.innerHTML+=`<tr>
-<td>${reviewArr[i].review_user_id}</td>
-<td>${reviewArr[i].review_content}</td>
-<td class="date">${reviewArr[i].review_date.substr(2,8)}</td>
-<td class="score">${reviewArr[i].review_score}</td>
-</tr>`
+                          reviews.innerHTML+=`<tr>
+            <td>${reviewArr[i].review_user_id}</td>
+            <td>${reviewArr[i].review_content}</td>
+            <td class="date">${reviewArr[i].review_date.substr(2,8)}</td>
+            <td class="score">${reviewArr[i].review_score}</td>
+            </tr>`
             }
           },
           error: function (data) {
@@ -651,6 +683,10 @@
           }
         })
         //모달창 병원정보 입력
+        //혜린 리스트 숨기기
+        document.querySelector('.searchList').style.display = 'none';
+        document.getElementById("filter").style.display = 'none';
+        document.getElementById("excel").style.display = 'none';
         document.getElementById("clickhospitalname").innerText=clickHospital.hospital_name;
         document.getElementById("clickhospitaltime").innerText=clickHospital.hospital_time;
         document.getElementById("clickhospitalsubject").innerText=clickHospital.medicals;
@@ -724,11 +760,11 @@
           document.getElementById("doctorCode").value=doctorCodeArr[idx];
         }
       }
-      document.body.style.backgroundColor="gray";
-      modalInfo.style.backgroundColor="white";
-      modalInfo.style.display="flex";
-      hospitalname.innerText="상세정보";
+
+       detailsView.style.display = 'block';
     }
+
+
 
 
     //병원이름으로 배열에서 병원정보 가져오기
