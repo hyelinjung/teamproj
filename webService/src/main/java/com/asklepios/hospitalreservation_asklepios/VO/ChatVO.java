@@ -7,5 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatVO {
-    private String symptoms;
+    private String identifier;
+    private String mainMessage;
 }

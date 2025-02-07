@@ -10,6 +10,10 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain_huggingface import HuggingFaceEmbeddings
 import gradio as gr
 import os
+from flask import Flask, request, jsonify
+import joblib
+
+app = Flask(__name__)
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 #%%
@@ -74,20 +78,5 @@ def chat(message, history):
 
     return response['answer'] + source_info
 #%%
-# Gradio 인터페이스 설정
-demo = gr.ChatInterface(
-    fn=chat,
-    examples=[
-        "로그인은 어디서 해야하나요?",
-        "회원가입은 어떻게 해야하나요?",
-        "병원 예약은 어떻게 하나요?"
-    ],
-    title="Asklepios Guide Chatbot",
-    description="저희 Asklepios 이용에 궁금한 점이 있으면 언제든지 물어보세요."
-)
-#%%
-# 서버 실행
-demo.launch(server_port=7862, server_name="0.0.0.0")
-#%%
-demo.close()
-#%%
+if __name__ == '__main__':
+    app.run(port=5100, debug=True)

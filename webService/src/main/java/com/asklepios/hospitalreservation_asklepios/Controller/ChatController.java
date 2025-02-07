@@ -17,7 +17,12 @@ public class ChatController {
 
     @PostMapping("/api/chat/recommend")
     public String recommendMedicalDepartment(@RequestBody ChatVO chatVO) {
-        System.out.println("1");
-        return chatService.recommendDepartment(chatVO.getSymptoms());
+        if(chatVO.getIdentifier().equals("symptomChatbot")) {
+            System.out.println("1");
+            return chatService.recommendDepartment(chatVO.getMainMessage());
+        } else if(chatVO.getIdentifier().equals("guideChatbot")) {
+            return chatService.recommendDepartment(chatVO.getMainMessage());
+        }
+        return null;
     }
 }

@@ -67,18 +67,6 @@
         padding: 10px;
         border-top: 1px solid #ddd;
     }
-    .chatInput textarea {
-        flex: 1;
-        padding: 5px;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-        resize: none;
-        font-size: 30px;
-    }
-    .chatInput textarea:focus {
-        border-color: #3b82f6;
-        outline: none;
-    }
     .chatInput button {
         background: #3b82f6;
         color: white;
@@ -140,6 +128,19 @@
         align-items: center;
         cursor: pointer;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    #chatInput {
+        width: 400px;
+        flex: 1;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        resize: none;
+        font-size: 30px;
+    }
+    #chatInput:focus {
+        border-color: #3b82f6;
+        outline: none;
     }
 </style>
 <aside class="quickMenu" style="position: sticky; top: 30px;">
@@ -238,14 +239,18 @@
         <span style="cursor:pointer; position: relative; left: 150px;" onclick="toggleChat()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="size-10">
   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg></span>
     </div>
-    <div class="chatBody" id="chatBody">
+    <div id="selection">
+        <button onclick="useGuideChat()">서비스 이용 문의</button>
+        <button onclick="useSymptomChat()">진료과 추천</button>
+    </div>
+    <div class="chatBody" id="chatBody" style="display: none;">
         <div class="messageWrapper botMessageWrapper">
             <img src="Img/chatbot.png" class="chatIconSmall">
-            <div class="message botMessage">안녕하세요? ASKLEPIOS 챗봇 입니다.<br>증상을 입력하면 진료과를 추천해드릴게요.</div>
+            <div class="message botMessage">안녕하세요? ASKLEPIOS 챗봇 입니다.<br><span id="chatMessage"></span></div>
         </div>
     </div>
-    <div class="chatInput">
-        <textarea id="chatInput" placeholder="증상을 입력해주세요..." rows="1"></textarea>
+    <div class="chatInput" id="messageInput" style="display: none;">
+        <div contenteditable="true" id="chatInput" rows="1"><span id="identifier" style="display: none"></span></div>
         <button onclick="sendMessage()">전송</button>
     </div>
 </div>
@@ -325,13 +330,41 @@
         }
     }
 
+    function useGuideChat() {
+        document.getElementById("selection").style.display = "none";
+        document.getElementById("messageInput").style.removeProperty("display");
+        let chatBody = document.getElementById("chatBody");
+        let guideChatText = document.getElementById("chatMessage");
+        let chatIdentifier = document.getElementById("chatIdentifier");
+
+        chatBody.style.removeProperty("display");
+        guideChatText.innerText = "서비스 이용에 문의사항을 입력해주세요.";
+        chatIdentifier.innerText = "guideChatbot";
+    }
+    function useSymptomChat() {
+        document.getElementById("selection").style.display = "none";
+        document.getElementById("messageInput").style.removeProperty("display");
+        let chatBody = document.getElementById("chatBody");
+        let symptomChatText = document.getElementById("chatMessage");
+        let chatIdentifier = document.getElementById("chatIdentifier");
+
+        chatBody.style.removeProperty("display");
+        symptomChatText.innerText = "증상을 입력해주세요.";
+        chatIdentifier.innerText = "symptomChatbot";
+    }
+    // contenteditable에서 span태그 값을 제외한 값 가져오기(유효성 검사를 위함)
+    function getCleanText() {
+        let chatInput = document.getElementById("chatInput").cloneNode(true); // 원본 보호
+        chatInput.querySelectorAll("span").forEach(span => span.remove()); // 모든 <span> 삭제
+        return chatInput.innerText.trim(); // 깨끗한 텍스트 반환
+    }
     function sendMessage() {
         let chatInput = document.getElementById("chatInput");
         let chatBody = document.getElementById("chatBody");
-        let userMessage = chatInput.value.trim();
+        let userMessage = chatInput.innerText.trim();
 
-        if (userMessage === "") {
-            alert("증상을 입력해주세요.");
+        if (getCleanText() === "") {
+            alert("내용을 입력해주세요.");
             return;
         }
 
@@ -343,16 +376,26 @@
         userMsgElement.classList.add("message", "userMessage");
         userMsgElement.innerText = userMessage;
 
+
+        // 첫 번째 단어와 나머지 단어 분리
+        let message = chatInput.textContent.trim(); // display none되어있는 span 태그값 포함해서 불러오기
+        let insertMessage = message.split(" ");     // 공백 기준으로 단어 나누기
+        let identifier = insertMessage.shift();     // 첫 번째 단어 (배열에서 제거됨)
+        let mainMessage = insertMessage.join(" ");  // 나머지 단어들 다시 문자열로 결합
+
         userMsgWrapper.appendChild(userMsgElement);
         chatBody.appendChild(userMsgWrapper);
-        chatInput.value = "";
+        chatInput.innerText = "";
 
         // 챗봇 응답 받기
         $.ajax({
             url: "/asklepios/api/chat/recommend",
             type: "POST",
             contentType: "application/json",
-            data: JSON.stringify({ symptoms: userMessage }),
+            data: JSON.stringify({
+                identifier: identifier,
+                mainMessage: mainMessage
+            }),
             success: function(response) {
                 let botMsgWrapper = document.createElement("div");
                 botMsgWrapper.classList.add("messageWrapper", "botMessageWrapper");
