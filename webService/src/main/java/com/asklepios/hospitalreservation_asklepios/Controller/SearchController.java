@@ -62,7 +62,7 @@ public class SearchController {
         }
         return modHospitalList;
     }
-    @PostMapping("/getreview")
+    @GetMapping("/getreview")
 //    public List<ReviewVO> getReview(@RequestParam("hospitalCode") String hospitalCode){
 ////        System.out.println(hospitalCode);
 //        return searchService.searchReview(hospitalCode);
@@ -97,5 +97,22 @@ public class SearchController {
         workbook.write(servletOutputStream);
         workbook.close();
         servletOutputStream.close();
+    }
+
+    @GetMapping("/getgenderdata")
+    public HashMap<String,Object> getGender(@RequestParam("hospitalCode") String hospitalCode){
+        HashMap<String,Object> map=new HashMap<>();
+        int[]genderData=searchService.getGenderData(hospitalCode);
+//        System.out.println(genderData[0]+"/"+genderData[1]);
+        map.put("Men",genderData[0]);
+        map.put("Women",genderData[1]);
+        return map;
+    }
+
+    @GetMapping("/gettimedata")
+    public HashMap<String,Object> getTime(@RequestParam("hospitalCode") String hospitalCode){
+        HashMap<String,Object> map=searchService.getTimeData(hospitalCode);
+//        System.out.println(map);
+        return map;
     }
 }

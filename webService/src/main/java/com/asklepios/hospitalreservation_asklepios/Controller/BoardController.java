@@ -171,5 +171,12 @@ public class BoardController {
     return "redirect:/bboard_health";
   }
 
+  @GetMapping("/deleteboard")
+  public String deleteboard(@RequestParam String board_sequence) throws Exception {
+//    System.out.println(board_sequence);
+    boardService.delBoard(board_sequence);
+    return "redirect:/bboard_all";
+
+  }
 }
 

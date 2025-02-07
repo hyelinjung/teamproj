@@ -73,5 +73,7 @@
     <select id="selectHeart" resultType="int">
         select count(*) from boardlike where board_sequence=#{board_sequence}
     </select>
-
+    <delete id="deleteBoard">
+        delete from testboard where board_sequence=#{no}
+    </delete>
 </mapper>
