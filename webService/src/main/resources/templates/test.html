@@ -9,6 +9,8 @@
             crossorigin="anonymous"
     ></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <link rel="stylesheet" href="CSS/home.css" />
 <link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
@@ -245,136 +247,26 @@
 <div style="position: fixed" th:replace="~{include/topinclude}"></div>
 <div class="homeContainer" style="height: 1530px;">
 
-  <aside id="aside1" th:replace="~{asideMenuTemplates/hospitalListAside}">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold mb-4">게시글 작성</h2>
 
-  </aside>
-  <section id="section">
-    <div id="search-header">병원검색</div>
-      <div id="filter" style="display: flex; justify-content: center;">
-        <span class="filter_button">진료과목</span>
-        <span class="filter_button" style="background: white">진료중</span>
-        <span class="filter_button">평일</span>
-      </div>
-       <div id="excel"  style="position: absolute; top: 350px; left: 1380px;">
-         <a href="excelDownload"><img width="50" height="50" src="https://img.icons8.com/color/48/ms-excel.png" alt="ms-excel"/> <span>병원목록 다운로드</span></a>
-       </div>
+        <label class="block text-gray-700 font-semibold mb-2" for="title">제목</label>
+        <input type="text" id="title" class="w-full p-2 border rounded-lg mb-4" placeholder="제목을 입력하세요">
 
+        <label class="block text-gray-700 font-semibold mb-2" for="content">질문 내용</label>
+        <textarea id="content" class="w-full p-2 border rounded-lg mb-4" rows="5" placeholder="질문 내용을 입력하세요"></textarea>
 
+        <label class="block text-gray-700 font-semibold mb-2">사진 첨부</label>
+        <input type="file" id="imageUpload" accept="image/*" class="w-full p-2 border rounded-lg mb-4" onchange="previewImage(event)">
 
-    <div id="modal">
-      <div id="modalheader">
-        진료과목 선택
-        <div id="closebutton">
-          <img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/>
+        <div id="imagePreview" class="mt-4 hidden">
+            <p class="text-gray-700 font-semibold mb-2">미리보기</p>
+            <img id="preview" class="w-full rounded-lg shadow">
         </div>
-      </div>
-      <div class="subject">내과</div>
-      <div class="subject">이비인후과</div>
-      <div class="subject">정형외과</div>
-      <div class="subject">성형외과</div>
-      <div class="subject">정신건강의학과</div>
-      <div class="subject">피부과</div>
-      <div class="subject">안과</div>
-      <div class="subject">소아청소년과</div>
-      <div class="subject">산부인과</div>
-      <div class="subject">비뇨기과</div>
-      <div class="subject">외과</div>
+
+        <button class="mt-4 w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">게시하기</button>
     </div>
 
-    <div class="searchList">
-      <table id="hospitals">
-        <tbody id="tbody">
-        <tr th:each="hospitalVO:${hlist}" class="row">
-          <td>
-            <div class="resultrow">
-              <div class="rheader" th:text="${hospitalVO.hospital_name}"></div>
-              <div class="info">
-                <span class="info" th:text="${hospitalVO.medicals}"></span>
-              </div>
-              <div class="time">
-                <span class="info" th:text="${hospitalVO.hospital_time}"> </span>
-              </div>
-              <div class="info" th:text="${hospitalVO.hospital_tel}"></div>
-              <div class="info" th:text="${hospitalVO.hospital_addr}"></div>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div id="detailsView" style="display: none;">
-      <div id="infoHeader">
-        <span id="hospitalName"></span>
-        <div id="closebutton2" onclick="closeInfo()">
-          <img width="48" height="48" src="https://img.icons8.com/pulsar-line/48/close-window.png" alt="close-window"/>
-        </div>
-        <div>
-          <table>
-            <tbody id="infoTable">
-            <tr class="row">
-              <td>
-                <div class="modalResultRow">
-                  <div class="rheader" id="clickhospitalname" style="width: 100%;" ></div>
-                  <div class="time">
-                    <span class="info" >진료시간: </span>
-                    <span class="info" id="clickhospitaltime"> </span>
-                    <span>|</span>
-                    <span class="info" id="clickhospitalsubject" ></span>
-                  </div>
-                  <div class="info" id="clickhospitaladdr"></div>
-                  <div class="info" id="clickhospitaltel"></div>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-          <div>
-            <div class="infoTitle">소개</div>
-            <div id="infoIntro"></div>
-            <div class="infoTitle">공지사항</div>
-            <div id="infoNotice"></div>
-            <div class="infoTitle">리뷰</div>
-            <div id="avgScore"></div>
-            <table id="reviewTable">
-              <thead>
-              <tr>
-                <td width="10%">ID</td>
-                <td width="55%">리뷰내용</td>
-                <td width="20%">날짜</td>
-                <td width="15%">별점</td>
-              </tr>
-              </thead>
-              <tbody id="reviews">
-
-              </tbody>
-            </table>
-            <div class="infoTitle">의사정보</div>
-            <table id="doctorTable">
-              <tr>
-                <td>이름</td>
-                <td class="clickhospitaldoctorname"></td>
-              </tr>
-              <tr>
-                <td>진료과목</td>
-                <td class="clickhospitaldoctorsubject"></td>
-              </tr>
-              <tr>
-                <td>약력</td>
-                <td class="clickhospitaldoctorcareer"></td>
-              </tr>
-            </table>
-            <form action="reserve" method="post" onsubmit="return sendPage()">
-              <input type="hidden" id="hospitalName2" name="hospitalName">
-              <input  type="hidden" id="doctorCode" name="doctorCode">
-              <input type="hidden" id="hospitalCode" name="hospitalCode">
-              <input type="hidden" id="userID" name="userID" value="${user.user_id}">
-              <input id="reservation" type="submit" style="width: 200px;height: 80px; font-size: 30px; background: #3b82f6;color: white; border-radius: 5px; margin-bottom:20px;"  value="예약하기">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
   <aside id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
 </div>
 <!--<footer id="ad" >-->
