@@ -96,4 +96,12 @@ public class fileController {
         String subject = service.getSubject(questionId);
         System.out.println(subject);
     }
+    @GetMapping("/askv")
+    public String askv(){
+        return "test";
+    }
+    @GetMapping("/qnalist")
+    public String qnalist(){
+        return "qnalist";
+    }
 }

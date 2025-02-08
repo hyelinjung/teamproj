@@ -87,12 +87,12 @@ public class QandAService {
     //큐앤에이 화면 자세히보기 - 질문자와 답변자 함께 가져옴
     //answer 테이블에 대부분의 정보가 들어있어서 닥터 이름만 join해서 가져오면됨
     public QuestionlistVO showdeatil(int question_id){
-        QuestionlistVO vo =qandAMapper.detailQandA(question_id);
-        vo.setAnswerlist(qandAMapper.show_detail_getDoctorInfo(question_id));
+        QuestionlistVO vo =qandAMapper.detailQandA(question_id); //질문정보
+        vo.setAnswerlist(qandAMapper.show_detail_getDoctorInfo(question_id)); //답변정보
         return vo;
     }
 
-    //해당 질문 제목 가져오기
+    //해당 질문 제목 가져오기 - 의사가 답변을 할 때 화면에 어떤 질문에 대한 답변인지 표시하기 위해
     public String getSubject(int questionId){
         return qandAMapper.getSubjuct(questionId);
     }
