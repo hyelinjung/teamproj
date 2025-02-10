@@ -1,82 +1,53 @@
-#%% md
-# # Guide Chatbot
-#%%
-# 라이브러리 빌드
-import pandas as pd
-from langchain_ollama import ChatOllama
-from langchain.vectorstores import FAISS
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.chains import ConversationalRetrievalChain
-from langchain_huggingface import HuggingFaceEmbeddings
-import gradio as gr
-import os
 from flask import Flask, request, jsonify
-import joblib
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
+# ✅ Flask 앱 생성
 app = Flask(__name__)
 
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-#%%
-# CSV 파일 로드 및 확인
-df = pd.read_csv("guideChatbot.csv")
-df = df.dropna(subset=["inputs", "response"])
-#%%
-def preprocess_text(text):
-    text = text.strip()  # 양쪽 공백 제거
-    # text = text.replace("\n", " ")  # 줄바꿈 제거
-    return text
-#%%
-# 데이터 준비
-texts = [
-    f"질문: {preprocess_text(row['inputs'])}\n답변: {preprocess_text(row['response'])}"
-    for _, row in df.iterrows()
-]
-if not texts:
-    raise ValueError("텍스트 데이터가 비어 있습니다. CSV 파일을 확인하세요.")
-#%%
-# 임베딩 모델 초기화
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/xlm-r-100langs-bert-base-nli-stsb-mean-tokens"
-)
-#%%
-# 벡터 데이터베이스 생성
-vectorstore = FAISS.from_texts(texts, embeddings)
-# 저장된 문서 수 확인
-print(f"벡터 스토어에 저장된 문서 수: {len(vectorstore.docstore._dict)}")
-# 저장된 문서 확인
-for key, value in vectorstore.docstore._dict.items():
-    print(f"Key: {key}, Value: {value}")
-#%%
-# ChatOllama 모델 초기화
-llm = ChatOllama(model="gemma2", temperature=0)
-#%%
-# Conversational Retrieval Chain 초기화
-qa_chain = ConversationalRetrievalChain.from_llm(
-    llm,
-    vectorstore.as_retriever(search_kwargs={"k": 3}),
-    return_source_documents=True,
-    verbose=True
-)
-#%%
-# 채팅 함수 정의
-def chat(message, history):
-    print(f"입력 메시지: {message}")
-    print(f"대화 기록: {history}")
+class ChatbotModel:
+    _instance = None  # ✅ 싱글톤 객체 저장
 
-    # 대화 기록 준비
-    chat_history = [(human, ai) for human, ai in history]
+    def __new__(cls):
+        if cls._instance is None:
+            print("🔹 [INFO] Fine-Tuned 챗봇 모델 로딩 중...")
+            cls._instance = super(ChatbotModel, cls).__new__(cls)
+            cls._instance.load_model()
+        return cls._instance
 
-    # 모델 호출
-    response = qa_chain({"question": message, "chat_history": chat_history})
+    def load_model(self):
+        """Fine-Tuned 모델 로드"""
+        model_path = "./gemma-finetuned"
+        self.tokenizer = AutoTokenizer.from_pretrained(model_path)
+        self.model = AutoModelForCausalLM.from_pretrained(model_path).to("cuda" if torch.cuda.is_available() else "cpu")
+        print("✅ Fine-Tuned 모델 로드 완료!")
 
-    # 검색된 문서 확인
-    print(f"검색된 문서: {[doc.page_content for doc in response['source_documents']]}")
-    print(f"모델 응답: {response['answer']}")
+    def get_response(self, user_input):
+        """챗봇 응답 생성"""
+        inputs = self.tokenizer(f"사용자: {user_input}\n챗봇:", return_tensors="pt").to("cuda" if torch.cuda.is_available() else "cpu")
+        outputs = self.model.generate(**inputs, max_length=200)
+        response_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-    sources = set([doc.metadata.get('source', 'Unknown') for doc in response['source_documents']])
-    source_info = f"\n\n참고 출처: {', '.join(sources)}" if sources else ""
+        # ✅ "챗봇:" 이후의 응답만 추출
+        if "챗봇:" in response_text:
+            response_text = response_text.split("챗봇:")[1].strip()
 
-    return response['answer'] + source_info
-#%%
-if __name__ == '__main__':
+        return response_text
+
+# ✅ 싱글톤 인스턴스 생성
+chatbot = ChatbotModel()
+
+@app.route("/chatbot", methods=["POST"])
+def chatbot_api():
+    """Flask API 엔드포인트"""
+    data = request.json
+    user_input = data.get("message", "")
+
+    if not user_input:
+        return jsonify({"error": "입력 메시지가 없습니다."}), 400
+
+    response = chatbot.get_response(user_input)
+    return jsonify({"response": response})
+
+if __name__ == "__main__":
     app.run(port=5100, debug=True)
