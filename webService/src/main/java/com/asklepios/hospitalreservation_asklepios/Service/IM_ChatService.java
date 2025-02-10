@@ -1,11 +1,9 @@
 package com.asklepios.hospitalreservation_asklepios.Service;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.json.JSONObject;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,27 +16,31 @@ public class IM_ChatService implements IF_ChatService {
         this.restTemplate = restTemplate;
     }
 
-
-    // 여기서 부터 수정 필요
     @Override
-    public String guideMessage(String guide) {
-        String url = "http://localhost:5100/";
+    public String guideMessage(String userMessage) {
+        System.out.println("Service");
+        System.out.println(userMessage);
 
-        // JSON 데이터 생성
-        Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("guide", guide);
+        String API_URL = "http://localhost:5100/chatbot";
+
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("message", userMessage);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
+        HttpEntity<String> request = new HttpEntity<>(requestJson.toString(), headers);
 
-        // Flask API 호출
-        ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
-        return response.getBody().get("medical").toString();
+        ResponseEntity<String> response = restTemplate.exchange(API_URL, HttpMethod.POST, request, String.class);
+        JSONObject responseJson = new JSONObject(response.getBody());
+
+        return responseJson.getString("response");
     }
 
     @Override
     public String recommendDepartment(String symptoms) {
+        System.out.println("Service");
+        System.out.println(symptoms);
+
         String url = "http://localhost:5000/predict"; // Python Flask 서버 주소
 
         // JSON 데이터 생성
