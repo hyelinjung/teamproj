@@ -1,0 +1,23 @@
+body {
+    font-family:'Pretendard-Regular', 'sans-serif';
+    width: 1920px;
+}
+#menu_wrap.container {
+    max-width: 1200px !important; /* 강제 적용 */
+}
+.container {
+    width: 1200px;
+    max-width: 1200px;
+    box-sizing: border-box;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    color: #3B82F6;
+}
+.asideQuestion {
+    background-color: #3B82F6;
+    color: white;
+}
