@@ -249,10 +249,10 @@
    }
 </style>
 <body>
-<div style="position: fixed" th:replace="~{include/topinclude}"></div>
+<div style="position: fixed" th:replace="~{include/header}"></div>
 <div class="homeContainer" style="height: 1530px;">
 
-  <aside id="aside1" th:replace="~{asideMenuTemplates/hospitalListAside}">
+  <aside id="aside1" th:replace="~{include/leftAside/hospitalListAside}">
 
   </aside>
   <section id="section">
@@ -386,7 +386,7 @@
       </div>
     </div>
   </section>
-  <aside id="aside2" th:insert="~{include/quickmenuinclude}"></aside>
+  <aside id="aside2" th:insert="~{include/rightAside}"></aside>
 </div>
 <!--<footer id="ad" >-->
 <!--    <h1>광고</h1>-->
