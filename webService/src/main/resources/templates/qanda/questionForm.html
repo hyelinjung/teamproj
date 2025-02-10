@@ -1,81 +1,126 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Asklepios</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://kit.fontawesome.com/9b855eea51.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="CSS/home.css"/>
-    <link rel="stylesheet" href="CSS/qandaAside.css"/>
-    <link rel="stylesheet" href="CSS/questionForm.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Asklepios</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/9b855eea51.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
+  <link rel="stylesheet" href="CSS/home.css"/>
+  <link rel="stylesheet" href="CSS/qandaAside.css"/>
+  <link rel="stylesheet" href="CSS/questionForm.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
 <body>
 <div th:replace="~{include/header}"></div>
-<div style="display:flex; width: 1920px; height: 1200px;">
-    <div style="display: inline-block;" th:replace="~{include/leftAside/qandaAside}"></div>
-    <div id="menu_wrap" class="container">
-        <div class="title" style="border-bottom: 5px solid #3b82f6;">
-            질문하기
-        </div>
-        <div class="post-form">
-            <textarea name="postContent" id="summernote">
-            </textarea>
-        </div>
-    </div>
-    <aside id="aside2" th:insert="~{include/rightAside}"></aside>
+<div style="display:flex; width: 1920px; height: 1200px; margin-bottom: 80px;">
+  <div style="display: inline-block;" th:replace="~{include/leftAside/qandaAside}"></div>
+  <div class="container1">
+    <!--    onsubmit="return validateForm()"-->
+    <form action="qnaSubmit" method="post" onsubmit="return validateForm()">
+      <div class="title">질문하기</div>
+      <table>
+        <tr class="small">
+          <td class="td1">
+            <div class="label">
+              제목<span style="color: red">(*)</span>
+            </div>
+          </td>
+          <td colspan="2" class="td2">
+            <div>
+              <input type="text" name="question_title" id="question_title" placeholder="제목을 입력해주세요."
+                     class="fillAuto bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none">
+            </div>
+          </td>
+        </tr>
+        <tr class="medium">
+          <td class="td1">
+            <div class="label">
+              내용<span style="color: red">(*)</span>
+            </div>
+          </td>
+          <td colspan="2" class="td2">
+            <div>
+              <textarea name="question_content" id="question_content" cols="100" rows="10" placeholder="질문 내용을 자세하게 작성해주세요." style="resize: none"
+                        class="memo bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none"></textarea>
+            </div>
+          </td>
+        </tr>
+        <tr class="small">
+          <td class="td1">
+            <div class="label">
+              추천 진료과<span style="color: red">(*)</span>
+            </div>
+          </td>
+          <td>
+            <div>
+              <select name="question_medical" id="question_medical"
+                      class="fillAuto bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none"
+                      style="width: 500px;">
+                <option value="" selected>선택</option>
+                <option value="내과">내과</option>
+                <option value="외과">외과</option>
+                <option value="안과">안과</option>
+                <option value="피부과">피부과</option>
+                <option value="성형외과">성형외과</option>
+                <option value="정형외과">정형외과</option>
+                <option value="비뇨기과">비뇨기과</option>
+                <option value="산부인과">산부인과</option>
+                <option value="이비인후과">이비인후과</option>
+                <option value="소아청소년과">소아청소년과</option>
+                <option value="정신건강의학과">정신건강의학과</option>
+              </select>
+            </div>
+          </td>
+          <td style="justify-items: end;">
+            <div>
+              <input type="button" name="rec_medical" id="rec_medical" value="추천받기" style="width: 300px;" onclick="recommendMedical()"
+                     class="mx-px place-items-center bg-blue-500 w-64 h-20 rounded-lg text-white text-5xl font-semibold hover:bg-blue-600">
+            </div>
+          </td>
+        </tr>
+        <tr class="small">
+          <td class="td1">
+            <div class="label">
+              첨부파일
+            </div>
+          </td>
+          <td>
+            <div>
+              <input type="text" id="question_file" placeholder="" style="width: 500px;"
+                     class="fillAuto bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none" readonly>
+              <input type="file" id="upload_file" style="display: none;"
+                     onchange="document.getElementById('question_file').value = this.files[0] ? this.files[0].name : '';">
+            </div>
+          </td>
+          <td style="justify-items: end;">
+            <div>
+              <input type="button" value="찾아보기" style="width: 300px;"
+                     class="mx-px place-items-center bg-blue-500 w-64 h-20 rounded-lg text-white text-5xl font-semibold hover:bg-blue-600"
+                     onclick="document.getElementById('upload_file').click();">
+            </div>
+          </td>
+        </tr>
+        <tr class="small">
+          <td colspan="3">
+            <div class="flex justify-center">
+              <input type="submit" value="등록하기"
+                     class="mx-px mt-10 place-items-center bg-blue-500 w-64 h-20 rounded-lg text-white text-5xl font-semibold hover:bg-blue-600">
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <aside id="aside2" th:insert="~{include/rightAside}"></aside>
 </div>
 <footer id="footer" th:replace="~{include/footer}">
 </footer>
 </body>
 </html>
-<script>
-    $('#summernote').summernote({
-
-        // 에디터 크기 설정
-        height: 800,
-        // 에디터 한글 설정
-        lang: 'ko-KR',
-        // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
-        toolbar: [
-            // 글자 크기 설정
-            ['fontsize', ['fontsize']],
-            // 글자 [굵게, 기울임, 밑줄, 취소 선, 지우기]
-            ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-            // 글자색 설정
-            ['color', ['color']],
-            // 표 만들기
-            ['table', ['table']],
-            // 서식 [글머리 기호, 번호매기기, 문단정렬]
-            ['para', ['ul', 'ol', 'paragraph']],
-            // 줄간격 설정
-            ['height', ['height']],
-            // 이미지 첨부
-            ['insert',['picture']]
-        ],
-        // 추가한 글꼴
-        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-        // 추가한 폰트사이즈
-        fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72','96'],
-        // focus는 작성 페이지 접속시 에디터에 커서를 위치하도록 하려면 설정해주세요.
-        focus : true,
-        // callbacks은 이미지 업로드 처리입니다.
-        callbacks : {
-            onImageUpload : function(files, editor, welEditable) {
-                // 다중 이미지 처리를 위해 for문을 사용했습니다.
-                for (var i = 0; i < files.length; i++) {
-                    imageUploader(files[i], this);
-                }
-            }
-        }
-
-    });
-
-</script>
-
+<script src="JS/questionForm.js"></script>
 
 
