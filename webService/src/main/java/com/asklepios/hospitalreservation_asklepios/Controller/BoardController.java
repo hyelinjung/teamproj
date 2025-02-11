@@ -4,10 +4,7 @@ import com.asklepios.hospitalreservation_asklepios.Service.IF_BoardService;
 import com.asklepios.hospitalreservation_asklepios.Service.IF_UserService;
 import com.asklepios.hospitalreservation_asklepios.Util.FileDataUtil;
 //import com.asklepios.hospitalreservation_asklepios.Util.FileDataUtil;
-import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
-import com.asklepios.hospitalreservation_asklepios.VO.MemberVO;
-import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
-import com.asklepios.hospitalreservation_asklepios.VO.UserVO;
+import com.asklepios.hospitalreservation_asklepios.VO.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -178,5 +176,20 @@ public class BoardController {
     return "redirect:/bboard_all";
 
   }
+  @ResponseBody
+  @PostMapping("/like")
+    public HashMap<String,Object> like(@RequestBody LikeVO likeVO){
+        HashMap<String,Object> map = new HashMap<>();
+        likeVO.setLiked(boardService.checkLike(likeVO));
+        int heart= boardService.countHeart(likeVO);
+        map.put("heart",heart);
+        map.put("likeVO",likeVO);
+        return map;
+    }
+    @ResponseBody
+    @PostMapping("/likecheck")
+    public boolean likecheck(@RequestBody LikeVO likeVO) {
+        return boardService.firstLike(likeVO);
+    }
 }
 

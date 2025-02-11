@@ -1,6 +1,7 @@
 package com.asklepios.hospitalreservation_asklepios.Service;
 
 import com.asklepios.hospitalreservation_asklepios.VO.BoardVO;
+import com.asklepios.hospitalreservation_asklepios.VO.LikeVO;
 import com.asklepios.hospitalreservation_asklepios.VO.PageVO;
 import java.util.List;
 
@@ -19,4 +20,7 @@ public interface IF_BoardService {
     public void modBoard(BoardVO boardVO);
     public BoardVO detail(String no) throws Exception;
     public void delBoard(String no) throws Exception;
+    public boolean checkLike(LikeVO likeVO);
+    public boolean firstLike(LikeVO likeVO);
+    public int countHeart(LikeVO likeVO);
 }
