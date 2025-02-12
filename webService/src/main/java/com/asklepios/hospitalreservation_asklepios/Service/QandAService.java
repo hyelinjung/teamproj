@@ -53,12 +53,26 @@ public class QandAService {
         }
     }
 
-    public boolean save_text(List<MultipartFile> files, QuestionVO vo){
+
+    //이미지 파일 등록한 질문 작성
+    public boolean save_text_w_img(List<MultipartFile> files, QuestionVO vo){
         System.out.println("질문 텍스트 저장");
         vo.setUser_id("lin99");
         qandAMapper.save_qanda_text(vo);
         System.out.println(vo.getId());
-       return save_local_img(files,vo.getId());
+        return save_local_img(files,vo.getId());
+    }
+    //이미지 없이 질문 등록
+    public boolean save_text( QuestionVO vo){
+        System.out.println("질문 텍스트 저장 사진 없이");
+        try {
+            vo.setUser_id("lin99");
+        }catch (Exception e){
+            qandAMapper.save_qanda_text(vo);
+            System.out.println(vo.getId());
+            return false;
+        }
+        return true;
     }
 
     //의사 답변 저장
