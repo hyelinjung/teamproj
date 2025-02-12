@@ -1,33 +1,12 @@
-function getCleanText() {
-    let chatInput = document.getElementById("question_content").cloneNode(true); // 원본 보호
-    chatInput.querySelectorAll("span").forEach(span => span.remove()); // 모든 <span> 삭제
-    return chatInput.innerText.trim(); // 깨끗한 텍스트 반환
-}
-
 function recommendMedical() {
-    let chatInput = document.getElementById("question_content");
-    let userMessage = chatInput.innerText.trim(); // 공백 제외한 사용자 입력값
-    let message = chatInput.textContent.trim(); // display: none; 속성의 텍스트 포함하여 가져오기
-
-    if (getCleanText() === "") {
-        alert("내용을 입력해주세요.");
-        return;
-    }
-
-    // identifier와 mainMessage 분리
-    let insertMessage = message.split(" "); // 공백 기준 단어 나누기
-    let identifier = insertMessage.shift(); // 첫 번째 단어를 identifier로 저장
-    let mainMessage = insertMessage.join(" "); // 나머지 단어들을 다시 문자열로 결합
+    let userMessage = document.getElementById("question_content").value.trim(); // 공백 제외한 사용자 입력값
 
     // 챗봇 응답 받기
     $.ajax({
         url: "/asklepios/api/medical/recommend",
         type: "POST",
         contentType: "application/json",
-        data: JSON.stringify({
-            identifier: identifier,
-            mainMessage: mainMessage
-        }),
+        data: JSON.stringify({mainMessage: userMessage}),
         success: function(response) {
             // 추천된 진료과 드롭다운 변경
             let medicalDropdown = document.getElementById("question_medical");
@@ -43,4 +22,31 @@ function recommendMedical() {
             alert("진료과 추천 요청 실패");
         }
     });
+}
+
+function validateForm(){
+    let title = document.querySelector("#question_title").value;
+    let content = document.querySelector("#question_content").value;
+    let medical = document.querySelector("#question_medical").value;
+    let formFlag = false;
+    
+    if(title === ""){
+        Swal.fire('필수항목 미입력', '제목을 입력해주세요.','error');
+        return formFlag;
+    }
+    if(content === ""){
+        Swal.fire('필수항목 미입력', '내용을 입력해주세요.','error');
+        return formFlag;
+    }
+    if(medical === ""){
+        Swal.fire('필수항목 미입력', '진료과목을 선택해주세요.','error');
+        return formFlag;
+    }
+    if(confirm("질문하시겠습니까?")){
+        formFlag = true;
+        return formFlag;
+    }else {
+        formFlag = false;
+        return formFlag;
+    }
 }
