@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Asklepios</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/9b855eea51.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <link rel="icon" href="Img/logo_icon.png" type="image/x-icon">
+  <link rel="stylesheet" href="CSS/home.css"/>
+  <link rel="stylesheet" href="CSS/qandaAside.css"/>
+  <link rel="stylesheet" href="CSS/questionForm.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+</head>
+<body>
+<div th:replace="~{include/header}"></div>
+<div style="display:flex; width: 1920px; height: 1200px; margin-bottom: 80px;">
+  <div style="display: inline-block;" th:replace="~{include/leftAside/qandaAside}"></div>
+  <div class="container1">
+    <!--    onsubmit="return validateForm()"-->
+    <form action="qnaSubmit" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+      <div class="title">질문하기</div>
+      <table>
+        <tr class="small">
+          <td class="td1">
+            <div class="label">
+              제목<span style="color: red">(*)</span>
+            </div>
+          </td>
+          <td colspan="2" class="td2">
+            <div>
+              <input type="text" name="title" id="question_title" placeholder="제목을 입력해주세요."
+                     class="fillAuto bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none">
+            </div>
+          </td>
+        </tr>
+        <tr class="medium">
+          <td class="td1">
+            <div class="label">
+              내용<span style="color: red">(*)</span>
+            </div>
+          </td>
+          <td colspan="2" class="td2">
+            <div>
+              <textarea name="content" id="question_content" cols="100" rows="10" placeholder="질문 내용을 자세하게 작성해주세요." style="resize: none"
+                        class="memo bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none"></textarea>
+            </div>
+          </td>
+        </tr>
+        <tr class="small">
+          <td class="td1">
+            <div class="label">
+              추천 진료과<span style="color: red">(*)</span>
+            </div>
+          </td>
+          <td>
+            <div>
+              <select name="sub" id="question_medical"
+                      class="fillAuto bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none"
+                      style="width: 500px;">
+                <option value="" selected>선택</option>
+                <option value="내과">내과</option>
+                <option value="외과">외과</option>
+                <option value="안과">안과</option>
+                <option value="피부과">피부과</option>
+                <option value="성형외과">성형외과</option>
+                <option value="정형외과">정형외과</option>
+                <option value="비뇨기과">비뇨기과</option>
+                <option value="산부인과">산부인과</option>
+                <option value="이비인후과">이비인후과</option>
+                <option value="소아청소년과">소아청소년과</option>
+                <option value="정신건강의학과">정신건강의학과</option>
+              </select>
+            </div>
+          </td>
+          <td style="justify-items: end;">
+            <div>
+              <input type="button" name="rec_medical" id="rec_medical" value="추천받기" style="width: 300px;" onclick="recommendMedical()"
+                     class="mx-px place-items-center bg-blue-500 w-64 h-20 rounded-lg text-white text-5xl font-semibold hover:bg-blue-600">
+            </div>
+          </td>
+        </tr>
+        <tr class="small">
+          <td class="td1">
+            <div class="label">
+              첨부파일
+            </div>
+          </td>
+          <td>
+            <div>
+              <input type="text" id="question_file" placeholder="" style="width: 500px;"
+                     class="fillAuto bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none" readonly>
+              <input type="file" id="upload_file" name="file" style="display: none;"
+                     onchange="document.getElementById('question_file').value = this.files[0] ? this.files[0].name : '';">
+            </div>
+          </td>
+          <td style="justify-items: end;">
+            <div>
+              <input type="button" value="찾아보기" style="width: 300px;"
+                     class="mx-px place-items-center bg-blue-500 w-64 h-20 rounded-lg text-white text-5xl font-semibold hover:bg-blue-600"
+                     onclick="document.getElementById('upload_file').click();">
+            </div>
+          </td>
+        </tr>
+        <tr class="small">
+          <td colspan="3">
+            <div class="flex justify-center">
+              <input type="hidden" name="user_id" th:value="${userId}">
+              <input type="submit" value="등록하기"
+                     class="mx-px mt-10 place-items-center bg-blue-500 w-64 h-20 rounded-lg text-white text-5xl font-semibold hover:bg-blue-600">
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <aside id="aside2" th:insert="~{include/rightAside}"></aside>
+</div>
+<footer id="footer" th:replace="~{include/footer}">
+</footer>
+</body>
+</html>
+<script src="JS/questionForm.js"></script>
+
+
