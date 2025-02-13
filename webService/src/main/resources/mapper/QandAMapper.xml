@@ -46,8 +46,8 @@
     </select>
 
     <!--의사 답변 테이블생성을 위한 pre데이터(join 개수가 너무 많아서 먼저 데이터를 구하고 테이블에 삽입할 데이터 생성하기로함)-->
-    <select id="pre_getDoctorInfo"  resultType="com.asklepios.hospitalreservation_asklepios.VO.QuestionlistVO">
-        select ud.user_doctor_id as user_name,ud.user_doctor_medical as tag,h.hospital_name as sub from user_doctor as ud left join hospital as h on ud.user_doctor_hospital_code =h.hospital_code where ud.user_doctor_id =#{doctor_id};
+    <select id="pre_getDoctorInfo"  resultType="com.asklepios.hospitalreservation_asklepios.VO.QuestionVO">
+        select ud.user_doctor_id as user_id,ud.user_doctor_medical as tag,h.hospital_name as sub from user_doctor as ud left join hospital as h on ud.user_doctor_hospital_code =h.hospital_code where ud.user_doctor_id =#{doctor_id};
     </select>
 
     <!--큐엔에이 디테일 보기에서 의사관련 정보만 가져오기-->
