@@ -20,7 +20,7 @@
   <div style="display: inline-block;" th:replace="~{include/leftAside/qandaAside}"></div>
   <div class="container1">
     <!--    onsubmit="return validateForm()"-->
-    <form action="qnaSubmit" method="post" onsubmit="return validateForm()">
+    <form action="qnaSubmit" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
       <div class="title">질문하기</div>
       <table>
         <tr class="small">
@@ -31,7 +31,7 @@
           </td>
           <td colspan="2" class="td2">
             <div>
-              <input type="text" name="question_title" id="question_title" placeholder="제목을 입력해주세요."
+              <input type="text" name="title" id="question_title" placeholder="제목을 입력해주세요."
                      class="fillAuto bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none">
             </div>
           </td>
@@ -44,7 +44,7 @@
           </td>
           <td colspan="2" class="td2">
             <div>
-              <textarea name="question_content" id="question_content" cols="100" rows="10" placeholder="질문 내용을 자세하게 작성해주세요." style="resize: none"
+              <textarea name="content" id="question_content" cols="100" rows="10" placeholder="질문 내용을 자세하게 작성해주세요." style="resize: none"
                         class="memo bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none"></textarea>
             </div>
           </td>
@@ -57,7 +57,7 @@
           </td>
           <td>
             <div>
-              <select name="question_medical" id="question_medical"
+              <select name="sub" id="question_medical"
                       class="fillAuto bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none"
                       style="width: 500px;">
                 <option value="" selected>선택</option>
@@ -92,7 +92,7 @@
             <div>
               <input type="text" id="question_file" placeholder="" style="width: 500px;"
                      class="fillAuto bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:ring-1 focus:outline-none" readonly>
-              <input type="file" id="upload_file" style="display: none;"
+              <input type="file" id="upload_file" name="file" style="display: none;"
                      onchange="document.getElementById('question_file').value = this.files[0] ? this.files[0].name : '';">
             </div>
           </td>
@@ -107,6 +107,7 @@
         <tr class="small">
           <td colspan="3">
             <div class="flex justify-center">
+              <input type="hidden" name="user_id" th:value="${userId}">
               <input type="submit" value="등록하기"
                      class="mx-px mt-10 place-items-center bg-blue-500 w-64 h-20 rounded-lg text-white text-5xl font-semibold hover:bg-blue-600">
             </div>

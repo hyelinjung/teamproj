@@ -16,6 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -30,29 +33,36 @@ public class Profile_ImageUtil {
 //        }
 //    };
 
+    //수정 -혜린
     @Value("${upload.file.path}")
     private String filePath;
+
 
     public String getFullPath(String fileName) {
         return filePath + fileName;
     }
 
+    //이미지 저장 수정 -혜린
     public String storeFile(MultipartFile file) throws Exception {
             if(file == null || file.isEmpty()) {
                 return null;
             } else {
+                String path_string = filePath.toLowerCase();
+                File save_file = new File(path_string);
+                if (!save_file.exists()){
+                    save_file.mkdir();
+                }
                 // 사진파일 client upload 한 원본 이름
                 String originalFilename = file.getOriginalFilename();
                 System.out.println(originalFilename);
                 // 사진파일 server 저장을 위해 uuid + 원본 합친 이름
                 String storeFileName = createStoreFileName(originalFilename);
-                System.out.println(storeFileName);
-                // server 에 사진 저장(transferTo = 서버에 사진을 저장하겠다.)
-//            user_image[i].transferTo(new File(getFullPath(storeFileName[i])));
+                System.out.println("storeFileName:"+storeFileName);
                 byte[] fileData = file.getBytes();
-
-                File target = new File(filePath, storeFileName);
-                FileCopyUtils.copy(fileData, target);
+                Path path = Paths.get(filePath+"/"+storeFileName);
+                /*File target = new File(filePath, storeFileName);*/
+                /*FileCopyUtils.copy(fileData, target);*/
+                Files.write(path,fileData);
                 return storeFileName;
             }
 

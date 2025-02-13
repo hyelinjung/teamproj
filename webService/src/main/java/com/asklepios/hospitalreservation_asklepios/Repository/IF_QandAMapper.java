@@ -24,8 +24,8 @@ public interface IF_QandAMapper {
     void save_qanda_text(QuestionVO vo);
 
     //답변
-    @Insert("INSERT INTO answer(question_id,content,user_doctor_id,hospital_name,user_doctor_medical) values(#{id},#{content},#{user_name},#{sub},#{tag})")
-    void save_answer(QuestionlistVO listvo);
+    @Insert("INSERT INTO answer(question_id,content,user_doctor_id,hospital_name,user_doctor_medical) values(#{id},#{content},#{user_id},#{sub},#{tag})")
+    void save_answer(QuestionVO listvo);
 
     //화면 리스트 가져옴
     List<QuestionlistVO> list();
@@ -33,7 +33,7 @@ public interface IF_QandAMapper {
     //질문 자세히 보기
     QuestionlistVO detailQandA(int questionId);
    //답변테이블 데이터 만들기 전 통합데이터 구함
-    QuestionlistVO pre_getDoctorInfo(String doctor_id);
+   QuestionVO pre_getDoctorInfo(String doctor_id);
     //질문 자세히 보기 -- 의사 정보 가져오기
     List<QuestionlistVO> show_detail_getDoctorInfo(int question_id);
 
