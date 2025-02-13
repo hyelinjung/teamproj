@@ -50,7 +50,7 @@ public class FileDataUtil {
           byte[]fileData=files[i].getBytes();
           File target=new File(uploadPath,saveName);
           FileCopyUtils.copy(fileData,target);
-          files[i]=saveName;
+          files[i]=originalName;
         }
       }
       return files;

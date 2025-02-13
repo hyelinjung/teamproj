@@ -11,7 +11,7 @@
         </if>
     </sql>
     <insert id="insertOne">
-        insert into testboard values(nextval(board_sequence),#{board_user_id},#{board_category},#{board_title},#{board_content},#{board_binary},default,default,default)
+        insert into testboard values(nextval(board_sequence),#{board_user_id},#{board_category},#{board_title},#{board_content},#{board_binary},default,default,default,default)
    </insert>
     <select id="selectNotice" resultType="com.asklepios.hospitalreservation_asklepios.VO.BoardVO">
         select * from testboard where board_category='공지사항'
