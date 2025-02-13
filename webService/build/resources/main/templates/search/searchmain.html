@@ -845,8 +845,11 @@
   //성별정보로 파이차트 그리기
   function drawGenderChart(data){
     let genderChart=document.getElementById("genderChart");
+    if(window.myGenderChart){
+      window.myGenderChart.destroy();
+    }
     genderChart.innerHTML="";
-    new Chart(genderChart, {
+    window.myGenderChart=new Chart(genderChart, {
       type: 'doughnut',
       data: {
         labels: ["Men", "Women"],
@@ -898,8 +901,10 @@
   //시간대별 방문자 수 차트 그리기
   function drawTimeChart(data){
     let timeChart=document.getElementById("timeChart");
-    timeChart.innerHTML="";
-    new Chart(timeChart,{
+    if(window.myTimeChart){
+      window.myTimeChart.destroy();
+    }
+    window.myTimeChart=new Chart(timeChart,{
       type:"line",
       data: {
         labels: Object.keys(data),

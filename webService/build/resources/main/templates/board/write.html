@@ -124,13 +124,13 @@
                 <option value="4">자유게시판</option>
               </select>
             </td>
-            <td><input type="text" name="board_title"></td>
+            <td><input type="text" name="board_title" required></td>
           </tr>
           <tr>
             <td class="header">Content</td>
           </tr>
           <tr>
-            <td colspan="2"><textarea name="board_content" style="resize: none;" ></textarea></td>
+            <td colspan="2"><textarea name="board_content" style="resize: none;" required></textarea></td>
           </tr>
           <tr>
             <td class="header">Add File</td>
@@ -145,7 +145,7 @@
             <!--          <td><input type="hidden" th:value="${boardVO.board_sequence}" name="board_sequence"></td>-->
           </tr>
           <tr>
-            <td><input type="submit" value="작성완료" onclick="alert('작성 완료!')"></td>
+            <td><input type="submit" value="작성완료" onclick="confirmWrite()"></td>
           </tr>
         </table>
       </form>
@@ -166,3 +166,12 @@
 
 </body>
 </html>
+<script>
+  function confirmWrite(){
+    if(confirm("글을 작성하시겠습니까?")==true){
+      onsubmit();
+    }else{
+      return false;
+    }
+  }
+</script>

@@ -90,6 +90,9 @@
   #heart{
     cursor: pointer;
   }
+  #delete{
+    color: #ff1a1a;
+  }
 </style>
 <body>
 <div th:replace="~{include/header}"></div>
@@ -152,6 +155,7 @@
             <td><input type="hidden" th:value="${boardVO.board_viewcount}" name="board_viewcount"></td>
             <td><input type="hidden" th:value="${boardVO.board_goodcount}" name="board_goodcount"></td>
             <td><input type="hidden" th:value="${boardVO.board_sequence}" name="board_sequence"></td>
+            <td><input type="hidden" th:value="${user.getUser_authority()}" name="user_authority" </td>
           </tr>
           <tr>
             <td><input type="submit" value="글 수정" ></td>
@@ -268,16 +272,18 @@
     history.back()
   })
 
-  //작성자와 사용자의 아이디 확인해 글 삭제가능여부 체크
+  //작성자와 사용자의 아이디 확인해 글 삭제가능여부 체크+관리자 글 삭제
   function checkWriter(){
     let userId=document.getElementById("userId").value;
+    let userAuthority=document.getElementsByName("user_authority")[0].value;
     let writerId=document.getElementsByName("board_user_id")[0].value;
     let deleteButton=document.getElementById("delete");
     let boardSequence=document.getElementsByName("board_sequence")[0].value;
     console.log(userId);
     console.log(writerId);
-    if(userId===writerId){
-      deleteButton.innerHTML=`<a href="deleteboard?board_sequence=${boardSequence}"><img width="50" height="50" src="https://img.icons8.com/ios/50/delete-trash.png" alt="delete-trash"/></a>`;
+    if(userId===writerId||
+        userAuthority==="admin"){
+      deleteButton.innerHTML=`<a href="deleteboard?board_sequence=${boardSequence}">글 삭제</a>`;
     }
 
   }
