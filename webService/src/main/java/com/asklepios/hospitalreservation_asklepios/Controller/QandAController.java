@@ -19,9 +19,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-
-
+import java.util.Map;
 
 
 @Controller
@@ -39,6 +39,7 @@ public class QandAController {
       model.addAttribute("userId",get_userId());
     return "qanda/questionForm";
   }
+
 
   @GetMapping("/qanda2")
   public String qna() {
@@ -173,5 +174,11 @@ public class QandAController {
       return "방금 전";
     }
 
+  }
+  @ResponseBody
+  @GetMapping("/test_fast")
+  ResponseEntity<String> ty(@RequestBody HashMap<String,String> map){
+    String result = map.get("question");
+    return ResponseEntity.ok(result);
   }
 }

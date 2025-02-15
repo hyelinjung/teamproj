@@ -111,12 +111,15 @@
 </html>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    let question =document.getElementById("user_content").value.trim();
+    console.log('실행');
+    let question =document.getElementById("user_content").value;
+    console.log(question);
     $.ajax({
-        url: "http://127.0.0.1:8000",
+        url: "/asklepios/test_fast",
         type: "GET",
         contentType: "application/json",
         data: JSON.stringify({'question': question}),
+        dataType:"JSON",
         success: function(response) {
             console.log(response);
         },
