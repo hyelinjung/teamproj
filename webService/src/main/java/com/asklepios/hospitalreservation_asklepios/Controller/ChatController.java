@@ -56,4 +56,8 @@ public class ChatController {
     public String recommendMedical(@RequestBody ChatVO chatVO) {
         return chatService.recommendDepartment(chatVO.getMainMessage());
     }
+    @PostMapping("/api/medical/recommend")
+    public String recommendMedical(@RequestBody ChatVO chatVO) {
+        return chatService.recommendDepartment(chatVO.getMainMessage());
+    }
 }

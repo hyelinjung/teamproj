@@ -19,9 +19,15 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+=======
+import java.util.List;
+
+
+>>>>>>> 16d0b8289e802f1d0c12b7ef76a585455f702fbc
 
 
 @Controller
@@ -40,7 +46,10 @@ public class QandAController {
     return "qanda/questionForm";
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 16d0b8289e802f1d0c12b7ef76a585455f702fbc
   @GetMapping("/qanda2")
   public String qna() {
     //model.addAttribute("user",  userservice.findMember());
@@ -175,10 +184,13 @@ public class QandAController {
     }
 
   }
+<<<<<<< HEAD
   @ResponseBody
   @GetMapping("/test_fast")
   ResponseEntity<String> ty(@RequestBody HashMap<String,String> map){
     String result = map.get("question");
     return ResponseEntity.ok(result);
   }
+=======
+>>>>>>> 16d0b8289e802f1d0c12b7ef76a585455f702fbc
 }

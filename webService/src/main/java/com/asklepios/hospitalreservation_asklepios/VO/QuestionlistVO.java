@@ -3,7 +3,7 @@ package com.asklepios.hospitalreservation_asklepios.VO;
 import lombok.Data;
 
 import java.util.List;
-
+//서버 -> 클라이언트
 @Data
 public class QuestionlistVO {
     private int id;

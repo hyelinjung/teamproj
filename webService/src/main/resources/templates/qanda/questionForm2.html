@@ -111,6 +111,7 @@
 </html>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
+<<<<<<< HEAD
     console.log('실행');
     let question =document.getElementById("user_content").value;
     console.log(question);
@@ -120,6 +121,14 @@
         contentType: "application/json",
         data: JSON.stringify({'question': question}),
         dataType:"JSON",
+=======
+    let question =document.getElementById("user_content").value.trim();
+    $.ajax({
+        url: "http://127.0.0.1:8000",
+        type: "GET",
+        contentType: "application/json",
+        data: JSON.stringify({'question': question}),
+>>>>>>> 16d0b8289e802f1d0c12b7ef76a585455f702fbc
         success: function(response) {
             console.log(response);
         },

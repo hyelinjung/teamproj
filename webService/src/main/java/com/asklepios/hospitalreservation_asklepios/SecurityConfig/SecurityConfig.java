@@ -48,8 +48,12 @@ public class SecurityConfig  {
                 "/", "/home","/login","/findId","/resultId","/findPw","findEmail","/resultPw","mailSend","mailCheck",
                 "/agreement","/commoninfo","/doctorinfo","/userjoin","/getreview","/filter","/insertedID","/hospitalList",
                 "/bboard_all","/bboard_campaign","/bboard_med","/doctorreservationstatus","/acceptreservation","/cancelreservation","/verify_password_mypage",
+<<<<<<< HEAD
                 "/bboard_health","/bboard_free","/detail", "/updateUserInfo","/chat","/recommend","/search","/api/chat/recommend",
                     "/gettimedata","/getgenderdata").permitAll() // 요청은 허용
+=======
+                "/bboard_health","/bboard_free","/detail", "/updateUserInfo","/chat","/recommend","/search","/api/chat/recommend","/api/medical/recommend", "/qanda", "/qanda/questionForm","/qnaSubmit").permitAll() // 요청은 허용
+>>>>>>> 16d0b8289e802f1d0c12b7ef76a585455f702fbc
                 .requestMatchers("/reservation","/reservationForm","/reserve").hasRole("client")
             .requestMatchers("/registration").hasRole("doctor")
             .requestMatchers("/myPage","/excelDownload").hasAnyRole("doctor","client")

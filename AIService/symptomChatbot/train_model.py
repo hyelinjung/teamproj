@@ -6,7 +6,11 @@ from sklearn.naive_bayes import MultinomialNB
 import joblib
 
 # DB 연결 및 데이터 로드
+<<<<<<< HEAD
 conn = pymysql.connect(host='localhost', user='root', password='root', db='asklepios')
+=======
+conn = pymysql.connect(host='localhost', user='root', password='1111', db='asklepios')
+>>>>>>> 16d0b8289e802f1d0c12b7ef76a585455f702fbc
 df = pd.read_sql("SELECT r.reservation_memo as 'memo', ud.user_doctor_medical as 'medical' FROM reservation r inner join user_doctor ud on r.reservation_user_doctor_code = ud.user_doctor_code", conn)
 conn.close()
 
