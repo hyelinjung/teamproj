@@ -7,7 +7,11 @@ import joblib
 
 # DB 연결 및 데이터 로드
 <<<<<<< HEAD
+<<<<<<< HEAD
 conn = pymysql.connect(host='localhost', user='root', password='root', db='asklepios')
+=======
+conn = pymysql.connect(host='localhost', user='root', password='1111', db='asklepios')
+>>>>>>> 16d0b8289e802f1d0c12b7ef76a585455f702fbc
 =======
 conn = pymysql.connect(host='localhost', user='root', password='1111', db='asklepios')
 >>>>>>> 16d0b8289e802f1d0c12b7ef76a585455f702fbc
